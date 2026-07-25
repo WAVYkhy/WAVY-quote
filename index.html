@@ -758,25 +758,31 @@
                         <input type="text" id="musicInfo" placeholder="신청곡 링크를 입력해주세요.">
                     </div>
 
-                    <!-- 7. 일러스트, 음원, 라인업 등의 자료 -->
+                    <!-- 7. 일러스트 음원 등의 자료 -->
                     <div class="form-group">
-                        <label class="field-title required" for="materialsInfo">7. 일러스트, 음원, 라인업 등의 자료</label>
+                        <label class="field-title required" for="materialsInfo">7. 일러스트 음원 등의 자료</label>
                         <div class="description">준비되지 않은 자료가 있다면 언제 전달 가능한지 적어주시길 바랍니다. 기본적으로 모든 자료를 전달받기 전에는 작업을 시작하지
                             않습니다.</div>
                         <textarea id="materialsInfo" placeholder="자료 링크 및 준비 상태에 대해 상세히 작성해주세요."></textarea>
                     </div>
 
-                    <!-- 8. 마감일 -->
+                    <!-- 8. 참여자 라인업 -->
                     <div class="form-group">
-                        <label class="field-title required" for="deadlineInfo">8. 마감일</label>
+                        <label class="field-title required" for="lineupInfo">8. 참여자 라인업</label>
+                        <input type="text" id="lineupInfo" placeholder="보컬, 일러스트레이터 등 참여자 라인업을 작성해주세요.">
+                    </div>
+
+                    <!-- 9. 마감일 -->
+                    <div class="form-group">
+                        <label class="field-title required" for="deadlineInfo">9. 마감일</label>
                         <div class="description">기본적으로 작업 시작 후 14일(Live2D 추가시 21일)입니다. 이보다 빠른 마감의 경우 날짜를 적어주시면 작업 난이도와
                             일정을 고려하여 가격을 책정해드립니다.</div>
                         <input type="text" id="deadlineInfo" placeholder="예: 2026년 06월 30일 (협의 가능)">
                     </div>
 
-                    <!-- 9. 기타 신청 내용을 작성해주세요. -->
+                    <!-- 10. 기타 신청 내용을 작성해주세요. -->
                     <div class="form-group">
-                        <label class="field-title" for="otherDetails">9. 기타 신청 내용을 작성해주세요.</label>
+                        <label class="field-title" for="otherDetails">10. 기타 신청 내용을 작성해주세요.</label>
                         <textarea id="otherDetails" placeholder="추가 문의사항이나 전달하고 싶으신 메시지가 있다면 작성해주세요."></textarea>
                     </div>
                 </div>
@@ -804,8 +810,10 @@
     </div>
 
     <div
-        style="position: absolute; bottom: 24px; right: 24px; font-size: 12px; color: #a1a1aa; font-weight: 600; letter-spacing: 0.5px; z-index: 10;">
-        designed by WAVIT</div>
+        style="position: absolute; bottom: 24px; left: 24px; right: 24px; display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: #a1a1aa; font-weight: 400; z-index: 10; flex-wrap: wrap; gap: 8px; pointer-events: none;">
+        <span id="logNoticeText" style="opacity: 0.65;">※ 서비스 품질 및 문의 확인을 위한 최소한의 로그가 기록될 수 있습니다.</span>
+        <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.5px; margin-left: auto;">designed by WAVIT</span>
+    </div>
 
     <script>
         let currentLang = 'ko';
@@ -829,11 +837,12 @@
                 q4: "4. 추가금 (다중선택)", q4_copy: "4. 추가금", q4_1: "추가 인원", q4_1_sub: "+10,000원 / 명", q4_1_desc: "기본 2인. 3인부터 추가금 발생", q4_1_qty: "인원 수", q4_2: "빠른 마감", q4_2_sub: "협의 후 결정", q4_3: "간단 썸네일", q4_3_sub: "+5,000원", c_thumb: "간단 썸네일",
                 q5: "5. 업로드 채널", q5_ph: "예: 유튜브 채널명 또는 URL",
                 q6: "6. 신청곡 링크", q6_ph: "신청곡 링크를 입력해주세요.",
-                q7: "7. 일러스트, 음원, 라인업 등의 자료", q7_copy: "7. 자료 첨부", q7_desc: "준비되지 않은 자료가 있다면 언제 전달 가능한지 적어주시길 바랍니다. 기본적으로 모든 자료를 전달받기 전에는 작업을 시작하지 않습니다.", q7_ph: "자료 링크 및 준비 상태에 대해 상세히 작성해주세요.",
-                q8: "8. 마감일", q8_desc: "기본적으로 작업 시작 후 14일(Live2D 추가시 21일)입니다. 빠른 마감의 경우 날짜를 적어주시면 일정을 고려하여 가격을 책정해드립니다.", q8_ph: "예: 2026년 06월 30일 (협의 가능)",
-                q9: "9. 기타 신청 내용을 작성해주세요.", q9_copy: "9. 추가 요청", q9_ph: "추가 문의사항이나 전달하고 싶으신 메시지가 있다면 작성해주세요.",
+                q7: "7. 일러스트 음원 등의 자료", q7_copy: "7. 자료 첨부", q7_desc: "준비되지 않은 자료가 있다면 언제 전달 가능한지 적어주시길 바랍니다. 기본적으로 모든 자료를 전달받기 전에는 작업을 시작하지 않습니다.", q7_ph: "자료 링크 및 준비 상태에 대해 상세히 작성해주세요.",
+                q8: "8. 참여자 라인업", q8_copy: "8. 참여자 라인업", q8_ph: "보컬, 일러스트레이터 등 참여자 라인업을 작성해주세요.",
+                q9: "9. 마감일", q9_desc: "기본적으로 작업 시작 후 14일(Live2D 추가시 21일)입니다. 빠른 마감의 경우 날짜를 적어주시면 일정을 고려하여 가격을 책정해드립니다.", q9_ph: "예: 2026년 06월 30일 (협의 가능)",
+                q10: "10. 기타 신청 내용을 작성해주세요.", q10_copy: "10. 추가 요청", q10_ph: "추가 문의사항이나 전달하고 싶으신 메시지가 있다면 작성해주세요.",
                 resTitle: "예상 견적서", resEmpty: "항목을 선택하면 내역이 표시됩니다.", resTotal: "총 예상 견적", copyBtn: "복사하기", emailBtn: "견적서 바로 전송", resNotice: "※ 해당 금액은 예상 견적이며 실제 확정 견적과 다를 수 있습니다. 빠른 마감은 미포함된 가격입니다.",
-                alert1: "1. 사용 용도를 선택해주세요.", alert5: "5. 업로드 채널을 입력해주세요.", alert6: "6. 신청곡 링크를 입력해주세요.", alert7: "7. 자료를 입력해주세요.", alert8: "8. 마감일을 입력해주세요.",
+                alert1: "1. 사용 용도를 선택해주세요.", alert5: "5. 업로드 채널을 입력해주세요.", alert6: "6. 신청곡 링크를 입력해주세요.", alert7: "7. 자료를 입력해주세요.", alert8: "8. 참여자 라인업을 입력해주세요.", alert9: "9. 마감일을 입력해주세요.",
                 alertSuccess: "복사가 완료되었습니다. 문의 시 붙여넣기로 사용해주세요.", alertFail: "복사에 실패했습니다. 수동으로 복사해주세요.",
                 c_use: "사용 용도", c_live: "Live 2D", c_vidEx: "영상 길이 초과", c_ppl: "추가 인원", c_fast: "빠른 마감", c_nego: "협의 후 결정", c_none: "없음",
                 title: "WAVIT - 견적 계산기",
@@ -849,7 +858,8 @@
                 emailSubject: "[WAVIT 견적서] 새로운 견적 문의가 도착했습니다.",
                 emailSenderName: "WAVIT 견적 계산기",
                 mailHeader: "[WAVIT 온라인 견적 문의]",
-                contactLabel: "연락처:"
+                contactLabel: "연락처:",
+                logNotice: "※ 서비스 품질 및 문의 확인을 위한 최소한의 로그가 기록될 수 있습니다."
             },
             en: {
                 curr: " KRW",
@@ -860,11 +870,12 @@
                 q4: "4. Extra Fees (Multiple)", q4_copy: "4. Extra Fees", q4_1: "Extra Person", q4_1_sub: "+10,000 KRW / Person", q4_1_desc: "Base is 2 people. Extra fee from 3rd person.", q4_1_qty: "Quantity", q4_2: "Fast Deadline", q4_2_sub: "Negotiable", q4_3: "Simple Thumbnail", q4_3_sub: "+5,000 KRW", c_thumb: "Simple Thumbnail",
                 q5: "5. Upload Channel", q5_ph: "e.g., YouTube Channel Name or URL",
                 q6: "6. Song Link", q6_ph: "Enter the song link.",
-                q7: "7. Materials (Illustrations, Audio, Lineup, etc.)", q7_copy: "7. Attached Materials", q7_desc: "Specify when missing materials will be provided. Work starts only after all materials are received.", q7_ph: "Describe material links and status in detail.",
-                q8: "8. Deadline", q8_desc: "Base is 14 days (21 for Live 2D). For faster deadlines, specify the date; price depends on schedule and difficulty.", q8_ph: "e.g., June 30, 2026 (Negotiable)",
-                q9: "9. Any other requests?", q9_copy: "9. Additional Requests", q9_ph: "Add any extra inquiries or messages here.",
+                q7: "7. Materials (Illustrations, Audio, etc.)", q7_copy: "7. Attached Materials", q7_desc: "Specify when missing materials will be provided. Work starts only after all materials are received.", q7_ph: "Describe material links and status in detail.",
+                q8: "8. Participant Lineup", q8_copy: "8. Lineup", q8_ph: "Please enter the participating vocalists and artists.",
+                q9: "9. Deadline", q9_desc: "Base is 14 days (21 for Live 2D). For faster deadlines, specify the date; price depends on schedule and difficulty.", q9_ph: "e.g., June 30, 2026 (Negotiable)",
+                q10: "10. Any other requests?", q10_copy: "10. Additional Requests", q10_ph: "Add any extra inquiries or messages here.",
                 resTitle: "ESTIMATE", resEmpty: "Select items to see the breakdown.", resTotal: "Total Estimate", copyBtn: "COPY", emailBtn: "Send Estimate Now", resNotice: "※ This is an estimated quote and may differ from the final price. Fast deadline fees are not included.",
-                alert1: "Please select 1. Usage.", alert5: "Please enter 5. Upload Channel.", alert6: "Please enter 6. Song Link.", alert7: "Please enter 7. Materials.", alert8: "Please enter 8. Deadline.",
+                alert1: "Please select 1. Usage.", alert5: "Please enter 5. Upload Channel.", alert6: "Please enter 6. Song Link.", alert7: "Please enter 7. Materials.", alert8: "Please enter 8. Participant Lineup.", alert9: "Please enter 9. Deadline.",
                 alertSuccess: "Copied successfully. Please paste it when inquiring.", alertFail: "Copy failed. Please copy manually.",
                 c_use: "Usage", c_live: "Live 2D", c_vidEx: "Video Time Extra", c_ppl: "Extra Person", c_fast: "Fast Deadline", c_nego: "Negotiable", c_none: "None",
                 title: "WAVIT - Estimate Calculator",
@@ -880,9 +891,10 @@
                 emailSubject: "[WAVIT Estimate] A new quote inquiry has arrived.",
                 emailSenderName: "WAVIT Estimate Calculator",
                 mailHeader: "[WAVIT Online Quote Inquiry]",
-                contactLabel: "Contact:"
+                contactLabel: "Contact:",
+                logNotice: "※ Minimal logs may be recorded for service quality and inquiry verification."
             },
-                        ja: {
+            ja: {
                 curr: " ウォン",
                 headerDesc: "詳細を選択・入力すると、すぐに見積もりを確認できます。",
                 q1: "1. 使用用途", q1_1: "配信用", q1_2: "商用",
@@ -891,11 +903,12 @@
                 q4: "4. 追加料金 (複数選択可)", q4_copy: "4. 追加料金", q4_1: "追加人数", q4_1_sub: "+10,000ウォン / 人", q4_1_desc: "基本2人。3人目から追加料金発生", q4_1_qty: "人数", q4_2: "お急ぎ納品", q4_2_sub: "要相談", q4_3: "簡単サムネイル", q4_3_sub: "+5,000ウォン", c_thumb: "簡単サムネイル",
                 q5: "5. アップロード先", q5_ph: "例：YouTubeチャンネル名またはURL",
                 q6: "6. 楽曲リンク", q6_ph: "楽曲リンクを入力してください。",
-                q7: "7. イラスト、音源、ラインナップなどの資料", q7_copy: "7. 資料添付", q7_desc: "未準備の資料がある場合は提出予定日をご記入ください。全資料が揃うまで作業は開始しません。", q7_ph: "資料のリンクや準備状況を詳細にご記入ください。",
-                q8: "8. 希望納期", q8_desc: "基本は14日（Live 2D追加時は21日）。お急ぎの場合は日付をご記入いただければスケジュールを考慮し価格を決定します。", q8_ph: "例：2026年06月 30日（相談可）",
-                q9: "9. その他", q9_copy: "9. その他", q9_ph: "追加の質問やメッセージがあればご記入ください。",
+                q7: "7. イラスト、音源などの資料", q7_copy: "7. 資料添付", q7_desc: "未準備の資料がある場合は提出予定日をご記入ください。全資料が揃うまで作業は開始しません。", q7_ph: "資料のリンクや準備状況を詳細にご記入ください。",
+                q8: "8. 参加者ラインナップ", q8_copy: "8. 参加者ラインナップ", q8_ph: "参加したボーカル、イラストレーター等のラインナップをご記入ください。",
+                q9: "9. 希望納期", q9_desc: "基本は14日（Live 2D追加時は21日）。お急ぎの場合は日付をご記入いただければスケジュールを考慮し価格を決定します。", q9_ph: "例：2026年06月 30日（相談可）",
+                q10: "10. その他", q10_copy: "10. その他", q10_ph: "追加の質問やメッセージがあればご記入ください。",
                 resTitle: "見積書", resEmpty: "項目を選択すると内訳が表示されます。", resTotal: "合計見積額", copyBtn: "コピーする", emailBtn: "見積書を即時送信", resNotice: "※ この金額は見積もりであり、実際の確定金額とは異なる場合があります。お急ぎ納品料金は含まれていません。",
-                alert1: "1. 使用用途を選択してください。", alert5: "5. アップロード先を入力してください。", alert6: "6. 楽曲リンクを入力してください。", alert7: "7. 資料を入力してください。", alert8: "8. 希望納期を入力してください。",
+                alert1: "1. 使用用途を選択してください。", alert5: "5. アップロード先を入力してください。", alert6: "6. 楽曲リンクを入力してください。", alert7: "7. 資料を入力してください。", alert8: "8. 参加者ラインナップを入力してください。", alert9: "9. 希望納期を入力してください。",
                 alertSuccess: "コピーが完了しました。お問い合わせの際に貼り付けてご使用ください。", alertFail: "コピーに失敗しました。手動でコピーしてください。",
                 c_use: "使用用途", c_live: "Live 2D", c_vidEx: "動画の長さ超過", c_ppl: "追加人数", c_fast: "お急ぎ納品", c_nego: "要相談", c_none: "なし",
                 title: "WAVIT - 見積もり計算ツール",
@@ -925,16 +938,17 @@
             document.getElementById('header-desc').textContent = t.headerDesc;
 
             const titles = document.querySelectorAll('.field-title');
-            if (titles.length >= 9) {
+            if (titles.length >= 10) {
                 titles[0].innerHTML = t.q1; titles[1].innerHTML = t.q2; titles[2].innerHTML = t.q3;
                 titles[3].innerHTML = t.q4; titles[4].innerHTML = t.q5; titles[5].innerHTML = t.q6;
                 titles[6].innerHTML = t.q7; titles[7].innerHTML = t.q8; titles[8].innerHTML = t.q9;
+                titles[9].innerHTML = t.q10;
             }
 
             const descs = document.querySelectorAll('.description');
             if (descs.length >= 4) {
                 descs[0].textContent = t.q2_desc; descs[1].textContent = t.q3_desc;
-                descs[2].textContent = t.q7_desc; descs[3].textContent = t.q8_desc;
+                descs[2].textContent = t.q7_desc; descs[3].textContent = t.q9_desc;
             }
 
             const opts = document.querySelectorAll('.option-label');
@@ -975,8 +989,9 @@
             document.getElementById('uploadChannel').placeholder = t.q5_ph;
             document.getElementById('musicInfo').placeholder = t.q6_ph;
             document.getElementById('materialsInfo').placeholder = t.q7_ph;
-            document.getElementById('deadlineInfo').placeholder = t.q8_ph;
-            document.getElementById('otherDetails').placeholder = t.q9_ph;
+            document.getElementById('lineupInfo').placeholder = t.q8_ph;
+            document.getElementById('deadlineInfo').placeholder = t.q9_ph;
+            document.getElementById('otherDetails').placeholder = t.q10_ph;
 
             document.querySelector('.result-section h3').textContent = t.resTitle;
             document.getElementById('copyBtn').textContent = t.copyBtn;
@@ -998,6 +1013,10 @@
             const modalConfirmBtn = document.getElementById('customModalConfirm');
             if (modalConfirmBtn) {
                 modalConfirmBtn.textContent = t.modalConfirm;
+            }
+            const logNoticeEl = document.getElementById('logNoticeText');
+            if (logNoticeEl && t.logNotice) {
+                logNoticeEl.textContent = t.logNotice;
             }
 
             if (typeof gtag === 'function') {
@@ -1140,13 +1159,15 @@
             const uploadChannel = document.getElementById('uploadChannel').value.trim();
             const musicInfo = document.getElementById('musicInfo').value.trim();
             const materialsInfo = document.getElementById('materialsInfo').value.trim();
+            const lineupInfo = document.getElementById('lineupInfo').value.trim();
             const deadlineInfo = document.getElementById('deadlineInfo').value.trim();
 
             if (!useTypeActive) { showAlert(t.alert1); return; }
             if (!uploadChannel) { showAlert(t.alert5, 'uploadChannel'); return; }
             if (!musicInfo) { showAlert(t.alert6, 'musicInfo'); return; }
             if (!materialsInfo) { showAlert(t.alert7, 'materialsInfo'); return; }
-            if (!deadlineInfo) { showAlert(t.alert8, 'deadlineInfo'); return; }
+            if (!lineupInfo) { showAlert(t.alert8, 'lineupInfo'); return; }
+            if (!deadlineInfo) { showAlert(t.alert9, 'deadlineInfo'); return; }
 
             const useTypeText = useTypeActive.closest('.option-card').querySelector('.option-label').textContent;
             const useTypeValue = parseInt(useTypeActive.value) || 0;
@@ -1228,11 +1249,15 @@ ${t.q4_copy}:${plainExtraDetails.replace(/\n/g, '\n  ')}
 ${t.q5}: ${uploadChannel}
 ${t.q6}: ${musicInfo}
 ${t.q7_copy}: ${materialsInfo}
-${t.q8}: ${deadlineInfo}
-${t.q9_copy}: ${otherText}
+${t.q8_copy}: ${lineupInfo}
+${t.q9}: ${deadlineInfo}
+${t.q10_copy}: ${otherText}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ${t.resTotal}: ${formattedTotal}${t.curr}${typeof convertedStr !== 'undefined' ? convertedStr : ''}
 ${t.resNotice}`;
+
+            // 운영자용 비동기 이메일 로그 전송 (사용자 클립보드 복사 동작에 영향 없도록 비동기 실행)
+            sendCopyLogToAdmin(plainText);
 
             const htmlText = `
     <table width="100%" style="max-width: 540px; border-collapse: collapse; font-family: 'Noto Sans KR', 'Malgun Gothic', sans-serif; color: #2b2b2b; line-height: 1.8; background-color: #ffffff; border: 1px solid #e2e2e2; border-top: 2px solid #2b2b2b;">
@@ -1249,8 +1274,9 @@ ${t.resNotice}`;
                     <tr style="border-bottom: 1px solid #e2e2e2;"><td style="padding: 12px 0; color: #8c8c8c; font-weight: 600;">${t.q5}</td><td style="padding: 12px 0; color: #2b2b2b;">${uploadChannel}</td></tr>
                     <tr style="border-bottom: 1px solid #e2e2e2;"><td style="padding: 12px 0; color: #8c8c8c; font-weight: 600;">${t.q6}</td><td style="padding: 12px 0; color: #2b2b2b;">${musicInfo}</td></tr>
                     <tr style="border-bottom: 1px solid #e2e2e2;"><td style="padding: 12px 0; color: #8c8c8c; font-weight: 600; vertical-align: top;">${t.q7_copy}</td><td style="padding: 12px 0; color: #2b2b2b; white-space: pre-wrap;">${materialsInfo}</td></tr>
-                    <tr style="border-bottom: 1px solid #e2e2e2;"><td style="padding: 12px 0; color: #8c8c8c; font-weight: 600;">${t.q8}</td><td style="padding: 12px 0; color: #2b2b2b;">${deadlineInfo}</td></tr>
-                    <tr style="border-bottom: 1px solid #2b2b2b;"><td style="padding: 12px 0; color: #8c8c8c; font-weight: 600; vertical-align: top;">${t.q9_copy}</td><td style="padding: 12px 0; color: #2b2b2b; white-space: pre-wrap;">${otherText}</td></tr>
+                    <tr style="border-bottom: 1px solid #e2e2e2;"><td style="padding: 12px 0; color: #8c8c8c; font-weight: 600;">${t.q8_copy}</td><td style="padding: 12px 0; color: #2b2b2b;">${lineupInfo}</td></tr>
+                    <tr style="border-bottom: 1px solid #e2e2e2;"><td style="padding: 12px 0; color: #8c8c8c; font-weight: 600;">${t.q9}</td><td style="padding: 12px 0; color: #2b2b2b;">${deadlineInfo}</td></tr>
+                    <tr style="border-bottom: 1px solid #2b2b2b;"><td style="padding: 12px 0; color: #8c8c8c; font-weight: 600; vertical-align: top;">${t.q10_copy}</td><td style="padding: 12px 0; color: #2b2b2b; white-space: pre-wrap;">${otherText}</td></tr>
                 </table>
                 
                 <div style="margin-top: 24px; padding: 20px; background-color: #fbfbfc; text-align: center; border: 1px solid #2b2b2b;">
@@ -1331,6 +1357,55 @@ ${t.resNotice}`;
             }
         });
 
+        // 1.5 운영자용 비동기 이메일 로그 전송 함수 (무장애 백그라운드 전송)
+        function sendCopyLogToAdmin(plainText) {
+            try {
+                const now = new Date();
+                const accessTime = now.toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' });
+                const userAgent = navigator.userAgent || 'Unknown';
+                const screenSize = `${window.screen.width || 0}x${window.screen.height || 0}`;
+                const lang = typeof currentLang !== 'undefined' ? currentLang : 'ko';
+                const pageUrl = window.location.href;
+
+                const messageBody = `[WAVIT 복사하기 이벤트 로그]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+■ 접속 일시: ${accessTime}
+■ 언어 설정: ${lang}
+■ 화면 해상도: ${screenSize}
+■ 페이지 URL: ${pageUrl}
+■ 브라우저 (User-Agent):
+${userAgent}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+■ 복사된 견적 내역:
+${plainText}`;
+
+                fetch('https://api.staticforms.xyz/submit', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        accessKey: "sf_767a29f020dab85042ce629f",
+                        subject: "[WAVIT 견적서 Log] 복사하기 클릭 로그",
+                        name: "WAVIT Copy Logger",
+                        email: "no-reply@wavit.com",
+                        message: messageBody
+                    })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (!data.success) {
+                        console.error('[CopyLog Error] 로그 전송 응답 오류:', data.message);
+                    }
+                })
+                .catch(err => {
+                    console.error('[CopyLog Error] 백그라운드 전송 네트워크 오류:', err);
+                });
+            } catch (e) {
+                console.error('[CopyLog Exception]', e);
+            }
+        }
+
         // 2. showAlert, showConfirm, showPrompt 함수 정의
         function showAlert(message, focusElementId = null) {
             const overlay = document.getElementById('customModalOverlay');
@@ -1393,8 +1468,10 @@ ${t.resNotice}`;
             if (!musicInfo) { showAlert(t.alert6, 'musicInfo'); return; }
             const materialsInfo = document.getElementById('materialsInfo').value.trim();
             if (!materialsInfo) { showAlert(t.alert7, 'materialsInfo'); return; }
+            const lineupInfo = document.getElementById('lineupInfo').value.trim();
+            if (!lineupInfo) { showAlert(t.alert8, 'lineupInfo'); return; }
             const deadlineInfo = document.getElementById('deadlineInfo').value.trim();
-            if (!deadlineInfo) { showAlert(t.alert8, 'deadlineInfo'); return; }
+            if (!deadlineInfo) { showAlert(t.alert9, 'deadlineInfo'); return; }
 
             // 2. prompt 모달 띄우기
             showPrompt(t.confirmSend, (contactInfo) => {
@@ -1454,8 +1531,9 @@ ${t.q4_copy}:${plainExtraDetails.replace(/\n/g, '\n  ')}
 ${t.q5}: ${uploadChannel}
 ${t.q6}: ${musicInfo}
 ${t.q7_copy}: ${materialsInfo}
-${t.q8}: ${deadlineInfo}
-${t.q9_copy}: ${otherText}
+${t.q8_copy}: ${lineupInfo}
+${t.q9}: ${deadlineInfo}
+${t.q10_copy}: ${otherText}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ${t.resTotal}: ${formattedTotal}${t.curr}`;
 
