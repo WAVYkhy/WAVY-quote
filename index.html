@@ -13,20 +13,72 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WAVIT - 견적 계산기</title>
+    <meta name="description" content="WAVIT studio - 영상 제작 및 Live2D 견적을 즉시 계산하고 확인하실 수 있는 온라인 견적 계산기입니다.">
+    <meta property="og:title" content="WAVIT - 견적 계산기">
+    <meta property="og:description" content="상세 내역을 선택하고 입력하시면 예상 견적을 즉시 확인할 수 있습니다.">
+    <meta property="og:type" content="website">
+    <meta name="robots" content="index, follow">
     <!-- Google Fonts -->
     <link
-        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,400&family=Noto+Serif+JP:wght@300;400&family=DM+Sans:wght@300;400&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;700&display=swap"
         rel="stylesheet">
     <style>
         :root {
-            --color-text-main: #2b2b2b;
-            --color-text-muted: #8c8c8c;
-            --color-canvas: #fbfbfc;
-            --color-snow: #ffffff;
-            --color-border: #e2e2e2;
-            --font-serif: 'Cormorant Garamond', 'Noto Serif JP', serif;
-            --font-sans: 'DM Sans', sans-serif;
-            --transition: all 0.2s ease-in-out;
+            /* Surface & Background */
+            --nordic-bg: #FAFAFA;
+            --nordic-surface: #FFFFFF;
+            --nordic-surface-subtle: #F4F4F5;
+            --nordic-border: #D4D4D8;
+            --nordic-border-strong: #18181B;
+
+            /* Typography */
+            --text-primary: #18181B;
+            --text-secondary: #3F3F46;
+            --text-muted: #71717A;
+
+            /* Accent & Active Inversion */
+            --accent-color: #18181B;
+            --accent-surface: #18181B;
+            --accent-text: #FAFAFA;
+
+            /* Sharp Edge Radii (Strict 2px Rules) */
+            --card-radius: 2px;
+            --cell-radius: 2px;
+            --pill-radius: 2px;
+
+            /* Status Dots */
+            --status-available: #10B981;
+            --status-negotiate: #F59E0B;
+            --status-unavailable: #EF4444;
+
+            --font-sans: 'Inter', 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --transition: all 0.12s ease;
+
+            /* Legacy mapped variables for HTML inline styling compatibility */
+            --color-text-main: var(--text-primary);
+            --color-text-muted: var(--text-muted);
+            --color-canvas: var(--nordic-bg);
+            --color-snow: var(--nordic-surface);
+            --color-border: var(--nordic-border);
+        }
+
+        /* Dark Mode Overrides */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --nordic-bg: #09090B;
+                --nordic-surface: #121215;
+                --nordic-surface-subtle: #18181B;
+                --nordic-border: #27272A;
+                --nordic-border-strong: #E4E4E7;
+
+                --text-primary: #E4E4E7;
+                --text-secondary: #A1A1AA;
+                --text-muted: #71717A;
+
+                --accent-color: #E4E4E7;
+                --accent-surface: #E4E4E7;
+                --accent-text: #18181B;
+            }
         }
 
         * {
@@ -37,29 +89,31 @@
 
         body {
             font-family: var(--font-sans);
-            background-color: var(--color-canvas);
-            color: var(--color-text-main);
+            background-color: var(--nordic-bg);
+            color: var(--text-primary);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 40px 20px;
             position: relative;
+            letter-spacing: -0.015em;
         }
 
         .container {
             width: 100%;
             max-width: 1040px;
-            background: var(--color-snow);
-            border: 1px solid var(--color-border);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+            background: var(--nordic-surface);
+            border: 1px solid var(--nordic-border);
+            border-radius: var(--card-radius);
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04);
             position: relative;
         }
 
         .header {
-            padding: 40px 40px 20px 40px;
+            padding: 40px 40px 24px 40px;
             text-align: left;
-            border-bottom: 1px solid var(--color-border);
+            border-bottom: 1px solid var(--nordic-border);
             margin-bottom: 32px;
             position: relative;
         }
@@ -70,22 +124,23 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 16px;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
         }
 
         .header h1 {
-            font-family: var(--font-serif);
-            font-size: 32px;
-            font-weight: 300;
-            color: var(--color-text-main);
-            letter-spacing: 2px;
+            font-family: var(--font-sans);
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--text-primary);
+            letter-spacing: -0.03em;
             text-transform: uppercase;
             line-height: 1;
         }
 
         .header p {
-            color: var(--color-text-muted);
-            font-size: 14px;
+            color: var(--text-muted);
+            font-size: 13.5px;
+            letter-spacing: -0.015em;
         }
 
         .form-body {
@@ -99,26 +154,28 @@
 
         .form-group label.field-title {
             display: block;
-            font-family: var(--font-serif);
-            font-size: 16px;
-            font-weight: 700;
+            font-family: var(--font-sans);
+            font-size: 15px;
+            font-weight: 600;
             margin-bottom: 8px;
-            color: var(--color-text-main);
+            color: var(--text-primary);
+            letter-spacing: -0.015em;
         }
 
         .required::after {
             content: ' *';
-            color: var(--color-text-main);
-            font-weight: bold;
+            color: var(--text-primary);
+            font-weight: 600;
         }
 
         .description {
             font-size: 13px;
-            color: var(--color-text-muted);
-            font-weight: 300;
+            color: var(--text-muted);
+            font-weight: 400;
             margin-top: 4px;
             margin-bottom: 12px;
             line-height: 1.5;
+            letter-spacing: -0.015em;
         }
 
         .options-grid {
@@ -130,8 +187,9 @@
 
         .option-card {
             position: relative;
-            background: var(--color-snow);
-            border: 1px solid var(--color-border);
+            background: var(--nordic-surface);
+            border: 1px solid var(--nordic-border);
+            border-radius: var(--cell-radius);
             padding: 16px;
             cursor: pointer;
             transition: var(--transition);
@@ -145,7 +203,22 @@
         }
 
         .option-card:hover {
-            border-color: var(--color-text-main);
+            background: var(--nordic-surface-subtle);
+            border-color: var(--nordic-border-strong);
+        }
+
+        .option-card:focus-within,
+        .checkbox-container:focus-within {
+            border-color: var(--nordic-border-strong);
+            box-shadow: 0 0 0 2px var(--nordic-border-strong);
+        }
+
+        .btn-custom:focus-visible,
+        .lang-btn:focus-visible,
+        input:focus-visible,
+        textarea:focus-visible {
+            outline: 2px solid var(--nordic-border-strong);
+            outline-offset: 1px;
         }
 
         .option-card input[type="radio"],
@@ -157,49 +230,55 @@
         }
 
         .option-card .option-label {
-            font-weight: 700;
-            font-size: 15px;
+            font-weight: 600;
+            font-size: 14px;
             margin-bottom: 4px;
-            color: var(--color-text-main);
+            color: var(--text-primary);
+            letter-spacing: -0.015em;
         }
 
         .option-card .option-price {
             font-size: 13px;
-            color: var(--color-text-muted);
+            color: var(--text-muted);
             font-weight: 500;
         }
 
         .option-card.selected {
-            border: 1px solid var(--color-text-main);
+            background-color: var(--accent-surface) !important;
+            color: var(--accent-text) !important;
+            border-color: var(--accent-surface) !important;
         }
 
+        .option-card.selected .option-label,
         .option-card.selected .option-price {
-            color: var(--color-text-main);
-            font-weight: 700;
+            color: var(--accent-text) !important;
         }
 
         input[type="text"],
         textarea {
             width: 100%;
-            padding: 14px 16px;
-            border: 1px solid var(--color-border);
+            padding: 12px 14px;
+            border: 1px solid var(--nordic-border);
+            border-radius: var(--cell-radius);
             font-family: inherit;
-            font-size: 15px;
-            color: var(--color-text-main);
-            background-color: #fafafa;
+            font-size: 14px;
+            color: var(--text-primary);
+            background-color: var(--nordic-surface);
             transition: var(--transition);
             outline: none;
+            letter-spacing: -0.015em;
         }
 
         input[type="text"]:focus,
         textarea:focus {
-            border-color: var(--color-text-main);
-            background-color: var(--color-snow);
+            border-color: var(--nordic-border-strong);
+            box-shadow: 0 0 0 1px var(--nordic-border-strong);
+            background-color: var(--nordic-surface);
         }
 
         input[type="text"]::placeholder,
         textarea::placeholder {
-            color: #a1a1aa;
+            color: var(--text-muted);
         }
 
         textarea {
@@ -208,8 +287,9 @@
         }
 
         .checkbox-container {
-            background: var(--color-snow);
-            border: 1px solid var(--color-border);
+            background: var(--nordic-surface);
+            border: 1px solid var(--nordic-border);
+            border-radius: var(--cell-radius);
             padding: 0;
             margin-bottom: 12px;
             display: flex;
@@ -222,11 +302,21 @@
         }
 
         .checkbox-container:hover {
-            border-color: var(--color-text-main);
+            background: var(--nordic-surface-subtle);
+            border-color: var(--nordic-border-strong);
         }
 
         .checkbox-container.checked {
-            border: 1px solid var(--color-text-main);
+            background-color: var(--accent-surface) !important;
+            color: var(--accent-text) !important;
+            border-color: var(--accent-surface) !important;
+        }
+
+        .checkbox-container.checked .checkbox-title,
+        .checkbox-container.checked .checkbox-subtext,
+        .checkbox-container.checked .quantity-control span,
+        .checkbox-container.checked .checkbox-text-group span {
+            color: var(--accent-text) !important;
         }
 
         .checkbox-info {
@@ -241,11 +331,41 @@
         }
 
         .checkbox-info input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
+            appearance: none;
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
             cursor: pointer;
-            border-radius: 0;
-            accent-color: var(--color-text-main);
+            border-radius: var(--cell-radius);
+            border: 1px solid var(--nordic-border);
+            background-color: var(--nordic-surface);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .checkbox-info input[type="checkbox"]:checked {
+            background-color: var(--accent-surface);
+            border-color: var(--accent-surface);
+        }
+
+        .checkbox-info input[type="checkbox"]:checked::after {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background-color: var(--accent-text);
+        }
+
+        .checkbox-container.checked .checkbox-info input[type="checkbox"] {
+            background-color: var(--accent-text);
+            border-color: var(--accent-text);
+        }
+
+        .checkbox-container.checked .checkbox-info input[type="checkbox"]::after {
+            background-color: var(--accent-surface);
         }
 
         .checkbox-text-group {
@@ -254,14 +374,15 @@
         }
 
         .checkbox-title {
-            font-size: 15px;
-            font-weight: 700;
-            color: var(--color-text-main);
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            letter-spacing: -0.015em;
         }
 
         .checkbox-subtext {
             font-size: 13px;
-            color: var(--color-text-muted);
+            color: var(--text-muted);
             font-weight: 500;
         }
 
@@ -282,26 +403,41 @@
 
         .quantity-control span {
             font-size: 13px;
-            color: var(--color-text-main);
+            color: var(--text-primary);
             font-weight: 600;
         }
 
         .quantity-control input[type="number"] {
             width: 60px;
             padding: 6px;
-            border: 1px solid var(--color-border);
-            border-radius: 0;
+            border: 1px solid var(--nordic-border);
+            border-radius: var(--cell-radius);
             text-align: center;
             font-family: inherit;
             font-size: 14px;
-            font-weight: 700;
+            font-weight: 600;
             outline: none;
-            background: var(--color-snow);
-            color: var(--color-text-main);
+            background: var(--nordic-surface);
+            color: var(--text-primary);
+            -webkit-appearance: none;
+            -moz-appearance: textfield;
+        }
+
+        .quantity-control input[type="number"]::-webkit-outer-spin-button,
+        .quantity-control input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .checkbox-container.checked .quantity-control input[type="number"] {
+            background: var(--accent-surface);
+            color: var(--accent-text);
+            border-color: var(--accent-text);
         }
 
         .quantity-control input[type="number"]:focus {
-            border-color: var(--color-text-main);
+            border-color: var(--nordic-border-strong);
+            box-shadow: 0 0 0 1px var(--nordic-border-strong);
         }
 
         .time-input-group {
@@ -315,19 +451,22 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            background: #fafafa;
-            border: 1px solid var(--color-border);
+            background: var(--nordic-surface);
+            border: 1px solid var(--nordic-border);
+            border-radius: var(--cell-radius);
             padding: 10px 16px;
             transition: var(--transition);
         }
 
         .time-input-wrapper:hover {
-            border-color: var(--color-text-main);
+            background: var(--nordic-surface-subtle);
+            border-color: var(--nordic-border-strong);
         }
 
         .time-input-wrapper:focus-within {
-            border-color: var(--color-text-main);
-            background: var(--color-snow);
+            border-color: var(--nordic-border-strong);
+            box-shadow: 0 0 0 1px var(--nordic-border-strong);
+            background: var(--nordic-surface);
         }
 
         .time-input {
@@ -338,7 +477,7 @@
             font-family: inherit;
             font-size: 18px;
             font-weight: 700;
-            color: var(--color-text-main);
+            color: var(--text-primary);
             outline: none;
             padding: 0;
         }
@@ -354,9 +493,9 @@
         }
 
         .time-label {
-            font-size: 14px;
+            font-size: 13.5px;
             font-weight: 600;
-            color: var(--color-text-muted);
+            color: var(--text-muted);
         }
 
         .form-main-wrapper {
@@ -369,30 +508,41 @@
         .form-left-side {
             flex: 1;
             min-width: 0;
-            border-right: 1px solid var(--color-border);
+            border-right: 1px solid var(--nordic-border);
             padding-right: 40px;
         }
 
         .result-section {
-            background: var(--color-snow);
-            border: none;
-            padding: 0;
+            background: var(--nordic-surface);
+            border: 1px solid var(--nordic-border);
+            border-radius: var(--card-radius);
+            padding: 24px;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04);
             position: sticky;
-            top: calc(50vh - 160px);
-            width: 280px;
+            top: 40px;
+            width: 300px;
             flex-shrink: 0;
-            margin-top: 8px;
         }
 
         .result-section h3 {
-            font-family: var(--font-serif);
-            font-size: 16px;
-            font-weight: 400;
-            color: var(--color-text-main);
+            font-family: var(--font-sans);
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-primary);
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 16px;
-            padding-left: 0;
+            letter-spacing: 0.18em;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .result-section h3::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 4px;
+            background-color: var(--accent-surface);
         }
 
         /* 공통 버튼 스타일 */
@@ -401,35 +551,37 @@
             align-items: center;
             justify-content: center;
             width: 100%;
-            padding: 18px;
+            padding: 14px 18px;
             font-family: var(--font-sans);
-            font-size: 11px;
-            font-weight: 400;
-            letter-spacing: 2px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
             cursor: pointer;
             transition: var(--transition);
-            border: 1px solid var(--color-text-main);
+            border-radius: var(--pill-radius);
             margin-top: 8px;
         }
 
-        /* 1. 복사하기 버튼 (Outline 스타일) */
+        /* 1. 복사하기 버튼 (Outline sharp 스타일) */
         .btn-copy {
-            background: transparent;
-            color: var(--color-text-main);
+            background: var(--nordic-surface);
+            color: var(--text-primary);
+            border: 1px solid var(--nordic-border);
         }
         .btn-copy:hover {
-            background: var(--color-text-main);
-            color: var(--color-snow);
+            background: var(--nordic-surface-subtle);
+            border-color: var(--nordic-border-strong);
         }
 
-        /* 2. 견적서 전송 버튼 (Solid 스타일) */
+        /* 2. 견적서 전송 버튼 (Solid sharp 스타일) */
         .btn-email {
-            background: var(--color-text-main);
-            color: var(--color-snow);
+            background: var(--accent-surface);
+            color: var(--accent-text);
+            border: 1px solid var(--accent-surface);
         }
         .btn-email:hover {
-            background: #4a4a4a; /* 진한 회색으로 변경하여 구별 */
-            border-color: #4a4a4a;
+            opacity: 0.9;
+            border-color: var(--accent-surface);
         }
 
         .lang-selector {
@@ -438,26 +590,49 @@
         }
 
         .lang-btn {
-            background: transparent;
-            border: 1px solid var(--color-border);
-            color: var(--color-text-muted);
-            padding: 4px 10px;
-            font-size: 12px;
-            font-weight: 800;
+            background: var(--nordic-surface);
+            border: 1px solid var(--nordic-border);
+            color: var(--text-muted);
+            padding: 5px 12px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
             cursor: pointer;
             transition: var(--transition);
-            border-radius: 0;
+            border-radius: var(--pill-radius);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .lang-btn::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 4px;
+            background-color: var(--text-muted);
+            transition: var(--transition);
         }
 
         .lang-btn:hover {
-            border-color: var(--color-text-main);
-            color: var(--color-text-main);
+            border-color: var(--nordic-border-strong);
+            color: var(--text-primary);
+            background: var(--nordic-surface-subtle);
+        }
+
+        .lang-btn:hover::before {
+            background-color: var(--text-primary);
         }
 
         .lang-btn.active {
-            background: var(--color-text-main);
-            color: var(--color-snow);
-            border-color: var(--color-text-main);
+            background: var(--accent-surface);
+            color: var(--accent-text);
+            border-color: var(--accent-surface);
+        }
+
+        .lang-btn.active::before {
+            background-color: var(--accent-text);
         }
 
         @media (max-width: 900px) {
@@ -485,7 +660,7 @@
             .form-left-side {
                 border-right: none;
                 padding-right: 0;
-                border-bottom: 1px solid var(--color-border);
+                border-bottom: 1px solid var(--nordic-border);
                 padding-bottom: 32px;
                 margin-bottom: 32px;
             }
@@ -508,10 +683,11 @@
         .breakdown-item {
             display: flex;
             justify-content: space-between;
-            font-size: 14px;
-            color: var(--color-text-muted);
-            border-bottom: 1px dashed var(--color-border);
+            font-size: 13.5px;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--nordic-border);
             padding-bottom: 6px;
+            letter-spacing: -0.015em;
         }
 
         .breakdown-item:last-child {
@@ -519,24 +695,25 @@
         }
 
         .breakdown-item .item-price {
-            font-weight: 700;
-            color: var(--color-text-main);
+            font-weight: 600;
+            color: var(--text-primary);
         }
 
         .total-price-display {
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--color-text-main);
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-primary);
             font-family: var(--font-sans);
             text-align: right;
             margin-bottom: 20px;
             padding-top: 16px;
-            border-top: 2px solid var(--color-text-main);
-            letter-spacing: 0px;
+            border-top: 1px solid var(--nordic-border-strong);
+            letter-spacing: -0.015em;
         }
 
         #convertedPriceText {
             font-family: var(--font-sans);
+            color: var(--text-muted);
         }
 
         /* Custom Modal Styles */
@@ -546,14 +723,14 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(2px);
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
             display: none;
             justify-content: center;
             align-items: center;
             z-index: 9999;
             opacity: 0;
-            transition: opacity 0.2s ease;
+            transition: opacity 0.12s ease;
         }
 
         .custom-modal-overlay.active {
@@ -562,15 +739,16 @@
         }
 
         .custom-modal {
-            background: var(--color-snow);
+            background: var(--nordic-surface);
             padding: 32px 24px;
-            border: 1px solid var(--color-border);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--nordic-border-strong);
+            border-radius: var(--card-radius);
+            box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.08);
             width: 90%;
             max-width: 360px;
             text-align: center;
             transform: translateY(10px);
-            transition: transform 0.2s ease;
+            transition: transform 0.12s ease;
         }
 
         .custom-modal-overlay.active .custom-modal {
@@ -578,13 +756,14 @@
         }
 
         .custom-modal-message {
-            color: var(--color-text-main);
-            font-size: 15px;
+            color: var(--text-primary);
+            font-size: 14px;
             margin-bottom: 24px;
             line-height: 1.6;
             font-weight: 500;
             white-space: pre-wrap;
             word-break: keep-all;
+            letter-spacing: -0.015em;
         }
 
         .custom-modal-buttons {
@@ -598,28 +777,28 @@
             font-family: var(--font-sans);
             font-size: 13px;
             font-weight: 600;
-            border: 1px solid var(--color-text-main);
-            background: transparent;
-            color: var(--color-text-main);
+            border: 1px solid var(--accent-surface);
+            background: var(--accent-surface);
+            color: var(--accent-text);
             cursor: pointer;
             transition: var(--transition);
+            border-radius: var(--pill-radius);
             flex: 1;
         }
 
         .custom-modal-btn:hover {
-            background: var(--color-text-main);
-            color: var(--color-snow);
+            opacity: 0.9;
         }
 
         .custom-modal-btn.cancel-btn {
-            border-color: var(--color-border);
-            color: var(--color-text-muted);
+            border-color: var(--nordic-border);
+            background: var(--nordic-surface);
+            color: var(--text-primary);
         }
 
         .custom-modal-btn.cancel-btn:hover {
-            border-color: var(--color-text-main);
-            color: var(--color-text-main);
-            background: transparent;
+            background: var(--nordic-surface-subtle);
+            border-color: var(--nordic-border-strong);
         }
     </style>
 </head>
@@ -636,7 +815,7 @@
                     <button class="lang-btn" onclick="changeLanguage('ja')" id="lang-ja">JA</button>
                 </div>
             </div>
-            <p id="header-desc">상세 내역을 선택하고 입력하시면 예상 견적을 즉시 확인할 수 있습니다.</p>
+            <p id="header-desc" data-i18n="headerDesc">상세 내역을 선택하고 입력하시면 예상 견적을 즉시 확인할 수 있습니다.</p>
         </div>
 
         <form class="form-body" id="calculatorForm" onsubmit="return false;">
@@ -644,18 +823,18 @@
                 <div class="form-left-side">
                     <!-- 1. 사용 용도 -->
                     <div class="form-group">
-                        <label class="field-title required">1. 사용 용도</label>
+                        <label class="field-title required" data-i18n="q1">1. 사용 용도</label>
                         <div class="options-grid">
                             <label class="option-card" id="useTypeRadioCard1">
                                 <input type="radio" name="useType" value="100000"
                                     onclick="selectRadioCard('useType', this)">
-                                <span class="option-label">방송용</span>
+                                <span class="option-label" data-i18n="q1_1">방송용</span>
                                 <span class="option-price">100,000원</span>
                             </label>
                             <label class="option-card" id="useTypeRadioCard2">
                                 <input type="radio" name="useType" value="300000"
                                     onclick="selectRadioCard('useType', this)">
-                                <span class="option-label">상업용</span>
+                                <span class="option-label" data-i18n="q1_2">상업용</span>
                                 <span class="option-price">300,000원</span>
                             </label>
                         </div>
@@ -663,19 +842,19 @@
 
                     <!-- 2. Live 2D 추가 -->
                     <div class="form-group">
-                        <label class="field-title">2. Live 2D 추가</label>
-                        <div class="description">Live 2D 추가시 기본 작업기간(14일)에 7일 추가되어 마감 기간이 작업 시작일로부터 21일이 됩니다.</div>
+                        <label class="field-title" data-i18n="q2">2. Live 2D 추가</label>
+                        <div class="description" data-i18n="q2_desc">Live 2D 추가시 기본 작업기간(14일)에 7일 추가되어 마감 기간이 작업 시작일로부터 21일이 됩니다.</div>
                         <div class="options-grid">
                             <label class="option-card" id="live2dRadioCard2">
                                 <input type="radio" name="live2D" value="30000"
                                     onclick="selectRadioCard('live2D', this)">
-                                <span class="option-label">반신</span>
+                                <span class="option-label" data-i18n="q2_2">반신</span>
                                 <span class="option-price">+30,000원</span>
                             </label>
                             <label class="option-card" id="live2dRadioCard3">
                                 <input type="radio" name="live2D" value="50000"
                                     onclick="selectRadioCard('live2D', this)">
-                                <span class="option-label">전신</span>
+                                <span class="option-label" data-i18n="q2_3">전신</span>
                                 <span class="option-price">+50,000원</span>
                             </label>
                         </div>
@@ -683,25 +862,27 @@
 
                     <!-- 3. 영상 길이 -->
                     <div class="form-group">
-                        <label class="field-title required">3. 영상 길이</label>
-                        <div class="description">기본 4분을 초과할 경우 30초당 5,000원의 추가금이 있습니다. 4:01의 경우 추가금이 발생합니다.</div>
+                        <label class="field-title required" data-i18n="q3">3. 영상 길이</label>
+                        <div class="description" data-i18n="q3_desc">기본 4분을 초과할 경우 30초당 5,000원의 추가금이 있습니다. 4:01의 경우 추가금이 발생합니다.</div>
                         <div class="time-input-group">
                             <div class="time-input-wrapper">
                                 <input type="number" id="videoMin" class="time-input" value="0" min="0"
+                                    onchange="this.value=Math.max(0, parseInt(this.value)||0)"
                                     oninput="calculateTotal()">
-                                <span class="time-label">분</span>
+                                <span class="time-label" data-i18n="q3_min">분</span>
                             </div>
                             <div class="time-input-wrapper">
                                 <input type="number" id="videoSec" class="time-input" value="0" min="0" max="59"
+                                    onchange="this.value=Math.min(59, Math.max(0, parseInt(this.value)||0))"
                                     oninput="calculateTotal()">
-                                <span class="time-label">초</span>
+                                <span class="time-label" data-i18n="q3_sec">초</span>
                             </div>
                         </div>
                     </div>
 
                     <!-- 4. 추가금 (다중선택) -->
                     <div class="form-group">
-                        <label class="field-title">4. 추가금 (다중선택)</label>
+                        <label class="field-title" data-i18n="q4">4. 추가금 (다중선택)</label>
 
                         <!-- Item A: 추가 인원 -->
                         <div class="checkbox-container" id="extraPeopleContainer">
@@ -709,15 +890,17 @@
                                 <input type="checkbox" id="extraPeopleCheck"
                                     onchange="toggleCheckboxCard('extraPeople')">
                                 <div class="checkbox-text-group">
-                                    <span class="checkbox-title">추가 인원</span>
-                                    <span class="checkbox-subtext">+10,000원 / 명</span>
-                                    <span style="font-size: 11px; color: #64748b; margin-top: 4px; font-weight: 400;">기본
+                                    <span class="checkbox-title" data-i18n="q4_1">추가 인원</span>
+                                    <span class="checkbox-subtext" data-i18n="q4_1_sub">+10,000원 / 명</span>
+                                    <span style="font-size: 11px; color: var(--text-muted); margin-top: 4px; font-weight: 400;" data-i18n="q4_1_desc">기본
                                         2인. 3인부터 추가금 발생</span>
                                 </div>
                             </label>
                             <div class="quantity-control">
-                                <span>인원 수</span>
-                                <input type="number" id="extraPeopleQty" value="0" min="0" oninput="calculateTotal()">
+                                <span data-i18n="q4_1_qty">인원 수</span>
+                                <input type="number" id="extraPeopleQty" value="0" min="0"
+                                    onchange="this.value=Math.max(0, parseInt(this.value)||0)"
+                                    oninput="calculateTotal()">
                             </div>
                         </div>
 
@@ -727,8 +910,8 @@
                                 <input type="checkbox" id="fastDeadlineCheck"
                                     onchange="toggleCheckboxCard('fastDeadline')">
                                 <div class="checkbox-text-group">
-                                    <span class="checkbox-title">빠른 마감</span>
-                                    <span class="checkbox-subtext">협의 후 결정</span>
+                                    <span class="checkbox-title" data-i18n="q4_2">빠른 마감</span>
+                                    <span class="checkbox-subtext" data-i18n="q4_2_sub">협의 후 결정</span>
                                 </div>
                             </label>
                         </div>
@@ -739,8 +922,8 @@
                                 <input type="checkbox" id="simpleThumbnailCheck"
                                     onchange="toggleCheckboxCard('simpleThumbnail')">
                                 <div class="checkbox-text-group">
-                                    <span class="checkbox-title" id="title-thumb">간단 썸네일</span>
-                                    <span class="checkbox-subtext" id="sub-thumb">+5,000원</span>
+                                    <span class="checkbox-title" id="title-thumb" data-i18n="q4_3">간단 썸네일</span>
+                                    <span class="checkbox-subtext" id="sub-thumb" data-i18n="q4_3_sub">+5,000원</span>
                                 </div>
                             </label>
                         </div>
@@ -748,61 +931,61 @@
 
                     <!-- 5. 업로드 채널 -->
                     <div class="form-group">
-                        <label class="field-title required" for="uploadChannel">5. 업로드 채널</label>
-                        <input type="text" id="uploadChannel" placeholder="예: 유튜브 채널명 또는 URL">
+                        <label class="field-title required" for="uploadChannel" data-i18n="q5">5. 업로드 채널</label>
+                        <input type="text" id="uploadChannel" data-i18n-ph="q5_ph" placeholder="예: 유튜브 채널명 또는 URL">
                     </div>
 
                     <!-- 6. 신청곡 링크 -->
                     <div class="form-group">
-                        <label class="field-title required" for="musicInfo">6. 신청곡 링크</label>
-                        <input type="text" id="musicInfo" placeholder="신청곡 링크를 입력해주세요.">
+                        <label class="field-title required" for="musicInfo" data-i18n="q6">6. 신청곡 링크</label>
+                        <input type="text" id="musicInfo" data-i18n-ph="q6_ph" placeholder="신청곡 링크를 입력해주세요.">
                     </div>
 
                     <!-- 7. 일러스트 음원 등의 자료 -->
                     <div class="form-group">
-                        <label class="field-title required" for="materialsInfo">7. 일러스트 음원 등의 자료</label>
-                        <div class="description">준비되지 않은 자료가 있다면 언제 전달 가능한지 적어주시길 바랍니다. 기본적으로 모든 자료를 전달받기 전에는 작업을 시작하지
+                        <label class="field-title required" for="materialsInfo" data-i18n="q7">7. 일러스트 음원 등의 자료</label>
+                        <div class="description" data-i18n="q7_desc">준비되지 않은 자료가 있다면 언제 전달 가능한지 적어주시길 바랍니다. 기본적으로 모든 자료를 전달받기 전에는 작업을 시작하지
                             않습니다.</div>
-                        <textarea id="materialsInfo" placeholder="자료 링크 및 준비 상태에 대해 상세히 작성해주세요."></textarea>
+                        <textarea id="materialsInfo" data-i18n-ph="q7_ph" placeholder="자료 링크 및 준비 상태에 대해 상세히 작성해주세요."></textarea>
                     </div>
 
                     <!-- 8. 참여자 라인업 -->
                     <div class="form-group">
-                        <label class="field-title required" for="lineupInfo">8. 참여자 라인업</label>
-                        <input type="text" id="lineupInfo" placeholder="보컬, 일러스트레이터 등 참여자 라인업을 작성해주세요.">
+                        <label class="field-title required" for="lineupInfo" data-i18n="q8">8. 참여자 라인업</label>
+                        <input type="text" id="lineupInfo" data-i18n-ph="q8_ph" placeholder="보컬, 일러스트레이터 등 참여자 라인업을 작성해주세요.">
                     </div>
 
                     <!-- 9. 마감일 -->
                     <div class="form-group">
-                        <label class="field-title required" for="deadlineInfo">9. 마감일</label>
-                        <div class="description">기본적으로 작업 시작 후 14일(Live2D 추가시 21일)입니다. 이보다 빠른 마감의 경우 날짜를 적어주시면 작업 난이도와
+                        <label class="field-title required" for="deadlineInfo" data-i18n="q9">9. 마감일</label>
+                        <div class="description" data-i18n="q9_desc">기본적으로 작업 시작 후 14일(Live2D 추가시 21일)입니다. 이보다 빠른 마감의 경우 날짜를 적어주시면 작업 난이도와
                             일정을 고려하여 가격을 책정해드립니다.</div>
-                        <input type="text" id="deadlineInfo" placeholder="예: 2026년 06월 30일 (협의 가능)">
+                        <input type="text" id="deadlineInfo" data-i18n-ph="q9_ph" placeholder="예: 2026년 06월 30일 (협의 가능)">
                     </div>
 
                     <!-- 10. 기타 신청 내용을 작성해주세요. -->
                     <div class="form-group">
-                        <label class="field-title" for="otherDetails">10. 기타 신청 내용을 작성해주세요.</label>
-                        <textarea id="otherDetails" placeholder="추가 문의사항이나 전달하고 싶으신 메시지가 있다면 작성해주세요."></textarea>
+                        <label class="field-title" for="otherDetails" data-i18n="q10">10. 기타 신청 내용을 작성해주세요.</label>
+                        <textarea id="otherDetails" data-i18n-ph="q10_ph" placeholder="추가 문의사항이나 전달하고 싶으신 메시지가 있다면 작성해주세요."></textarea>
                     </div>
                 </div>
 
                 <!-- Result UI -->
                 <div class="result-section">
-                    <h3>예상 견적서</h3>
+                    <h3 data-i18n="resTitle">예상 견적서</h3>
                     <div id="priceBreakdown" class="price-breakdown">
-                        <div class="breakdown-item" style="color: #a1a1aa; font-size: 13px;">항목을 선택하면 내역이 표시됩니다.</div>
+                        <div class="breakdown-item" style="color: var(--text-muted); font-size: 13px;">항목을 선택하면 내역이 표시됩니다.</div>
                     </div>
                     <div class="total-price-display" id="totalEstimateText">
                         총 예상 견적: 0원
                     </div>
                     <div id="convertedPriceText"
-                        style="font-size: 13px; color: #71717a; text-align: right; margin-top: -12px; margin-bottom: 16px; font-weight: 600;">
+                        style="font-size: 13px; color: var(--text-muted); text-align: right; margin-top: -12px; margin-bottom: 16px; font-weight: 600;">
                     </div>
-                    <button class="btn-custom btn-copy" id="copyBtn">복사하기</button>
-                    <button class="btn-custom btn-email" id="emailBtn">견적서 바로 전송</button>
+                    <button class="btn-custom btn-copy" id="copyBtn" data-i18n="copyBtn">복사하기</button>
+                    <button class="btn-custom btn-email" id="emailBtn" data-i18n="emailBtn">견적서 바로 전송</button>
 
-                    <p style="font-size: 11px; color: #71717a; text-align: left; margin: 12px 0 0 0; font-weight: 500;">
+                    <p style="font-size: 11px; color: var(--text-muted); text-align: left; margin: 12px 0 0 0; font-weight: 500;" data-i18n="resNotice">
                         ※ 해당 금액은 예상 견적이며 실제 확정 견적과 다를 수 있습니다. 빠른 마감은 미포함된 가격입니다.</p>
                 </div>
             </div>
@@ -810,22 +993,38 @@
     </div>
 
     <div
-        style="position: absolute; bottom: 24px; left: 24px; right: 24px; display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: #a1a1aa; font-weight: 400; z-index: 10; flex-wrap: wrap; gap: 8px; pointer-events: none;">
+        style="position: absolute; bottom: 24px; left: 24px; right: 24px; display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: var(--text-muted); font-weight: 400; z-index: 10; flex-wrap: wrap; gap: 8px; pointer-events: none;">
         <span id="logNoticeText" style="opacity: 0.65;">※ 서비스 품질 및 문의 확인을 위한 최소한의 로그가 기록될 수 있습니다.</span>
         <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.5px; margin-left: auto;">designed by WAVIT</span>
     </div>
 
     <script>
+        // --- Security Utility: HTML Sanitizer to prevent DOM XSS ---
+        function escapeHTML(str) {
+            if (!str) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
         let currentLang = 'ko';
-        let exchangeRates = { USD: 0, JPY: 0 };
+        let exchangeRates = { USD: 0.00072, JPY: 0.11 }; // Fallback defaults
         fetch('https://open.er-api.com/v6/latest/KRW')
             .then(res => res.json())
             .then(data => {
-                exchangeRates.USD = data.rates.USD;
-                exchangeRates.JPY = data.rates.JPY;
+                if (data && data.rates) {
+                    exchangeRates.USD = data.rates.USD || exchangeRates.USD;
+                    exchangeRates.JPY = data.rates.JPY || exchangeRates.JPY;
+                }
                 calculateTotal();
             })
-            .catch(err => console.error("Exchange rate fetch failed", err));
+            .catch(err => {
+                console.warn("Exchange rate fetch failed, using fallback defaults", err);
+                calculateTotal();
+            });
 
         const i18n = {
             ko: {
@@ -933,29 +1132,23 @@
             const t = i18n[lang];
 
             document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById('lang-' + lang).classList.add('active');
+            const activeLangBtn = document.getElementById('lang-' + lang);
+            if (activeLangBtn) activeLangBtn.classList.add('active');
 
-            document.getElementById('header-desc').textContent = t.headerDesc;
+            // Data-driven i18n update
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (t[key] !== undefined) {
+                    el.textContent = t[key];
+                }
+            });
 
-            const titles = document.querySelectorAll('.field-title');
-            if (titles.length >= 10) {
-                titles[0].innerHTML = t.q1; titles[1].innerHTML = t.q2; titles[2].innerHTML = t.q3;
-                titles[3].innerHTML = t.q4; titles[4].innerHTML = t.q5; titles[5].innerHTML = t.q6;
-                titles[6].innerHTML = t.q7; titles[7].innerHTML = t.q8; titles[8].innerHTML = t.q9;
-                titles[9].innerHTML = t.q10;
-            }
-
-            const descs = document.querySelectorAll('.description');
-            if (descs.length >= 4) {
-                descs[0].textContent = t.q2_desc; descs[1].textContent = t.q3_desc;
-                descs[2].textContent = t.q7_desc; descs[3].textContent = t.q9_desc;
-            }
-
-            const opts = document.querySelectorAll('.option-label');
-            if (opts.length >= 4) {
-                opts[0].textContent = t.q1_1; opts[1].textContent = t.q1_2;
-                opts[2].textContent = t.q2_2; opts[3].textContent = t.q2_3;
-            }
+            document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+                const key = el.getAttribute('data-i18n-ph');
+                if (t[key] !== undefined) {
+                    el.placeholder = t[key];
+                }
+            });
 
             const prices = document.querySelectorAll('.option-price');
             if (prices.length >= 4) {
@@ -965,59 +1158,18 @@
                 prices[3].textContent = "+50,000" + t.curr;
             }
 
-            const timeLbs = document.querySelectorAll('.time-label');
-            if (timeLbs.length >= 2) { timeLbs[0].textContent = t.q3_min; timeLbs[1].textContent = t.q3_sec; }
-
-            const chkT = document.querySelectorAll('.checkbox-title');
-            const chkS = document.querySelectorAll('.checkbox-subtext');
-            if (chkT.length >= 2) { chkT[0].textContent = t.q4_1; chkT[1].textContent = t.q4_2; }
-            if (chkS.length >= 2) { chkS[0].textContent = t.q4_1_sub; chkS[1].textContent = t.q4_2_sub; }
-
-            const thumbTitle = document.getElementById('title-thumb');
-            const thumbSub = document.getElementById('sub-thumb');
-            if (thumbTitle && thumbSub) {
-                thumbTitle.textContent = t.q4_3;
-                thumbSub.textContent = t.q4_3_sub;
-            }
-
-            const extraPplDesc = document.querySelector('#extraPeopleContainer .checkbox-text-group span:nth-child(3)');
-            if (extraPplDesc) extraPplDesc.textContent = t.q4_1_desc;
-
-            const qtySpan = document.querySelector('.quantity-control span');
-            if (qtySpan) qtySpan.textContent = t.q4_1_qty;
-
-            document.getElementById('uploadChannel').placeholder = t.q5_ph;
-            document.getElementById('musicInfo').placeholder = t.q6_ph;
-            document.getElementById('materialsInfo').placeholder = t.q7_ph;
-            document.getElementById('lineupInfo').placeholder = t.q8_ph;
-            document.getElementById('deadlineInfo').placeholder = t.q9_ph;
-            document.getElementById('otherDetails').placeholder = t.q10_ph;
-
-            document.querySelector('.result-section h3').textContent = t.resTitle;
-            document.getElementById('copyBtn').textContent = t.copyBtn;
-            const emailBtn = document.getElementById('emailBtn');
-            if (emailBtn) {
-                emailBtn.textContent = t.emailBtn;
-            }
-            document.querySelector('.result-section p').textContent = t.resNotice;
-
             document.title = t.title;
             const contactInfoInput = document.getElementById('contactInfo');
-            if (contactInfoInput) {
-                contactInfoInput.placeholder = t.contactPlaceholder;
-            }
+            if (contactInfoInput) contactInfoInput.placeholder = t.contactPlaceholder;
+            
             const modalCancelBtn = document.getElementById('customModalCancel');
-            if (modalCancelBtn) {
-                modalCancelBtn.textContent = t.modalCancel;
-            }
+            if (modalCancelBtn) modalCancelBtn.textContent = t.modalCancel;
+            
             const modalConfirmBtn = document.getElementById('customModalConfirm');
-            if (modalConfirmBtn) {
-                modalConfirmBtn.textContent = t.modalConfirm;
-            }
+            if (modalConfirmBtn) modalConfirmBtn.textContent = t.modalConfirm;
+            
             const logNoticeEl = document.getElementById('logNoticeText');
-            if (logNoticeEl && t.logNotice) {
-                logNoticeEl.textContent = t.logNotice;
-            }
+            if (logNoticeEl && t.logNotice) logNoticeEl.textContent = t.logNotice;
 
             if (typeof gtag === 'function') {
                 gtag('event', 'select_content', {
@@ -1138,7 +1290,7 @@
                 breakdownHTML += `<div class="breakdown-item"><span>${t.c_fast}</span><span class="item-price">${t.c_nego}</span></div>`;
             }
             if (breakdownHTML === '') {
-                breakdownHTML = `<div class="breakdown-item" style="color: #a1a1aa; font-size: 13px;">${t.resEmpty}</div>`;
+                breakdownHTML = `<div class="breakdown-item" style="color: var(--text-muted); font-size: 13px;">${t.resEmpty}</div>`;
             }
 
             document.getElementById('priceBreakdown').innerHTML = breakdownHTML;
@@ -1155,29 +1307,18 @@
 
         document.getElementById('copyBtn').addEventListener('click', function () {
             const t = i18n[currentLang];
-            const useTypeActive = document.querySelector('input[name="useType"]:checked');
-            const uploadChannel = document.getElementById('uploadChannel').value.trim();
-            const musicInfo = document.getElementById('musicInfo').value.trim();
-            const materialsInfo = document.getElementById('materialsInfo').value.trim();
-            const lineupInfo = document.getElementById('lineupInfo').value.trim();
-            const deadlineInfo = document.getElementById('deadlineInfo').value.trim();
+            const v = getFormValues();
+            const validation = validateFormInputs(v, t);
+            if (!validation.valid) { showAlert(validation.message, validation.focusId); return; }
 
-            if (!useTypeActive) { showAlert(t.alert1); return; }
-            if (!uploadChannel) { showAlert(t.alert5, 'uploadChannel'); return; }
-            if (!musicInfo) { showAlert(t.alert6, 'musicInfo'); return; }
-            if (!materialsInfo) { showAlert(t.alert7, 'materialsInfo'); return; }
-            if (!lineupInfo) { showAlert(t.alert8, 'lineupInfo'); return; }
-            if (!deadlineInfo) { showAlert(t.alert9, 'deadlineInfo'); return; }
+            const useTypeText = v.useTypeActive.closest('.option-card').querySelector('.option-label').textContent;
+            const useTypeValue = v.useTypeValue;
 
-            const useTypeText = useTypeActive.closest('.option-card').querySelector('.option-label').textContent;
-            const useTypeValue = parseInt(useTypeActive.value) || 0;
+            const live2DText = v.live2DActive ? v.live2DActive.closest('.option-card').querySelector('.option-label').textContent : t.c_none;
+            const live2dValue = v.live2dValue;
 
-            const live2DActive = document.querySelector('input[name="live2D"]:checked');
-            const live2DText = live2DActive ? live2DActive.closest('.option-card').querySelector('.option-label').textContent : t.c_none;
-            const live2dValue = live2DActive ? parseInt(live2DActive.value) : 0;
-
-            const videoMin = parseInt(document.getElementById('videoMin').value) || 0;
-            const videoSec = parseInt(document.getElementById('videoSec').value) || 0;
+            const videoMin = v.videoMin;
+            const videoSec = v.videoSec;
             const totalSeconds = (videoMin * 60) + videoSec;
             let extraTimeCost = 0;
             if (totalSeconds > 240) {
@@ -1185,11 +1326,11 @@
                 extraTimeCost = extraUnits * 5000;
             }
 
-            const extraPeopleCheck = document.getElementById('extraPeopleCheck').checked;
-            const extraPeopleQty = parseInt(document.getElementById('extraPeopleQty').value) || 0;
+            const extraPeopleCheck = v.extraPeopleCheck;
+            const extraPeopleQty = v.extraPeopleQty;
             const extraPeopleCost = extraPeopleCheck && extraPeopleQty > 0 ? extraPeopleQty * 10000 : 0;
 
-            const thumbCheck = document.getElementById('simpleThumbnailCheck').checked;
+            const thumbCheck = v.thumbCheck;
             const thumbCost = thumbCheck ? 5000 : 0;
 
             const total = useTypeValue + live2dValue + extraPeopleCost + extraTimeCost + thumbCost;
@@ -1201,7 +1342,7 @@
                     selected_usage: useTypeText,
                     selected_live2d: live2DText,
                     has_extra_people: extraPeopleCheck,
-                    fast_deadline: document.getElementById('fastDeadlineCheck').checked
+                    fast_deadline: v.fastDeadlineCheck
                 });
             }
 
@@ -1228,7 +1369,7 @@
                 plainExtraDetails += `\n   - ${t.c_thumb} (+5,000${t.curr})`;
                 htmlExtraDetails += `<div>- ${t.c_thumb} <span style="font-size: 12px;">(+5,000${t.curr})</span></div>`;
             }
-            if (document.getElementById('fastDeadlineCheck').checked) {
+            if (v.fastDeadlineCheck) {
                 plainExtraDetails += `\n   - ${t.c_fast}: ${t.c_nego}`;
                 htmlExtraDetails += `<div>- ${t.c_fast}: ${t.c_nego}</div>`;
             }
@@ -1238,7 +1379,13 @@
                 htmlExtraDetails = t.c_none;
             }
 
-            const otherText = document.getElementById('otherDetails').value.trim() || t.c_none;
+            // Sanitize user inputs to prevent DOM XSS
+            const safeUploadChannel = escapeHTML(v.uploadChannel);
+            const safeMusicInfo = escapeHTML(v.musicInfo);
+            const safeMaterialsInfo = escapeHTML(v.materialsInfo);
+            const safeLineupInfo = escapeHTML(v.lineupInfo);
+            const safeDeadlineInfo = escapeHTML(v.deadlineInfo);
+            const safeOtherText = escapeHTML(v.otherDetails || t.c_none);
 
             const plainText = `[WAVIT]
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -1246,44 +1393,44 @@ ${t.q1}: ${useTypeText} (${useTypePriceText})
 ${t.q2}: ${live2DText} (${live2DPriceText})
 ${t.q3}: ${videoMin}${t.q3_min} ${videoSec}${t.q3_sec} (${videoPriceText})
 ${t.q4_copy}:${plainExtraDetails.replace(/\n/g, '\n  ')}
-${t.q5}: ${uploadChannel}
-${t.q6}: ${musicInfo}
-${t.q7_copy}: ${materialsInfo}
-${t.q8_copy}: ${lineupInfo}
-${t.q9}: ${deadlineInfo}
-${t.q10_copy}: ${otherText}
+${t.q5}: ${safeUploadChannel}
+${t.q6}: ${safeMusicInfo}
+${t.q7_copy}: ${safeMaterialsInfo}
+${t.q8_copy}: ${safeLineupInfo}
+${t.q9}: ${safeDeadlineInfo}
+${t.q10_copy}: ${safeOtherText}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ${t.resTotal}: ${formattedTotal}${t.curr}${typeof convertedStr !== 'undefined' ? convertedStr : ''}
 ${t.resNotice}`;
 
-            // 운영자용 비동기 이메일 로그 전송 (사용자 클립보드 복사 동작에 영향 없도록 비동기 실행)
+            // 운영자용 비동기 이메일 로그 전송
             sendCopyLogToAdmin(plainText);
 
             const htmlText = `
-    <table width="100%" style="max-width: 540px; border-collapse: collapse; font-family: 'Noto Sans KR', 'Malgun Gothic', sans-serif; color: #2b2b2b; line-height: 1.8; background-color: #ffffff; border: 1px solid #e2e2e2; border-top: 2px solid #2b2b2b;">
+    <table width="100%" style="max-width: 540px; border-collapse: collapse; font-family: 'Inter', -apple-system, sans-serif; color: #000000; line-height: 1.8; background-color: #ffffff; border: 1px solid #d4d4d8; border-top: 2px solid #000000;">
         <tr>
             <td style="padding: 32px;">
-                <h2 style="margin: 0 0 8px 0; color: #2b2b2b; font-size: 22px; font-weight: 400; text-transform: uppercase; letter-spacing: 1px;">WAVIT - ${t.resTitle}</h2>
-                <p style="margin: 0 0 24px 0; color: #8c8c8c; font-size: 13px;">${t.headerDesc}</p>
+                <h2 style="margin: 0 0 8px 0; color: #000000; font-size: 20px; font-weight: 600; text-transform: uppercase; letter-spacing: -0.015em;">WAVIT - ${t.resTitle}</h2>
+                <p style="margin: 0 0 24px 0; color: #71717a; font-size: 13px;">${t.headerDesc}</p>
                 
                 <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
-                    <tr style="border-bottom: 1px solid #e2e2e2;"><td style="padding: 12px 0; width: 120px; color: #8c8c8c; font-weight: 600;">${t.q1}</td><td style="padding: 12px 0; font-weight: 700; color: #2b2b2b;">${useTypeText} <span style="color: #2b2b2b; font-size: 12px; font-weight: 600;">(${useTypePriceText})</span></td></tr>
-                    <tr style="border-bottom: 1px solid #e2e2e2;"><td style="padding: 12px 0; color: #8c8c8c; font-weight: 600;">${t.q2}</td><td style="padding: 12px 0; font-weight: 700; color: #2b2b2b;">${live2DText} <span style="color: #2b2b2b; font-size: 12px; font-weight: 600;">(${live2DPriceText})</span></td></tr>
-                    <tr style="border-bottom: 1px solid #e2e2e2;"><td style="padding: 12px 0; color: #8c8c8c; font-weight: 600;">${t.q3}</td><td style="padding: 12px 0; font-weight: 700; color: #2b2b2b;">${videoMin}${t.q3_min} ${videoSec}${t.q3_sec} <span style="color: #2b2b2b; font-size: 12px; font-weight: 600;">(${videoPriceText})</span></td></tr>
-                    <tr style="border-bottom: 1px solid #e2e2e2;"><td style="padding: 12px 0; color: #8c8c8c; font-weight: 600; vertical-align: top;">${t.q4_copy}</td><td style="padding: 12px 0; font-weight: 600; color: #2b2b2b; margin: 0;">${htmlExtraDetails}</td></tr>
-                    <tr style="border-bottom: 1px solid #e2e2e2;"><td style="padding: 12px 0; color: #8c8c8c; font-weight: 600;">${t.q5}</td><td style="padding: 12px 0; color: #2b2b2b;">${uploadChannel}</td></tr>
-                    <tr style="border-bottom: 1px solid #e2e2e2;"><td style="padding: 12px 0; color: #8c8c8c; font-weight: 600;">${t.q6}</td><td style="padding: 12px 0; color: #2b2b2b;">${musicInfo}</td></tr>
-                    <tr style="border-bottom: 1px solid #e2e2e2;"><td style="padding: 12px 0; color: #8c8c8c; font-weight: 600; vertical-align: top;">${t.q7_copy}</td><td style="padding: 12px 0; color: #2b2b2b; white-space: pre-wrap;">${materialsInfo}</td></tr>
-                    <tr style="border-bottom: 1px solid #e2e2e2;"><td style="padding: 12px 0; color: #8c8c8c; font-weight: 600;">${t.q8_copy}</td><td style="padding: 12px 0; color: #2b2b2b;">${lineupInfo}</td></tr>
-                    <tr style="border-bottom: 1px solid #e2e2e2;"><td style="padding: 12px 0; color: #8c8c8c; font-weight: 600;">${t.q9}</td><td style="padding: 12px 0; color: #2b2b2b;">${deadlineInfo}</td></tr>
-                    <tr style="border-bottom: 1px solid #2b2b2b;"><td style="padding: 12px 0; color: #8c8c8c; font-weight: 600; vertical-align: top;">${t.q10_copy}</td><td style="padding: 12px 0; color: #2b2b2b; white-space: pre-wrap;">${otherText}</td></tr>
+                    <tr style="border-bottom: 1px solid #d4d4d8;"><td style="padding: 12px 0; width: 120px; color: #71717a; font-weight: 600;">${t.q1}</td><td style="padding: 12px 0; font-weight: 700; color: #000000;">${useTypeText} <span style="color: #000000; font-size: 12px; font-weight: 600;">(${useTypePriceText})</span></td></tr>
+                    <tr style="border-bottom: 1px solid #d4d4d8;"><td style="padding: 12px 0; color: #71717a; font-weight: 600;">${t.q2}</td><td style="padding: 12px 0; font-weight: 700; color: #000000;">${live2DText} <span style="color: #000000; font-size: 12px; font-weight: 600;">(${live2DPriceText})</span></td></tr>
+                    <tr style="border-bottom: 1px solid #d4d4d8;"><td style="padding: 12px 0; color: #71717a; font-weight: 600;">${t.q3}</td><td style="padding: 12px 0; font-weight: 700; color: #000000;">${videoMin}${t.q3_min} ${videoSec}${t.q3_sec} <span style="color: #000000; font-size: 12px; font-weight: 600;">(${videoPriceText})</span></td></tr>
+                    <tr style="border-bottom: 1px solid #d4d4d8;"><td style="padding: 12px 0; color: #71717a; font-weight: 600; vertical-align: top;">${t.q4_copy}</td><td style="padding: 12px 0; font-weight: 600; color: #000000; margin: 0;">${htmlExtraDetails}</td></tr>
+                    <tr style="border-bottom: 1px solid #d4d4d8;"><td style="padding: 12px 0; color: #71717a; font-weight: 600;">${t.q5}</td><td style="padding: 12px 0; color: #000000;">${safeUploadChannel}</td></tr>
+                    <tr style="border-bottom: 1px solid #d4d4d8;"><td style="padding: 12px 0; color: #71717a; font-weight: 600;">${t.q6}</td><td style="padding: 12px 0; color: #000000;">${safeMusicInfo}</td></tr>
+                    <tr style="border-bottom: 1px solid #d4d4d8;"><td style="padding: 12px 0; color: #71717a; font-weight: 600; vertical-align: top;">${t.q7_copy}</td><td style="padding: 12px 0; color: #000000; white-space: pre-wrap;">${safeMaterialsInfo}</td></tr>
+                    <tr style="border-bottom: 1px solid #d4d4d8;"><td style="padding: 12px 0; color: #71717a; font-weight: 600;">${t.q8_copy}</td><td style="padding: 12px 0; color: #000000;">${safeLineupInfo}</td></tr>
+                    <tr style="border-bottom: 1px solid #d4d4d8;"><td style="padding: 12px 0; color: #71717a; font-weight: 600;">${t.q9}</td><td style="padding: 12px 0; color: #000000;">${safeDeadlineInfo}</td></tr>
+                    <tr style="border-bottom: 1px solid #000000;"><td style="padding: 12px 0; color: #71717a; font-weight: 600; vertical-align: top;">${t.q10_copy}</td><td style="padding: 12px 0; color: #000000; white-space: pre-wrap;">${safeOtherText}</td></tr>
                 </table>
                 
-                <div style="margin-top: 24px; padding: 20px; background-color: #fbfbfc; text-align: center; border: 1px solid #2b2b2b;">
-                    <span style="font-size: 18px; font-weight: 700; color: #2b2b2b;">${t.resTotal}: ${formattedTotal}${t.curr}</span>
-                    <div style="font-size: 13px; color: #8c8c8c; font-weight: 600; margin-top: 4px;">${typeof convertedStr !== 'undefined' ? convertedStr : ''}</div>
+                <div style="margin-top: 24px; padding: 20px; background-color: #fafafa; text-align: center; border: 1px solid #000000;">
+                    <span style="font-size: 18px; font-weight: 700; color: #000000;">${t.resTotal}: ${formattedTotal}${t.curr}</span>
+                    <div style="font-size: 13px; color: #71717a; font-weight: 600; margin-top: 4px;">${typeof convertedStr !== 'undefined' ? convertedStr : ''}</div>
                 </div>
-                <p style="font-size: 11px; color: #8c8c8c; text-align: center; margin: 12px 0 0 0; font-weight: 500;">${t.resNotice}</p>
+                <p style="font-size: 11px; color: #71717a; text-align: center; margin: 12px 0 0 0; font-weight: 500;">${t.resNotice}</p>
             </td>
         </tr>
     </table>
@@ -1357,11 +1504,56 @@ ${t.resNotice}`;
             }
         });
 
-        // 1.5 운영자용 비동기 이메일 로그 전송 함수 (무장애 백그라운드 전송)
+        // --- Centralized Form Data Extractor & Validation ---
+        function getFormValues() {
+            const useTypeActive = document.querySelector('input[name="useType"]:checked');
+            const live2DActive = document.querySelector('input[name="live2D"]:checked');
+            const videoMin = Math.max(0, parseInt(document.getElementById('videoMin').value) || 0);
+            const videoSec = Math.min(59, Math.max(0, parseInt(document.getElementById('videoSec').value) || 0));
+            const extraPeopleCheck = document.getElementById('extraPeopleCheck').checked;
+            const extraPeopleQty = extraPeopleCheck ? Math.max(0, parseInt(document.getElementById('extraPeopleQty').value) || 0) : 0;
+            const fastDeadlineCheck = document.getElementById('fastDeadlineCheck').checked;
+            const thumbCheck = document.getElementById('simpleThumbnailCheck').checked;
+
+            return {
+                useTypeActive,
+                useTypeValue: useTypeActive ? parseInt(useTypeActive.value) : 0,
+                live2DActive,
+                live2dValue: live2DActive ? parseInt(live2DActive.value) : 0,
+                videoMin,
+                videoSec,
+                extraPeopleCheck,
+                extraPeopleQty,
+                fastDeadlineCheck,
+                thumbCheck,
+                uploadChannel: document.getElementById('uploadChannel').value.trim(),
+                musicInfo: document.getElementById('musicInfo').value.trim(),
+                materialsInfo: document.getElementById('materialsInfo').value.trim(),
+                lineupInfo: document.getElementById('lineupInfo').value.trim(),
+                deadlineInfo: document.getElementById('deadlineInfo').value.trim(),
+                otherDetails: document.getElementById('otherDetails').value.trim()
+            };
+        }
+
+        function validateFormInputs(v, t) {
+            if (!v.useTypeActive) return { valid: false, message: t.alert1 };
+            if (!v.uploadChannel) return { valid: false, message: t.alert5, focusId: 'uploadChannel' };
+            if (!v.musicInfo) return { valid: false, message: t.alert6, focusId: 'musicInfo' };
+            if (!v.materialsInfo) return { valid: false, message: t.alert7, focusId: 'materialsInfo' };
+            if (!v.lineupInfo) return { valid: false, message: t.alert8, focusId: 'lineupInfo' };
+            if (!v.deadlineInfo) return { valid: false, message: t.alert9, focusId: 'deadlineInfo' };
+            return { valid: true };
+        }
+
+        // 1.5 운영자용 비동기 이메일 로그 전송 함수 (5초 디바운싱 Throttling 적용)
+        let lastLogTime = 0;
         function sendCopyLogToAdmin(plainText) {
             try {
-                const now = new Date();
-                const accessTime = now.toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' });
+                const now = Date.now();
+                if (now - lastLogTime < 5000) return; // Throttle: Maximum 1 log per 5 seconds
+                lastLogTime = now;
+
+                const accessTime = new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' });
                 const userAgent = navigator.userAgent || 'Unknown';
                 const screenSize = `${window.screen.width || 0}x${window.screen.height || 0}`;
                 const lang = typeof currentLang !== 'undefined' ? currentLang : 'ko';
@@ -1381,9 +1573,7 @@ ${plainText}`;
 
                 fetch('https://api.staticforms.xyz/submit', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         accessKey: "sf_767a29f020dab85042ce629f",
                         subject: "[WAVIT 견적서 Log] 복사하기 클릭 로그",
@@ -1391,16 +1581,7 @@ ${plainText}`;
                         email: "no-reply@wavit.com",
                         message: messageBody
                     })
-                })
-                .then(res => res.json())
-                .then(data => {
-                    if (!data.success) {
-                        console.error('[CopyLog Error] 로그 전송 응답 오류:', data.message);
-                    }
-                })
-                .catch(err => {
-                    console.error('[CopyLog Error] 백그라운드 전송 네트워크 오류:', err);
-                });
+                }).catch(err => console.error('[CopyLog Error]', err));
             } catch (e) {
                 console.error('[CopyLog Exception]', e);
             }
@@ -1437,7 +1618,7 @@ ${plainText}`;
             inputEl.style.display = 'block';
             inputEl.value = '';
             inputEl.placeholder = t.contactPlaceholder;
-            inputEl.style.borderColor = '#e2e2e2'; // reset border color on show
+            inputEl.style.borderColor = 'var(--nordic-border)'; // reset border color on show
             cancelBtn.style.display = 'block';
             
             overlay.classList.add('active');
@@ -1460,18 +1641,9 @@ ${plainText}`;
             const t = i18n[currentLang];
             
             // 1. 유효성 검사 (기존 연락처 검사 부분 삭제)
-            const useTypeActive = document.querySelector('input[name="useType"]:checked');
-            if (!useTypeActive) { showAlert(t.alert1); return; }
-            const uploadChannel = document.getElementById('uploadChannel').value.trim();
-            if (!uploadChannel) { showAlert(t.alert5, 'uploadChannel'); return; }
-            const musicInfo = document.getElementById('musicInfo').value.trim();
-            if (!musicInfo) { showAlert(t.alert6, 'musicInfo'); return; }
-            const materialsInfo = document.getElementById('materialsInfo').value.trim();
-            if (!materialsInfo) { showAlert(t.alert7, 'materialsInfo'); return; }
-            const lineupInfo = document.getElementById('lineupInfo').value.trim();
-            if (!lineupInfo) { showAlert(t.alert8, 'lineupInfo'); return; }
-            const deadlineInfo = document.getElementById('deadlineInfo').value.trim();
-            if (!deadlineInfo) { showAlert(t.alert9, 'deadlineInfo'); return; }
+            const v = getFormValues();
+            const validation = validateFormInputs(v, t);
+            if (!validation.valid) { showAlert(validation.message, validation.focusId); return; }
 
             // 2. prompt 모달 띄우기
             showPrompt(t.confirmSend, (contactInfo) => {
@@ -1482,13 +1654,6 @@ ${plainText}`;
                 btn.disabled = true;
 
                 // 비용 계산 및 텍스트 구성 로직
-                const useTypeText = useTypeActive.closest('.option-card').querySelector('.option-label').textContent;
-                const useTypeValue = parseInt(useTypeActive.value) || 0;
-
-                const live2DActive = document.querySelector('input[name="live2D"]:checked');
-                const live2DText = live2DActive ? live2DActive.closest('.option-card').querySelector('.option-label').textContent : t.c_none;
-                const live2dValue = live2DActive ? parseInt(live2DActive.value) : 0;
-
                 const videoMin = parseInt(document.getElementById('videoMin').value) || 0;
                 const videoSec = parseInt(document.getElementById('videoSec').value) || 0;
                 const totalSeconds = (videoMin * 60) + videoSec;
@@ -1575,7 +1740,7 @@ ${t.resTotal}: ${formattedTotal}${t.curr}`;
 <div class="custom-modal-overlay" id="customModalOverlay">
         <div class="custom-modal">
             <div class="custom-modal-message" id="customModalMessage"></div>
-            <input type="text" id="modalContactInput" style="display:none; width: 100%; margin-bottom: 20px; padding: 12px; border: 1px solid #e2e2e2; font-family: inherit;" />
+            <input type="text" id="modalContactInput" style="display:none; width: 100%; margin-bottom: 20px;" />
             <div class="custom-modal-buttons">
                 <button class="custom-modal-btn cancel-btn" id="customModalCancel">취소</button>
                 <button class="custom-modal-btn" id="customModalConfirm">확인</button>
