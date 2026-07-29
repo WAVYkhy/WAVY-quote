@@ -843,19 +843,25 @@
                     <!-- 2. Live 2D 추가 -->
                     <div class="form-group">
                         <label class="field-title" data-i18n="q2">2. Live 2D 추가</label>
-                        <div class="description" data-i18n="q2_desc">Live 2D 추가시 기본 작업기간(14일)에 7일 추가되어 마감 기간이 작업 시작일로부터 21일이 됩니다.</div>
+                        <div class="description" data-i18n="q2_desc">Live 2D 추가시 기본 작업기간(14일)에 7일 추가되어 마감 기간이 작업 시작일로부터 21일이 됩니다. ※ 참고 가격이며 변동될 수 있습니다.</div>
                         <div class="options-grid">
-                            <label class="option-card" id="live2dRadioCard2">
-                                <input type="radio" name="live2D" value="30000"
+                            <label class="option-card" id="live2dRadioCard1">
+                                <input type="radio" name="live2D" value="20000"
                                     onclick="selectRadioCard('live2D', this)">
-                                <span class="option-label" data-i18n="q2_2">반신</span>
-                                <span class="option-price">+30,000원</span>
+                                <span class="option-label" data-i18n="q2_1">기본 파츠 분할</span>
+                                <span class="option-price">+20,000원</span>
                             </label>
-                            <label class="option-card" id="live2dRadioCard3">
+                            <label class="option-card" id="live2dRadioCard2">
                                 <input type="radio" name="live2D" value="50000"
                                     onclick="selectRadioCard('live2D', this)">
-                                <span class="option-label" data-i18n="q2_3">전신</span>
+                                <span class="option-label" data-i18n="q2_2">상세 파츠 분할</span>
                                 <span class="option-price">+50,000원</span>
+                            </label>
+                            <label class="option-card" id="live2dRadioCard3">
+                                <input type="radio" name="live2D" value="80000"
+                                    onclick="selectRadioCard('live2D', this)">
+                                <span class="option-label" data-i18n="q2_3">상세 파츠 분할 + 2.5D</span>
+                                <span class="option-price">+80,000원</span>
                             </label>
                         </div>
                     </div>
@@ -1031,7 +1037,7 @@
                 curr: "원",
                 headerDesc: "상세 내역을 선택하고 입력하시면 예상 견적을 즉시 확인할 수 있습니다.",
                 q1: "1. 사용 용도", q1_1: "방송용", q1_2: "상업용",
-                q2: "2. Live 2D 추가", q2_desc: "Live 2D 추가시 기본 작업기간(14일)에 7일 추가되어 마감 기간이 작업 시작일로부터 21일이 됩니다.", q2_1: "선택 안함", q2_2: "반신", q2_3: "전신",
+                q2: "2. Live 2D 추가", q2_desc: "Live 2D 추가시 기본 작업기간(14일)에 7일 추가되어 마감 기간이 작업 시작일로부터 21일이 됩니다. ※ 참고 가격이며 변동될 수 있습니다.", q2_1: "기본 파츠 분할", q2_2: "상세 파츠 분할", q2_3: "상세 파츠 분할 + 2.5D",
                 q3: "3. 영상 길이", q3_desc: "기본 4분을 초과할 경우 30초당 5,000원의 추가금이 있습니다. 4:01의 경우 추가금이 발생합니다.", q3_min: "분", q3_sec: "초",
                 q4: "4. 추가금 (다중선택)", q4_copy: "4. 추가금", q4_1: "추가 인원", q4_1_sub: "+10,000원 / 명", q4_1_desc: "기본 2인. 3인부터 추가금 발생", q4_1_qty: "인원 수", q4_2: "빠른 마감", q4_2_sub: "협의 후 결정", q4_3: "간단 썸네일", q4_3_sub: "+5,000원", c_thumb: "간단 썸네일",
                 q5: "5. 업로드 채널", q5_ph: "예: 유튜브 채널명 또는 URL",
@@ -1064,7 +1070,7 @@
                 curr: " KRW",
                 headerDesc: "Select details below to instantly view your estimated quote.",
                 q1: "1. Usage", q1_1: "Streaming", q1_2: "Commercial",
-                q2: "2. Add Live 2D", q2_desc: "Adding Live 2D extends the base 14-day period by 7 days (total 21 days).", q2_2: "Half-body", q2_3: "Full-body",
+                q2: "2. Add Live 2D", q2_desc: "Adding Live 2D extends the base 14-day period by 7 days (total 21 days). ※ Prices are for reference only and subject to change.", q2_1: "Basic Part Separation", q2_2: "Detailed Part Separation", q2_3: "Detailed Part Separation + 2.5D",
                 q3: "3. Video Length", q3_desc: "Exceeding the base 4 mins incurs a fee of 5,000 KRW per 30 secs. (e.g., 4:01 applies the fee).", q3_min: "Min", q3_sec: "Sec",
                 q4: "4. Extra Fees (Multiple)", q4_copy: "4. Extra Fees", q4_1: "Extra Person", q4_1_sub: "+10,000 KRW / Person", q4_1_desc: "Base is 2 people. Extra fee from 3rd person.", q4_1_qty: "Quantity", q4_2: "Fast Deadline", q4_2_sub: "Negotiable", q4_3: "Simple Thumbnail", q4_3_sub: "+5,000 KRW", c_thumb: "Simple Thumbnail",
                 q5: "5. Upload Channel", q5_ph: "e.g., YouTube Channel Name or URL",
@@ -1097,7 +1103,7 @@
                 curr: " ウォン",
                 headerDesc: "詳細を選択・入力すると、すぐに見積もりを確認できます。",
                 q1: "1. 使用用途", q1_1: "配信用", q1_2: "商用",
-                q2: "2. Live 2D 追加", q2_desc: "Live 2Dを追加する場合、基本作業期間(14日)に7日が追加され、納期は21日となります。", q2_2: "半身", q2_3: "全身",
+                q2: "2. Live 2D 追加", q2_desc: "Live 2Dを追加する場合、基本作業期間(14日)に7日が追加され、納期は21日となります。 ※ 参考価格であり、変動する場合があります。", q2_1: "基本パーツ分け", q2_2: "詳細パーツ分け", q2_3: "詳細パーツ分け + 2.5D",
                 q3: "3. 動画の長さ", q3_desc: "基本の4分を超える場合、30秒ごとに5,000ウォンの追加料金が発生します（例：4分01秒から適用）。", q3_min: "分", q3_sec: "秒",
                 q4: "4. 追加料金 (複数選択可)", q4_copy: "4. 追加料金", q4_1: "追加人数", q4_1_sub: "+10,000ウォン / 人", q4_1_desc: "基本2人。3人目から追加料金発生", q4_1_qty: "人数", q4_2: "お急ぎ納品", q4_2_sub: "要相談", q4_3: "簡単サムネイル", q4_3_sub: "+5,000ウォン", c_thumb: "簡単サムネイル",
                 q5: "5. アップロード先", q5_ph: "例：YouTubeチャンネル名またはURL",
@@ -1151,11 +1157,12 @@
             });
 
             const prices = document.querySelectorAll('.option-price');
-            if (prices.length >= 4) {
+            if (prices.length >= 5) {
                 prices[0].textContent = "100,000" + t.curr;
                 prices[1].textContent = "300,000" + t.curr;
-                prices[2].textContent = "+30,000" + t.curr;
+                prices[2].textContent = "+20,000" + t.curr;
                 prices[3].textContent = "+50,000" + t.curr;
+                prices[4].textContent = "+80,000" + t.curr;
             }
 
             document.title = t.title;
@@ -1654,6 +1661,16 @@ ${plainText}`;
                 btn.disabled = true;
 
                 // 비용 계산 및 텍스트 구성 로직
+                const useTypeText = v.useTypeActive ? v.useTypeActive.closest('.option-card').querySelector('.option-label').textContent : t.c_none;
+                const useTypeValue = v.useTypeValue;
+                const live2DText = v.live2DActive ? v.live2DActive.closest('.option-card').querySelector('.option-label').textContent : t.c_none;
+                const live2dValue = v.live2dValue;
+                const uploadChannel = v.uploadChannel;
+                const musicInfo = v.musicInfo;
+                const materialsInfo = v.materialsInfo;
+                const lineupInfo = v.lineupInfo;
+                const deadlineInfo = v.deadlineInfo;
+
                 const videoMin = parseInt(document.getElementById('videoMin').value) || 0;
                 const videoSec = parseInt(document.getElementById('videoSec').value) || 0;
                 const totalSeconds = (videoMin * 60) + videoSec;
