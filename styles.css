@@ -74,9 +74,9 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    padding: 40px 20px;
+    padding: 40px 20px 24px 20px;
     position: relative;
     letter-spacing: -0.015em;
 }
@@ -804,7 +804,8 @@ textarea {
 .site-footer {
     width: 100%;
     max-width: 1040px;
-    margin-top: 24px;
+    margin-top: auto;
+    padding-top: 24px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -814,7 +815,8 @@ textarea {
     z-index: 10;
     flex-wrap: wrap;
     gap: 8px;
-    padding: 0 4px;
+    padding-left: 4px;
+    padding-right: 4px;
 }
 
 @media (max-width: 900px) {
@@ -867,7 +869,7 @@ textarea {
    ========================================== */
 @media (max-width: 480px) {
     body {
-        padding: 0;
+        padding: 16px 0 0 0;
     }
 
     .container {
