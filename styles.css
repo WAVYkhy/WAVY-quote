@@ -62,6 +62,11 @@
     padding: 0;
 }
 
+html {
+    overflow-y: scroll;
+    scrollbar-gutter: stable;
+}
+
 body {
     font-family: var(--font-sans);
     background-color: var(--nordic-bg);
@@ -539,6 +544,7 @@ textarea {
     min-width: 0;
     border-right: 1px solid var(--nordic-border);
     padding-right: 40px;
+    min-height: 540px;
 }
 
 .result-section {
@@ -1209,25 +1215,39 @@ textarea {
     transition: width 0.25s ease;
 }
 
-/* 6. Step Wizard Visibility & Navigation */
+/* 6. Step Wizard Visibility & Smooth Height Transition */
+.form-left-side {
+    transition: height 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: height;
+}
+
+.form-section-block {
+    transition: opacity 0.22s cubic-bezier(0.4, 0, 0.2, 1), transform 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: opacity, transform;
+}
+
 .form-section-block.step-hidden {
     display: none !important;
+    opacity: 0;
+    transform: translateY(8px);
+}
+
+.form-section-block.step-leaving {
+    display: block !important;
+    opacity: 0;
+    transform: translateY(-6px);
+}
+
+.form-section-block.step-entering {
+    display: block !important;
+    opacity: 0;
+    transform: translateY(6px);
 }
 
 .form-section-block.step-active {
     display: block !important;
-    animation: fadeInStep 0.22s ease-out;
-}
-
-@keyframes fadeInStep {
-    from {
-        opacity: 0;
-        transform: translateY(8px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .onboarding-flow .flow-step {
@@ -1300,6 +1320,57 @@ textarea {
     margin-top: 14px;
     transition: max-height 0.35s cubic-bezier(1, 0, 1, 0), opacity 0.25s ease, margin-top 0.25s ease;
 }
+
+/* --------------------------------------------------------------------------
+   Language Transition Spec: 2-Phase Cross-Fade & Shift
+   -------------------------------------------------------------------------- */
+
+/* Phase 1: 기존 텍스트가 위로 올라가며 사라짐 */
+@keyframes sharpFadeOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+}
+
+/* Phase 2: 새 텍스트가 아래에서 올라오며 나타남 */
+@keyframes sharpFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 애니메이션 적용 유틸리티 클래스 */
+.lang-fading-out {
+  animation: sharpFadeOut 0.18s cubic-bezier(0.4, 0, 1, 1) forwards;
+  will-change: opacity, transform;
+}
+
+.lang-fading-in {
+  animation: sharpFadeIn 0.22s cubic-bezier(0, 0, 0.2, 1) forwards;
+  will-change: opacity, transform;
+}
+
+span.lang-fading-out:not(.section-tag):not(.lang-btn):not(.btn-step),
+span.lang-fading-in:not(.section-tag):not(.lang-btn):not(.btn-step) {
+  display: inline-block;
+}
+
+.section-tag.lang-fading-out,
+.section-tag.lang-fading-in {
+  display: inline-flex !important;
+}
+
+
 
 
 

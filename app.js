@@ -10,6 +10,7 @@ function escapeHTML(str) {
 }
 
 let currentLang = 'ko';
+let isLangTransitioning = false;
 let currentStep = 1;
 let exchangeRates = { USD: 0.00072, JPY: 0.11 }; // Fallback defaults
 
@@ -169,57 +170,94 @@ const i18n = {
 };
 
 function changeLanguage(lang) {
-    currentLang = lang;
-    const t = i18n[lang];
+    if (lang === currentLang || isLangTransitioning) return;
 
+    isLangTransitioning = true;
+
+    // Immediately update language selector active button state
     document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
     const activeLangBtn = document.getElementById('lang-' + lang);
     if (activeLangBtn) activeLangBtn.classList.add('active');
 
-    // Data-driven i18n text update
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-        const key = el.getAttribute('data-i18n');
-        if (t[key] !== undefined) {
-            el.textContent = t[key];
-        }
+    // Collect all elements affected by language change
+    const targets = document.querySelectorAll(`
+        [data-i18n],
+        .option-price[data-base-price],
+        #priceBreakdown,
+        #totalEstimateText,
+        #convertedPriceText,
+        #logNoticeText,
+        .lang-target
+    `);
+
+    // Phase 1: Fade-Out (0ms ~ 180ms)
+    targets.forEach(el => {
+        el.classList.remove('lang-fading-in');
+        el.classList.add('lang-fading-out');
     });
 
-    document.querySelectorAll('[data-i18n-ph]').forEach(el => {
-        const key = el.getAttribute('data-i18n-ph');
-        if (t[key] !== undefined) {
-            el.placeholder = t[key];
-        }
-    });
+    setTimeout(() => {
+        // Actual text and language state update
+        currentLang = lang;
+        const t = i18n[lang];
 
-    // Declarative price text update via data-base-price attributes
-    document.querySelectorAll('.option-price[data-base-price]').forEach(el => {
-        const basePrice = parseInt(el.getAttribute('data-base-price')) || 0;
-        const prefix = el.getAttribute('data-price-prefix') || '';
-        el.textContent = `${prefix}${basePrice.toLocaleString()}${t.curr}`;
-    });
-
-    document.title = t.title;
-    const contactInfoInput = document.getElementById('contactInfo');
-    if (contactInfoInput) contactInfoInput.placeholder = t.contactPlaceholder;
-    
-    const modalCancelBtn = document.getElementById('customModalCancel');
-    if (modalCancelBtn) modalCancelBtn.textContent = t.modalCancel;
-    
-    const modalConfirmBtn = document.getElementById('customModalConfirm');
-    if (modalConfirmBtn) modalConfirmBtn.textContent = t.modalConfirm;
-    
-    const logNoticeEl = document.getElementById('logNoticeText');
-    if (logNoticeEl && t.logNotice) logNoticeEl.textContent = t.logNotice;
-
-    if (typeof gtag === 'function') {
-        gtag('event', 'select_content', {
-            content_type: 'language_button',
-            item_id: lang
+        // Data-driven i18n text update
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (t[key] !== undefined) {
+                el.textContent = t[key];
+            }
         });
-    }
 
-    calculateTotal();
-    goToStep(currentStep);
+        document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+            const key = el.getAttribute('data-i18n-ph');
+            if (t[key] !== undefined) {
+                el.placeholder = t[key];
+            }
+        });
+
+        // Declarative price text update via data-base-price attributes
+        document.querySelectorAll('.option-price[data-base-price]').forEach(el => {
+            const basePrice = parseInt(el.getAttribute('data-base-price')) || 0;
+            const prefix = el.getAttribute('data-price-prefix') || '';
+            el.textContent = `${prefix}${basePrice.toLocaleString()}${t.curr}`;
+        });
+
+        document.title = t.title;
+        const contactInfoInput = document.getElementById('contactInfo');
+        if (contactInfoInput) contactInfoInput.placeholder = t.contactPlaceholder;
+        
+        const modalCancelBtn = document.getElementById('customModalCancel');
+        if (modalCancelBtn) modalCancelBtn.textContent = t.modalCancel;
+        
+        const modalConfirmBtn = document.getElementById('customModalConfirm');
+        if (modalConfirmBtn) modalConfirmBtn.textContent = t.modalConfirm;
+        
+        const logNoticeEl = document.getElementById('logNoticeText');
+        if (logNoticeEl && t.logNotice) logNoticeEl.textContent = t.logNotice;
+
+        if (typeof gtag === 'function') {
+            gtag('event', 'select_content', {
+                content_type: 'language_button',
+                item_id: lang
+            });
+        }
+
+        calculateTotal();
+        goToStep(currentStep, true);
+
+        // Phase 2: Fade-In (180ms ~ 400ms)
+        targets.forEach(el => {
+            el.classList.remove('lang-fading-out');
+            el.classList.add('lang-fading-in');
+        });
+
+        setTimeout(() => {
+            targets.forEach(el => el.classList.remove('lang-fading-in'));
+            isLangTransitioning = false;
+        }, 220);
+
+    }, 180);
 }
 
 function selectRadioCard(groupName, inputEl) {
@@ -312,32 +350,104 @@ function changeQuantity(type, delta) {
     calculateTotal();
 }
 
-function goToStep(stepNum) {
-    if (stepNum < 1 || stepNum > 2) return;
+let isStepTransitioning = false;
+let stepTransitionTimer = null;
+
+function goToStep(stepNum, skipScroll = false) {
+    if (stepNum < 1 || stepNum > 2 || isLangTransitioning) return;
+
+    const leftSide = document.querySelector('.form-left-side');
+    const currentCard = document.getElementById('step-card-' + currentStep);
+    const targetCard = document.getElementById('step-card-' + stepNum);
+
+    if (!leftSide || !targetCard) return;
+
+    // Update current step index
     currentStep = stepNum;
 
+    // Update onboarding step indicators
     for (let i = 1; i <= 2; i++) {
-        const card = document.getElementById('step-card-' + i);
         const flow = document.getElementById('step-flow-' + i);
-        if (card) {
-            if (i === currentStep) {
-                card.classList.remove('step-hidden');
-                card.classList.add('step-active');
-            } else {
-                card.classList.add('step-hidden');
-                card.classList.remove('step-active');
-            }
-        }
         if (flow) {
-            if (i === currentStep) {
-                flow.classList.add('active');
-            } else {
-                flow.classList.remove('active');
-            }
+            if (i === currentStep) flow.classList.add('active');
+            else flow.classList.remove('active');
         }
     }
 
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Direct update without animation if skipScroll is true (e.g. language switch re-render)
+    if (skipScroll) {
+        for (let i = 1; i <= 2; i++) {
+            const card = document.getElementById('step-card-' + i);
+            if (card) {
+                card.classList.remove('step-leaving', 'step-entering');
+                if (i === currentStep) {
+                    card.classList.remove('step-hidden');
+                    card.classList.add('step-active');
+                } else {
+                    card.classList.add('step-hidden');
+                    card.classList.remove('step-active');
+                }
+            }
+        }
+        leftSide.style.height = '';
+        leftSide.style.overflow = '';
+        return;
+    }
+
+    if (stepTransitionTimer) clearTimeout(stepTransitionTimer);
+    isStepTransitioning = true;
+
+    // 1. Lock initial height of container
+    const startHeight = leftSide.getBoundingClientRect().height;
+    leftSide.style.height = `${startHeight}px`;
+    leftSide.style.overflow = 'hidden';
+
+    // 2. Cross-fade phase 1: Fade out current card
+    if (currentCard && currentCard !== targetCard) {
+        currentCard.classList.remove('step-active');
+        currentCard.classList.add('step-leaving');
+    }
+
+    setTimeout(() => {
+        // Cross-fade phase 2: Swap visibility
+        for (let i = 1; i <= 2; i++) {
+            const card = document.getElementById('step-card-' + i);
+            if (card && i !== currentStep) {
+                card.classList.remove('step-active', 'step-leaving', 'step-entering');
+                card.classList.add('step-hidden');
+            }
+        }
+
+        targetCard.classList.remove('step-hidden', 'step-leaving');
+        targetCard.classList.add('step-entering');
+
+        // Measure natural height of target content
+        const targetHeight = leftSide.scrollHeight;
+
+        // Smoothly animate height transition
+        leftSide.style.height = `${targetHeight}px`;
+
+        requestAnimationFrame(() => {
+            targetCard.classList.remove('step-entering');
+            targetCard.classList.add('step-active');
+        });
+
+        // Smooth scroll position handling to prevent abrupt jumps
+        const onboardingFlow = document.querySelector('.onboarding-flow');
+        if (onboardingFlow) {
+            const flowTop = onboardingFlow.getBoundingClientRect().top + window.scrollY - 20;
+            if (window.scrollY > flowTop) {
+                window.scrollTo({ top: Math.max(0, flowTop), behavior: 'smooth' });
+            }
+        }
+
+        // Clean up inline styles after transition completes
+        stepTransitionTimer = setTimeout(() => {
+            leftSide.style.height = '';
+            leftSide.style.overflow = '';
+            isStepTransitioning = false;
+        }, 320);
+    }, 110);
 }
 
 function nextStep() {
