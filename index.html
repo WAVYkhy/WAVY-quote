@@ -17,790 +17,14 @@
     <meta property="og:title" content="WAVIT - 견적 계산기">
     <meta property="og:description" content="상세 내역을 선택하고 입력하시면 예상 견적을 즉시 확인할 수 있습니다.">
     <meta property="og:type" content="website">
+    <meta property="og:url" content="https://wavit.studio/quote">
+    <meta property="og:image" content="https://wavit.studio/og-image.png">
     <meta name="robots" content="index, follow">
     <!-- Google Fonts -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;700&display=swap"
-        rel="stylesheet">
-    <style>
-        :root {
-            /* Surface & Background */
-            --nordic-bg: #FAFAFA;
-            --nordic-surface: #FFFFFF;
-            --nordic-surface-subtle: #F4F4F5;
-            --nordic-border: #D4D4D8;
-            --nordic-border-strong: #18181B;
-
-            /* Typography */
-            --text-primary: #18181B;
-            --text-secondary: #3F3F46;
-            --text-muted: #71717A;
-
-            /* Accent & Active Inversion */
-            --accent-color: #18181B;
-            --accent-surface: #18181B;
-            --accent-text: #FAFAFA;
-
-            /* Sharp Edge Radii (Strict 2px Rules) */
-            --card-radius: 2px;
-            --cell-radius: 2px;
-            --pill-radius: 2px;
-
-            /* Status Dots */
-            --status-available: #10B981;
-            --status-negotiate: #F59E0B;
-            --status-unavailable: #EF4444;
-
-            --font-sans: 'Inter', 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            --transition: all 0.12s ease;
-
-            /* Legacy mapped variables for HTML inline styling compatibility */
-            --color-text-main: var(--text-primary);
-            --color-text-muted: var(--text-muted);
-            --color-canvas: var(--nordic-bg);
-            --color-snow: var(--nordic-surface);
-            --color-border: var(--nordic-border);
-        }
-
-        /* Dark Mode Overrides */
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --nordic-bg: #09090B;
-                --nordic-surface: #121215;
-                --nordic-surface-subtle: #18181B;
-                --nordic-border: #27272A;
-                --nordic-border-strong: #E4E4E7;
-
-                --text-primary: #E4E4E7;
-                --text-secondary: #A1A1AA;
-                --text-muted: #71717A;
-
-                --accent-color: #E4E4E7;
-                --accent-surface: #E4E4E7;
-                --accent-text: #18181B;
-            }
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            font-family: var(--font-sans);
-            background-color: var(--nordic-bg);
-            color: var(--text-primary);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 40px 20px;
-            position: relative;
-            letter-spacing: -0.015em;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 1040px;
-            background: var(--nordic-surface);
-            border: 1px solid var(--nordic-border);
-            border-radius: var(--card-radius);
-            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04);
-            position: relative;
-        }
-
-        .header {
-            padding: 40px 40px 24px 40px;
-            text-align: left;
-            border-bottom: 1px solid var(--nordic-border);
-            margin-bottom: 32px;
-            position: relative;
-        }
-
-        .header-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 16px;
-            margin-bottom: 10px;
-        }
-
-        .header h1 {
-            font-family: var(--font-sans);
-            font-size: 28px;
-            font-weight: 600;
-            color: var(--text-primary);
-            letter-spacing: -0.03em;
-            text-transform: uppercase;
-            line-height: 1;
-        }
-
-        .header p {
-            color: var(--text-muted);
-            font-size: 13.5px;
-            letter-spacing: -0.015em;
-        }
-
-        .form-body {
-            padding: 0 40px 40px 40px;
-        }
-
-        .form-group {
-            margin-bottom: 32px;
-            position: relative;
-        }
-
-        .form-group label.field-title {
-            display: block;
-            font-family: var(--font-sans);
-            font-size: 15px;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: var(--text-primary);
-            letter-spacing: -0.015em;
-        }
-
-        .required::after {
-            content: ' *';
-            color: var(--text-primary);
-            font-weight: 600;
-        }
-
-        .description {
-            font-size: 13px;
-            color: var(--text-muted);
-            font-weight: 400;
-            margin-top: 4px;
-            margin-bottom: 12px;
-            line-height: 1.5;
-            letter-spacing: -0.015em;
-        }
-
-        .options-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-            gap: 12px;
-            margin-top: 8px;
-        }
-
-        .option-card {
-            position: relative;
-            background: var(--nordic-surface);
-            border: 1px solid var(--nordic-border);
-            border-radius: var(--cell-radius);
-            padding: 16px;
-            cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            justify-content: center;
-            min-height: 84px;
-            line-height: 1.4;
-            word-break: keep-all;
-        }
-
-        .option-card:hover {
-            background: var(--nordic-surface-subtle);
-            border-color: var(--nordic-border-strong);
-        }
-
-        .option-card:focus-within,
-        .checkbox-container:focus-within {
-            border-color: var(--nordic-border-strong);
-            box-shadow: 0 0 0 2px var(--nordic-border-strong);
-        }
-
-        .btn-custom:focus-visible,
-        .lang-btn:focus-visible,
-        input:focus-visible,
-        textarea:focus-visible {
-            outline: 2px solid var(--nordic-border-strong);
-            outline-offset: 1px;
-        }
-
-        .option-card input[type="radio"],
-        .option-card input[type="checkbox"] {
-            position: absolute;
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .option-card .option-label {
-            font-weight: 600;
-            font-size: 14px;
-            margin-bottom: 4px;
-            color: var(--text-primary);
-            letter-spacing: -0.015em;
-        }
-
-        .option-card .option-price {
-            font-size: 13px;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
-
-        .option-card.selected {
-            background-color: var(--accent-surface) !important;
-            color: var(--accent-text) !important;
-            border-color: var(--accent-surface) !important;
-        }
-
-        .option-card.selected .option-label,
-        .option-card.selected .option-price {
-            color: var(--accent-text) !important;
-        }
-
-        input[type="text"],
-        textarea {
-            width: 100%;
-            padding: 12px 14px;
-            border: 1px solid var(--nordic-border);
-            border-radius: var(--cell-radius);
-            font-family: inherit;
-            font-size: 14px;
-            color: var(--text-primary);
-            background-color: var(--nordic-surface);
-            transition: var(--transition);
-            outline: none;
-            letter-spacing: -0.015em;
-        }
-
-        input[type="text"]:focus,
-        textarea:focus {
-            border-color: var(--nordic-border-strong);
-            box-shadow: 0 0 0 1px var(--nordic-border-strong);
-            background-color: var(--nordic-surface);
-        }
-
-        input[type="text"]::placeholder,
-        textarea::placeholder {
-            color: var(--text-muted);
-        }
-
-        textarea {
-            resize: vertical;
-            min-height: 100px;
-        }
-
-        .checkbox-container {
-            background: var(--nordic-surface);
-            border: 1px solid var(--nordic-border);
-            border-radius: var(--cell-radius);
-            padding: 0;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            transition: var(--transition);
-            min-height: 84px;
-            line-height: 1.4;
-            word-break: keep-all;
-        }
-
-        .checkbox-container:hover {
-            background: var(--nordic-surface-subtle);
-            border-color: var(--nordic-border-strong);
-        }
-
-        .checkbox-container.checked {
-            background-color: var(--accent-surface) !important;
-            color: var(--accent-text) !important;
-            border-color: var(--accent-surface) !important;
-        }
-
-        .checkbox-container.checked .checkbox-title,
-        .checkbox-container.checked .checkbox-subtext,
-        .checkbox-container.checked .quantity-control span,
-        .checkbox-container.checked .checkbox-text-group span {
-            color: var(--accent-text) !important;
-        }
-
-        .checkbox-info {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            cursor: pointer;
-            user-select: none;
-            flex: 1;
-            align-self: stretch;
-            padding: 16px;
-        }
-
-        .checkbox-info input[type="checkbox"] {
-            appearance: none;
-            -webkit-appearance: none;
-            width: 16px;
-            height: 16px;
-            cursor: pointer;
-            border-radius: var(--cell-radius);
-            border: 1px solid var(--nordic-border);
-            background-color: var(--nordic-surface);
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition);
-            flex-shrink: 0;
-            position: relative;
-        }
-
-        .checkbox-info input[type="checkbox"]:checked {
-            background-color: var(--accent-surface);
-            border-color: var(--accent-surface);
-        }
-
-        .checkbox-info input[type="checkbox"]:checked::after {
-            content: '';
-            width: 6px;
-            height: 6px;
-            background-color: var(--accent-text);
-        }
-
-        .checkbox-container.checked .checkbox-info input[type="checkbox"] {
-            background-color: var(--accent-text);
-            border-color: var(--accent-text);
-        }
-
-        .checkbox-container.checked .checkbox-info input[type="checkbox"]::after {
-            background-color: var(--accent-surface);
-        }
-
-        .checkbox-text-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .checkbox-title {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text-primary);
-            letter-spacing: -0.015em;
-        }
-
-        .checkbox-subtext {
-            font-size: 13px;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
-
-        .quantity-control {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            opacity: 0.5;
-            pointer-events: none;
-            transition: var(--transition);
-            padding-right: 16px;
-        }
-
-        .checkbox-container.checked .quantity-control {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .quantity-control span {
-            font-size: 13px;
-            color: var(--text-primary);
-            font-weight: 600;
-        }
-
-        .quantity-control input[type="number"] {
-            width: 60px;
-            padding: 6px;
-            border: 1px solid var(--nordic-border);
-            border-radius: var(--cell-radius);
-            text-align: center;
-            font-family: inherit;
-            font-size: 14px;
-            font-weight: 600;
-            outline: none;
-            background: var(--nordic-surface);
-            color: var(--text-primary);
-            -webkit-appearance: none;
-            -moz-appearance: textfield;
-        }
-
-        .quantity-control input[type="number"]::-webkit-outer-spin-button,
-        .quantity-control input[type="number"]::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-
-        .checkbox-container.checked .quantity-control input[type="number"] {
-            background: var(--accent-surface);
-            color: var(--accent-text);
-            border-color: var(--accent-text);
-        }
-
-        .quantity-control input[type="number"]:focus {
-            border-color: var(--nordic-border-strong);
-            box-shadow: 0 0 0 1px var(--nordic-border-strong);
-        }
-
-        .time-input-group {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-top: 8px;
-        }
-
-        .time-input-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--nordic-surface);
-            border: 1px solid var(--nordic-border);
-            border-radius: var(--cell-radius);
-            padding: 10px 16px;
-            transition: var(--transition);
-        }
-
-        .time-input-wrapper:hover {
-            background: var(--nordic-surface-subtle);
-            border-color: var(--nordic-border-strong);
-        }
-
-        .time-input-wrapper:focus-within {
-            border-color: var(--nordic-border-strong);
-            box-shadow: 0 0 0 1px var(--nordic-border-strong);
-            background: var(--nordic-surface);
-        }
-
-        .time-input {
-            width: 45px;
-            border: none;
-            background: transparent;
-            text-align: center;
-            font-family: inherit;
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--text-primary);
-            outline: none;
-            padding: 0;
-        }
-
-        .time-input::-webkit-outer-spin-button,
-        .time-input::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-
-        .time-input[type=number] {
-            -moz-appearance: textfield;
-        }
-
-        .time-label {
-            font-size: 13.5px;
-            font-weight: 600;
-            color: var(--text-muted);
-        }
-
-        .form-main-wrapper {
-            display: flex;
-            gap: 40px;
-            align-items: flex-start;
-            width: 100%;
-        }
-
-        .form-left-side {
-            flex: 1;
-            min-width: 0;
-            border-right: 1px solid var(--nordic-border);
-            padding-right: 40px;
-        }
-
-        .result-section {
-            background: var(--nordic-surface);
-            border: 1px solid var(--nordic-border);
-            border-radius: var(--card-radius);
-            padding: 24px;
-            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04);
-            position: sticky;
-            top: 40px;
-            width: 300px;
-            flex-shrink: 0;
-        }
-
-        .result-section h3 {
-            font-family: var(--font-sans);
-            font-size: 11px;
-            font-weight: 700;
-            color: var(--text-primary);
-            text-transform: uppercase;
-            letter-spacing: 0.18em;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .result-section h3::before {
-            content: '';
-            display: inline-block;
-            width: 4px;
-            height: 4px;
-            background-color: var(--accent-surface);
-        }
-
-        /* 공통 버튼 스타일 */
-        .btn-custom {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            padding: 14px 18px;
-            font-family: var(--font-sans);
-            font-size: 13px;
-            font-weight: 600;
-            letter-spacing: 0.05em;
-            cursor: pointer;
-            transition: var(--transition);
-            border-radius: var(--pill-radius);
-            margin-top: 8px;
-        }
-
-        /* 1. 복사하기 버튼 (Outline sharp 스타일) */
-        .btn-copy {
-            background: var(--nordic-surface);
-            color: var(--text-primary);
-            border: 1px solid var(--nordic-border);
-        }
-        .btn-copy:hover {
-            background: var(--nordic-surface-subtle);
-            border-color: var(--nordic-border-strong);
-        }
-
-        /* 2. 견적서 전송 버튼 (Solid sharp 스타일) */
-        .btn-email {
-            background: var(--accent-surface);
-            color: var(--accent-text);
-            border: 1px solid var(--accent-surface);
-        }
-        .btn-email:hover {
-            opacity: 0.9;
-            border-color: var(--accent-surface);
-        }
-
-        .lang-selector {
-            display: flex;
-            gap: 4px;
-        }
-
-        .lang-btn {
-            background: var(--nordic-surface);
-            border: 1px solid var(--nordic-border);
-            color: var(--text-muted);
-            padding: 5px 12px;
-            font-size: 10px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.18em;
-            cursor: pointer;
-            transition: var(--transition);
-            border-radius: var(--pill-radius);
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .lang-btn::before {
-            content: '';
-            display: inline-block;
-            width: 4px;
-            height: 4px;
-            background-color: var(--text-muted);
-            transition: var(--transition);
-        }
-
-        .lang-btn:hover {
-            border-color: var(--nordic-border-strong);
-            color: var(--text-primary);
-            background: var(--nordic-surface-subtle);
-        }
-
-        .lang-btn:hover::before {
-            background-color: var(--text-primary);
-        }
-
-        .lang-btn.active {
-            background: var(--accent-surface);
-            color: var(--accent-text);
-            border-color: var(--accent-surface);
-        }
-
-        .lang-btn.active::before {
-            background-color: var(--accent-text);
-        }
-
-        @media (max-width: 900px) {
-            body {
-                padding: 16px;
-            }
-
-            .header {
-                padding: 30px 20px 20px 20px;
-            }
-
-            .form-body {
-                padding: 0 20px 30px 20px;
-            }
-
-            .options-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .form-main-wrapper {
-                flex-direction: column;
-                gap: 0;
-            }
-
-            .form-left-side {
-                border-right: none;
-                padding-right: 0;
-                border-bottom: 1px solid var(--nordic-border);
-                padding-bottom: 32px;
-                margin-bottom: 32px;
-            }
-
-            .result-section {
-                position: static;
-                width: 100%;
-                margin-top: 0;
-            }
-        }
-
-        .price-breakdown {
-            margin-bottom: 16px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            min-height: 40px;
-        }
-
-        .breakdown-item {
-            display: flex;
-            justify-content: space-between;
-            font-size: 13.5px;
-            color: var(--text-muted);
-            border-bottom: 1px solid var(--nordic-border);
-            padding-bottom: 6px;
-            letter-spacing: -0.015em;
-        }
-
-        .breakdown-item:last-child {
-            border-bottom: none;
-        }
-
-        .breakdown-item .item-price {
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-
-        .total-price-display {
-            font-size: 20px;
-            font-weight: 600;
-            color: var(--text-primary);
-            font-family: var(--font-sans);
-            text-align: right;
-            margin-bottom: 20px;
-            padding-top: 16px;
-            border-top: 1px solid var(--nordic-border-strong);
-            letter-spacing: -0.015em;
-        }
-
-        #convertedPriceText {
-            font-family: var(--font-sans);
-            color: var(--text-muted);
-        }
-
-        /* Custom Modal Styles */
-        .custom-modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(4px);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            opacity: 0;
-            transition: opacity 0.12s ease;
-        }
-
-        .custom-modal-overlay.active {
-            display: flex;
-            opacity: 1;
-        }
-
-        .custom-modal {
-            background: var(--nordic-surface);
-            padding: 32px 24px;
-            border: 1px solid var(--nordic-border-strong);
-            border-radius: var(--card-radius);
-            box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.08);
-            width: 90%;
-            max-width: 360px;
-            text-align: center;
-            transform: translateY(10px);
-            transition: transform 0.12s ease;
-        }
-
-        .custom-modal-overlay.active .custom-modal {
-            transform: translateY(0);
-        }
-
-        .custom-modal-message {
-            color: var(--text-primary);
-            font-size: 14px;
-            margin-bottom: 24px;
-            line-height: 1.6;
-            font-weight: 500;
-            white-space: pre-wrap;
-            word-break: keep-all;
-            letter-spacing: -0.015em;
-        }
-
-        .custom-modal-buttons {
-            display: flex;
-            gap: 8px;
-            justify-content: center;
-        }
-
-        .custom-modal-btn {
-            padding: 10px 20px;
-            font-family: var(--font-sans);
-            font-size: 13px;
-            font-weight: 600;
-            border: 1px solid var(--accent-surface);
-            background: var(--accent-surface);
-            color: var(--accent-text);
-            cursor: pointer;
-            transition: var(--transition);
-            border-radius: var(--pill-radius);
-            flex: 1;
-        }
-
-        .custom-modal-btn:hover {
-            opacity: 0.9;
-        }
-
-        .custom-modal-btn.cancel-btn {
-            border-color: var(--nordic-border);
-            background: var(--nordic-surface);
-            color: var(--text-primary);
-        }
-
-        .custom-modal-btn.cancel-btn:hover {
-            background: var(--nordic-surface-subtle);
-            border-color: var(--nordic-border-strong);
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Stylesheet & Script -->
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js" defer></script>
 </head>
 
 <body>
@@ -816,177 +40,297 @@
                 </div>
             </div>
             <p id="header-desc" data-i18n="headerDesc">상세 내역을 선택하고 입력하시면 예상 견적을 즉시 확인할 수 있습니다.</p>
+
+            <!-- 1. Onboarding Step Bar -->
+            <div class="onboarding-flow">
+                <div class="flow-step active" id="step-flow-1" onclick="goToStep(1)" style="cursor: pointer;">
+                    <span class="step-num">01</span>
+                    <span class="step-text" data-i18n="step1">견적 산출 & 마감일</span>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step" id="step-flow-2" onclick="goToStep(2)" style="cursor: pointer;">
+                    <span class="step-num">02</span>
+                    <span class="step-text" data-i18n="step2">프로젝트 상세 작성</span>
+                </div>
+            </div>
         </div>
 
         <form class="form-body" id="calculatorForm" onsubmit="return false;">
             <div class="form-main-wrapper">
                 <div class="form-left-side">
-                    <!-- 1. 사용 용도 -->
-                    <div class="form-group">
-                        <label class="field-title required" data-i18n="q1">1. 사용 용도</label>
-                        <div class="options-grid">
-                            <label class="option-card" id="useTypeRadioCard1">
-                                <input type="radio" name="useType" value="100000"
-                                    onclick="selectRadioCard('useType', this)">
-                                <span class="option-label" data-i18n="q1_1">방송용</span>
-                                <span class="option-price">100,000원</span>
-                            </label>
-                            <label class="option-card" id="useTypeRadioCard2">
-                                <input type="radio" name="useType" value="300000"
-                                    onclick="selectRadioCard('useType', this)">
-                                <span class="option-label" data-i18n="q1_2">상업용</span>
-                                <span class="option-price">300,000원</span>
-                            </label>
+                    <!-- SECTION 01: 견적 산출 & 마감일 -->
+                    <div class="form-section-block step-active" id="step-card-1">
+                        <div class="section-header">
+                            <span class="section-tag" data-i18n="sec1Tag">SECTION 01</span>
+                            <h2 class="section-title" data-i18n="sec1Title">견적 산출 & 마감일</h2>
                         </div>
-                    </div>
 
-                    <!-- 2. Live 2D 추가 -->
-                    <div class="form-group">
-                        <label class="field-title" data-i18n="q2">2. Live 2D 추가</label>
-                        <div class="description" data-i18n="q2_desc">Live 2D 추가시 기본 작업기간(14일)에 7일 추가되어 마감 기간이 작업 시작일로부터 21일이 됩니다. ※ 참고 가격이며 변동될 수 있습니다.</div>
-                        <div class="options-grid">
-                            <label class="option-card" id="live2dRadioCard1">
-                                <input type="radio" name="live2D" value="20000"
-                                    onclick="selectRadioCard('live2D', this)">
-                                <span class="option-label" data-i18n="q2_1">기본 파츠</span>
-                                <span class="option-price">+20,000원</span>
-                            </label>
-                            <label class="option-card" id="live2dRadioCard2">
-                                <input type="radio" name="live2D" value="50000"
-                                    onclick="selectRadioCard('live2D', this)">
-                                <span class="option-label" data-i18n="q2_2">상세 파츠</span>
-                                <span class="option-price">+50,000원</span>
-                            </label>
-                            <label class="option-card" id="live2dRadioCard3">
-                                <input type="radio" name="live2D" value="80000"
-                                    onclick="selectRadioCard('live2D', this)">
-                                <span class="option-label" data-i18n="q2_3">상세 파츠 + 2.5D</span>
-                                <span class="option-price">+80,000원</span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <!-- 3. 영상 길이 -->
-                    <div class="form-group">
-                        <label class="field-title required" data-i18n="q3">3. 영상 길이</label>
-                        <div class="description" data-i18n="q3_desc">기본 4분을 초과할 경우 30초당 5,000원의 추가금이 있습니다. 4:01의 경우 추가금이 발생합니다.</div>
-                        <div class="time-input-group">
-                            <div class="time-input-wrapper">
-                                <input type="number" id="videoMin" class="time-input" value="0" min="0"
-                                    onchange="this.value=Math.max(0, parseInt(this.value)||0)"
-                                    oninput="calculateTotal()">
-                                <span class="time-label" data-i18n="q3_min">분</span>
-                            </div>
-                            <div class="time-input-wrapper">
-                                <input type="number" id="videoSec" class="time-input" value="0" min="0" max="59"
-                                    onchange="this.value=Math.min(59, Math.max(0, parseInt(this.value)||0))"
-                                    oninput="calculateTotal()">
-                                <span class="time-label" data-i18n="q3_sec">초</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 4. 추가금 (다중선택) -->
-                    <div class="form-group">
-                        <label class="field-title" data-i18n="q4">4. 추가금 (다중선택)</label>
-
-                        <!-- Item A: 추가 인원 -->
-                        <div class="checkbox-container" id="extraPeopleContainer">
-                            <label class="checkbox-info">
-                                <input type="checkbox" id="extraPeopleCheck"
-                                    onchange="toggleCheckboxCard('extraPeople')">
-                                <div class="checkbox-text-group">
-                                    <span class="checkbox-title" data-i18n="q4_1">추가 인원</span>
-                                    <span class="checkbox-subtext" data-i18n="q4_1_sub">+10,000원 / 명</span>
-                                    <span style="font-size: 11px; color: var(--text-muted); margin-top: 4px; font-weight: 400;" data-i18n="q4_1_desc">기본
-                                        2인. 3인부터 추가금 발생</span>
+                        <!-- 1. 사용 용도 -->
+                        <div class="form-group">
+                            <div class="field-header">
+                                <div class="field-title-group">
+                                    <label class="field-title required" data-i18n="q1">1. 사용 용도</label>
                                 </div>
-                            </label>
-                            <div class="quantity-control">
-                                <span data-i18n="q4_1_qty">인원 수</span>
-                                <input type="number" id="extraPeopleQty" value="0" min="0"
-                                    onchange="this.value=Math.max(0, parseInt(this.value)||0)"
-                                    oninput="calculateTotal()">
+                                <span class="field-status" id="status-q1" data-i18n="statusUnselected">미선택</span>
+                            </div>
+                            <div class="options-grid">
+                                <label class="option-card" id="useTypeRadioCard1" role="radio" aria-checked="false">
+                                    <input type="radio" name="useType" value="140000"
+                                        onclick="selectRadioCard('useType', this)">
+                                    <span class="option-label" data-i18n="q1_1">방송용</span>
+                                    <span class="option-price" data-base-price="140000">140,000원</span>
+                                </label>
+                                <label class="option-card" id="useTypeRadioCard2" role="radio" aria-checked="false">
+                                    <input type="radio" name="useType" value="300000"
+                                        onclick="selectRadioCard('useType', this)">
+                                    <span class="option-label" data-i18n="q1_2">상업용</span>
+                                    <span class="option-price" data-base-price="300000">300,000원</span>
+                                </label>
                             </div>
                         </div>
 
-                        <!-- 빠른 마감 -->
-                        <div class="checkbox-container" id="fastDeadlineContainer">
-                            <label class="checkbox-info">
-                                <input type="checkbox" id="fastDeadlineCheck"
-                                    onchange="toggleCheckboxCard('fastDeadline')">
-                                <div class="checkbox-text-group">
-                                    <span class="checkbox-title" data-i18n="q4_2">빠른 마감</span>
-                                    <span class="checkbox-subtext" data-i18n="q4_2_sub">협의 후 결정</span>
+                        <!-- 2. Live 2D 추가 -->
+                        <div class="form-group">
+                            <div class="field-header">
+                                <div class="field-title-group">
+                                    <label class="field-title" data-i18n="q2">2. Live 2D 추가</label>
+                                    <button type="button" class="tooltip-trigger" onclick="toggleTooltip('tt-live2d', event)" aria-label="도움말">?</button>
                                 </div>
-                            </label>
+                                <div class="tooltip-box" id="tt-live2d" data-i18n="tt_live2d">
+                                    Live2D 리깅 파츠 분리 정도를 의미합니다. 상세 파츠 + 2.5D는 더 높은 입체감과 자연스러운 움직임을 구현합니다.
+                                </div>
+                            </div>
+
+                            <div class="checkbox-container" id="live2dContainer" role="checkbox" aria-checked="false">
+                                <label class="checkbox-info">
+                                    <input type="checkbox" id="live2dCheck" onchange="toggleLive2DCard()">
+                                    <div class="checkbox-text-group">
+                                        <span class="checkbox-title" data-i18n="q2_card_title">Live 2D 리깅 옵션 추가</span>
+                                        <span class="checkbox-subtext" data-i18n="q2_card_sub">+20,000원부터~ / 작업기간 +5일</span>
+                                    </div>
+                                </label>
+                            </div>
+
+                            <div class="live2d-suboptions-container" id="live2dSubContainer">
+                                <div class="description" data-i18n="q2_desc">Live 2D 추가시 기본 작업기간(10일)에 5일 추가되어 마감 기간이 작업 시작일로부터 15일이 됩니다. ※ 참고 가격이며 변동될 수 있습니다.</div>
+                                <div class="options-grid">
+                                    <label class="option-card" id="live2dRadioCard1" role="radio" aria-checked="false">
+                                        <input type="radio" name="live2D" value="20000"
+                                            onclick="selectRadioCard('live2D', this)">
+                                        <span class="option-label" data-i18n="q2_1">기본 파츠</span>
+                                        <span class="option-price" data-base-price="20000" data-price-prefix="+">+20,000원</span>
+                                    </label>
+                                    <label class="option-card" id="live2dRadioCard2" role="radio" aria-checked="false">
+                                        <input type="radio" name="live2D" value="50000"
+                                            onclick="selectRadioCard('live2D', this)">
+                                        <span class="option-label" data-i18n="q2_2">상세 파츠</span>
+                                        <span class="option-price" data-base-price="50000" data-price-prefix="+">+50,000원</span>
+                                    </label>
+                                    <label class="option-card" id="live2dRadioCard3" role="radio" aria-checked="false">
+                                        <input type="radio" name="live2D" value="80000"
+                                            onclick="selectRadioCard('live2D', this)">
+                                        <span class="option-label" data-i18n="q2_3">상세 파츠 + 2.5D</span>
+                                        <span class="option-price" data-base-price="80000" data-price-prefix="+">+80,000원</span>
+                                    </label>
+                                </div>
+                            </div>
                         </div>
 
-                        <!-- 간단 썸네일 -->
-                        <div class="checkbox-container" id="simpleThumbnailContainer">
-                            <label class="checkbox-info">
-                                <input type="checkbox" id="simpleThumbnailCheck"
-                                    onchange="toggleCheckboxCard('simpleThumbnail')">
-                                <div class="checkbox-text-group">
-                                    <span class="checkbox-title" id="title-thumb" data-i18n="q4_3">간단 썸네일</span>
-                                    <span class="checkbox-subtext" id="sub-thumb" data-i18n="q4_3_sub">+5,000원</span>
+                        <!-- 3. 영상 길이 -->
+                        <div class="form-group">
+                            <div class="field-header">
+                                <div class="field-title-group">
+                                    <label class="field-title required" data-i18n="q3">3. 영상 길이</label>
+                                    <button type="button" class="tooltip-trigger" onclick="toggleTooltip('tt-video', event)" aria-label="도움말">?</button>
                                 </div>
-                            </label>
+                                <div class="tooltip-box" id="tt-video" data-i18n="tt_video">
+                                    기본 4:00까지 초과금이 없으며, 4:01부터는 30초 단위로 10,000원이 자동 합산됩니다.
+                                </div>
+                            </div>
+                            <div class="description" data-i18n="q3_desc">기본 4분을 초과할 경우 30초당 10,000원의 추가금이 있습니다. 4:01의 경우 추가금이 발생합니다.</div>
+                            <div class="time-input-group">
+                                <div class="time-input-wrapper">
+                                    <input type="number" id="videoMin" class="time-input" value="0" min="0"
+                                        inputmode="numeric"
+                                        onchange="this.value=Math.max(0, parseInt(this.value)||0)"
+                                        oninput="calculateTotal()">
+                                    <span class="time-label" data-i18n="q3_min">분</span>
+                                </div>
+                                <div class="time-input-wrapper">
+                                    <input type="number" id="videoSec" class="time-input" value="0" min="0" max="59"
+                                        inputmode="numeric"
+                                        onchange="this.value=Math.min(59, Math.max(0, parseInt(this.value)||0))"
+                                        oninput="calculateTotal()">
+                                    <span class="time-label" data-i18n="q3_sec">초</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 4. 추가금 (다중선택) -->
+                        <div class="form-group">
+                            <label class="field-title" data-i18n="q4">4. 추가금 (다중선택)</label>
+
+                            <!-- Item A: 추가 인원 -->
+                            <div class="checkbox-container" id="extraPeopleContainer" role="checkbox" aria-checked="false">
+                                <label class="checkbox-info">
+                                    <input type="checkbox" id="extraPeopleCheck"
+                                        onchange="toggleCheckboxCard('extraPeople')">
+                                    <div class="checkbox-text-group">
+                                        <span class="checkbox-title" data-i18n="q4_1">추가 인원</span>
+                                        <span class="checkbox-subtext" data-i18n="q4_1_sub">+10,000원 / 명</span>
+                                        <span style="font-size: 11px; color: var(--text-muted); margin-top: 4px; font-weight: 400;" data-i18n="q4_1_desc">기본 2인 포함. 3인째부터 인당 +10,000원</span>
+                                    </div>
+                                </label>
+                                <div class="quantity-control">
+                                    <span data-i18n="q4_1_qty">추가 인원수</span>
+                                    <div class="qty-stepper">
+                                        <button type="button" class="qty-btn" onclick="changeQuantity('extraPeople', -1)" aria-label="수량 감소">-</button>
+                                        <input type="number" id="extraPeopleQty" value="0" min="0" readonly
+                                            oninput="calculateTotal()">
+                                        <button type="button" class="qty-btn" onclick="changeQuantity('extraPeople', 1)" aria-label="수량 증가">+</button>
+                                        <span class="qty-unit" data-i18n="unit_person">명</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 빠른 마감 -->
+                            <div class="checkbox-container" id="fastDeadlineContainer" role="checkbox" aria-checked="false">
+                                <label class="checkbox-info">
+                                    <input type="checkbox" id="fastDeadlineCheck"
+                                        onchange="toggleCheckboxCard('fastDeadline')">
+                                    <div class="checkbox-text-group">
+                                        <span class="checkbox-title" data-i18n="q4_2">빠른 마감</span>
+                                        <span class="checkbox-subtext" data-i18n="q4_2_sub">협의 후 결정</span>
+                                    </div>
+                                </label>
+                            </div>
+
+                            <!-- 간단 썸네일 -->
+                            <div class="checkbox-container" id="simpleThumbnailContainer" role="checkbox" aria-checked="false">
+                                <label class="checkbox-info">
+                                    <input type="checkbox" id="simpleThumbnailCheck"
+                                        onchange="toggleCheckboxCard('simpleThumbnail')">
+                                    <div class="checkbox-text-group">
+                                        <span class="checkbox-title" id="title-thumb" data-i18n="q4_3">간단 썸네일</span>
+                                        <span class="checkbox-subtext" id="sub-thumb" data-i18n="q4_3_sub">+8,000원</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- 5. 마감일 -->
+                        <div class="form-group">
+                            <div class="field-header">
+                                <div class="field-title-group">
+                                    <label class="field-title required" for="deadlineInfo" data-i18n="q5">5. 마감일</label>
+                                    <button type="button" class="tooltip-trigger" onclick="toggleTooltip('tt-deadline', event)" aria-label="도움말">?</button>
+                                </div>
+                                <span class="field-status" id="status-q5" data-i18n="statusUnwritten">미작성</span>
+                                <div class="tooltip-box" id="tt-deadline" data-i18n="tt_deadline">
+                                    지정 마감일이 필요하신 경우 날짜를 작성해 주시면 일정 가능 여부 및 빠른 마감 비용 산출이 진행됩니다.
+                                </div>
+                            </div>
+                            <div class="description" data-i18n="q5_desc">기본적으로 작업 시작 후 10일(Live2D 추가시 15일)입니다. 이보다 빠른 마감의 경우 날짜를 적어주시면 작업 난이도와 일정을 고려하여 가격을 책정해드립니다.</div>
+                            <input type="text" id="deadlineInfo" data-i18n-ph="q5_ph" placeholder="예: 2026년 06월 30일 (협의 가능)" autocomplete="off" oninput="calculateTotal()">
+                        </div>
+
+                        <!-- Step 1 Navigation Bar -->
+                        <div class="step-nav-bar">
+                            <button type="button" class="btn-step btn-step-next" onclick="nextStep()" data-i18n="btnNext1">다음 단계 (02. 상세 자료 작성) →</button>
                         </div>
                     </div>
 
-                    <!-- 5. 업로드 채널 -->
-                    <div class="form-group">
-                        <label class="field-title required" for="uploadChannel" data-i18n="q5">5. 업로드 채널</label>
-                        <input type="text" id="uploadChannel" data-i18n-ph="q5_ph" placeholder="예: 유튜브 채널명 또는 URL">
-                    </div>
+                    <!-- SECTION 02: 프로젝트 상세 자료 -->
+                    <div class="form-section-block step-hidden" id="step-card-2">
+                        <div class="section-header">
+                            <span class="section-tag" data-i18n="sec2Tag">SECTION 02</span>
+                            <h2 class="section-title" data-i18n="sec2Title">프로젝트 상세 자료</h2>
+                        </div>
 
-                    <!-- 6. 신청곡 링크 -->
-                    <div class="form-group">
-                        <label class="field-title required" for="musicInfo" data-i18n="q6">6. 신청곡 링크</label>
-                        <input type="text" id="musicInfo" data-i18n-ph="q6_ph" placeholder="신청곡 링크를 입력해주세요.">
-                    </div>
+                        <!-- 6. 신청곡 링크 -->
+                        <div class="form-group">
+                            <div class="field-header">
+                                <div class="field-title-group">
+                                    <label class="field-title required" for="musicInfo" data-i18n="q6">6. 신청곡 링크</label>
+                                </div>
+                                <span class="field-status" id="status-q6" data-i18n="statusUnwritten">미작성</span>
+                            </div>
+                            <input type="text" id="musicInfo" data-i18n-ph="q6_ph" placeholder="신청곡 링크를 입력해주세요." inputmode="url" autocomplete="off" oninput="calculateTotal()">
+                        </div>
 
-                    <!-- 7. 일러스트 음원 등의 자료 -->
-                    <div class="form-group">
-                        <label class="field-title required" for="materialsInfo" data-i18n="q7">7. 일러스트 음원 등의 자료</label>
-                        <div class="description" data-i18n="q7_desc">준비되지 않은 자료가 있다면 언제 전달 가능한지 적어주시길 바랍니다. 기본적으로 모든 자료를 전달받기 전에는 작업을 시작하지
-                            않습니다.</div>
-                        <textarea id="materialsInfo" data-i18n-ph="q7_ph" placeholder="자료 링크 및 준비 상태에 대해 상세히 작성해주세요."></textarea>
-                    </div>
+                        <!-- 7. 업로드 채널 -->
+                        <div class="form-group">
+                            <div class="field-header">
+                                <div class="field-title-group">
+                                    <label class="field-title required" for="uploadChannel" data-i18n="q7">7. 업로드 채널</label>
+                                </div>
+                                <span class="field-status" id="status-q7" data-i18n="statusUnwritten">미작성</span>
+                            </div>
+                            <input type="text" id="uploadChannel" data-i18n-ph="q7_ph" placeholder="예: 유튜브 채널명 또는 URL" inputmode="url" autocomplete="off" oninput="calculateTotal()">
+                        </div>
 
-                    <!-- 8. 참여자 라인업 -->
-                    <div class="form-group">
-                        <label class="field-title required" for="lineupInfo" data-i18n="q8">8. 참여자 라인업</label>
-                        <input type="text" id="lineupInfo" data-i18n-ph="q8_ph" placeholder="보컬, 일러스트레이터 등 참여자 라인업을 작성해주세요.">
-                    </div>
+                        <!-- 8. 일러스트 음원 등의 자료 -->
+                        <div class="form-group">
+                            <div class="field-header">
+                                <div class="field-title-group">
+                                    <label class="field-title required" for="materialsInfo" data-i18n="q8">8. 일러스트 음원 등의 자료</label>
+                                    <button type="button" class="tooltip-trigger" onclick="toggleTooltip('tt-materials', event)" aria-label="도움말">?</button>
+                                </div>
+                                <span class="field-status" id="status-q8" data-i18n="statusUnwritten">미작성</span>
+                                <div class="tooltip-box" id="tt-materials" data-i18n="tt_materials">
+                                    모든 자료(일러스트, 음원 등)가 최종 수령된 날짜부터 작업 카운트다운(10일/15일)이 시작됩니다.
+                                </div>
+                            </div>
+                            <div class="description" data-i18n="q8_desc">준비되지 않은 자료가 있다면 언제 전달 가능한지 적어주시길 바랍니다. 기본적으로 모든 자료를 전달받기 전에는 작업을 시작하지 않습니다.</div>
+                            <textarea id="materialsInfo" data-i18n-ph="q8_ph" placeholder="자료 링크 및 준비 상태에 대해 상세히 작성해주세요." oninput="calculateTotal()"></textarea>
+                        </div>
 
-                    <!-- 9. 마감일 -->
-                    <div class="form-group">
-                        <label class="field-title required" for="deadlineInfo" data-i18n="q9">9. 마감일</label>
-                        <div class="description" data-i18n="q9_desc">기본적으로 작업 시작 후 14일(Live2D 추가시 21일)입니다. 이보다 빠른 마감의 경우 날짜를 적어주시면 작업 난이도와
-                            일정을 고려하여 가격을 책정해드립니다.</div>
-                        <input type="text" id="deadlineInfo" data-i18n-ph="q9_ph" placeholder="예: 2026년 06월 30일 (협의 가능)">
-                    </div>
+                        <!-- 9. 참여자 라인업 -->
+                        <div class="form-group">
+                            <div class="field-header">
+                                <div class="field-title-group">
+                                    <label class="field-title required" for="lineupInfo" data-i18n="q9">9. 참여자 라인업</label>
+                                </div>
+                                <span class="field-status" id="status-q9" data-i18n="statusUnwritten">미작성</span>
+                            </div>
+                            <input type="text" id="lineupInfo" data-i18n-ph="q9_ph" placeholder="보컬, 일러스트레이터 등 참여자 라인업을 작성해주세요." autocomplete="off" oninput="calculateTotal()">
+                        </div>
 
-                    <!-- 10. 기타 신청 내용을 작성해주세요. -->
-                    <div class="form-group">
-                        <label class="field-title" for="otherDetails" data-i18n="q10">10. 기타 신청 내용을 작성해주세요.</label>
-                        <textarea id="otherDetails" data-i18n-ph="q10_ph" placeholder="추가 문의사항이나 전달하고 싶으신 메시지가 있다면 작성해주세요."></textarea>
+                        <!-- 10. 기타 신청 내용을 작성해주세요. -->
+                        <div class="form-group">
+                            <label class="field-title" for="otherDetails" data-i18n="q10">10. 기타 신청 내용을 작성해주세요.</label>
+                            <textarea id="otherDetails" data-i18n-ph="q10_ph" placeholder="추가 문의사항이나 전달하고 싶으신 메시지가 있다면 작성해주세요."></textarea>
+                        </div>
+
+                        <!-- Step 2 Navigation Bar -->
+                        <div class="step-nav-bar">
+                            <button type="button" class="btn-step btn-step-prev" onclick="prevStep()" data-i18n="btnPrev">← 이전 단계</button>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Result UI -->
                 <div class="result-section">
                     <h3 data-i18n="resTitle">예상 견적서</h3>
+
+                    <!-- Progress Tracker Card -->
+                    <div class="progress-card">
+                        <div class="progress-text-row">
+                            <span class="progress-label" data-i18n="progressTitle">필수 항목 작성</span>
+                            <span class="progress-val" id="progressCountText">0 / 6</span>
+                        </div>
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill" id="progressBarFill" style="width: 0%;"></div>
+                        </div>
+                    </div>
+
                     <div id="priceBreakdown" class="price-breakdown">
                         <div class="breakdown-item" style="color: var(--text-muted); font-size: 13px;">항목을 선택하면 내역이 표시됩니다.</div>
                     </div>
                     <div class="total-price-display" id="totalEstimateText">
                         총 예상 견적: 0원
                     </div>
-                    <div id="convertedPriceText"
-                        style="font-size: 13px; color: var(--text-muted); text-align: right; margin-top: -12px; margin-bottom: 16px; font-weight: 600;">
+                    <div id="convertedPriceText" style="font-size: 13px; color: var(--text-muted); text-align: right; margin-top: -12px; margin-bottom: 16px; font-weight: 600;">
                     </div>
                     <button class="btn-custom btn-copy" id="copyBtn" data-i18n="copyBtn">복사하기</button>
                     <button class="btn-custom btn-email" id="emailBtn" data-i18n="emailBtn">견적서 바로 전송</button>
@@ -998,763 +342,14 @@
         </form>
     </div>
 
-    <div
-        style="position: absolute; bottom: 24px; left: 24px; right: 24px; display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: var(--text-muted); font-weight: 400; z-index: 10; flex-wrap: wrap; gap: 8px; pointer-events: none;">
-        <span id="logNoticeText" style="opacity: 0.65;">※ 서비스 품질 및 문의 확인을 위한 최소한의 로그가 기록될 수 있습니다.</span>
+    <!-- Site Footer (Document Flow) -->
+    <footer class="site-footer">
+        <span id="logNoticeText" style="opacity: 0.65;" data-i18n="logNotice">※ 서비스 품질 및 문의 확인을 위한 최소한의 로그가 기록될 수 있습니다.</span>
         <span style="font-size: 12px; font-weight: 600; letter-spacing: 0.5px; margin-left: auto;">designed by WAVIT</span>
-    </div>
+    </footer>
 
-    <script>
-        // --- Security Utility: HTML Sanitizer to prevent DOM XSS ---
-        function escapeHTML(str) {
-            if (!str) return '';
-            return String(str)
-                .replace(/&/g, '&amp;')
-                .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;')
-                .replace(/"/g, '&quot;')
-                .replace(/'/g, '&#039;');
-        }
-
-        let currentLang = 'ko';
-        let exchangeRates = { USD: 0.00072, JPY: 0.11 }; // Fallback defaults
-        fetch('https://open.er-api.com/v6/latest/KRW')
-            .then(res => res.json())
-            .then(data => {
-                if (data && data.rates) {
-                    exchangeRates.USD = data.rates.USD || exchangeRates.USD;
-                    exchangeRates.JPY = data.rates.JPY || exchangeRates.JPY;
-                }
-                calculateTotal();
-            })
-            .catch(err => {
-                console.warn("Exchange rate fetch failed, using fallback defaults", err);
-                calculateTotal();
-            });
-
-        const i18n = {
-            ko: {
-                curr: "원",
-                headerDesc: "상세 내역을 선택하고 입력하시면 예상 견적을 즉시 확인할 수 있습니다.",
-                q1: "1. 사용 용도", q1_1: "방송용", q1_2: "상업용",
-                q2: "2. Live 2D 추가", q2_desc: "Live 2D 추가시 기본 작업기간(14일)에 7일 추가되어 마감 기간이 작업 시작일로부터 21일이 됩니다. ※ 참고 가격이며 변동될 수 있습니다.", q2_1: "기본 파츠", q2_2: "상세 파츠", q2_3: "상세 파츠 + 2.5D",
-                q3: "3. 영상 길이", q3_desc: "기본 4분을 초과할 경우 30초당 5,000원의 추가금이 있습니다. 4:01의 경우 추가금이 발생합니다.", q3_min: "분", q3_sec: "초",
-                q4: "4. 추가금 (다중선택)", q4_copy: "4. 추가금", q4_1: "추가 인원", q4_1_sub: "+10,000원 / 명", q4_1_desc: "기본 2인. 3인부터 추가금 발생", q4_1_qty: "인원 수", q4_2: "빠른 마감", q4_2_sub: "협의 후 결정", q4_3: "간단 썸네일", q4_3_sub: "+5,000원", c_thumb: "간단 썸네일",
-                q5: "5. 업로드 채널", q5_ph: "예: 유튜브 채널명 또는 URL",
-                q6: "6. 신청곡 링크", q6_ph: "신청곡 링크를 입력해주세요.",
-                q7: "7. 일러스트 음원 등의 자료", q7_copy: "7. 자료 첨부", q7_desc: "준비되지 않은 자료가 있다면 언제 전달 가능한지 적어주시길 바랍니다. 기본적으로 모든 자료를 전달받기 전에는 작업을 시작하지 않습니다.", q7_ph: "자료 링크 및 준비 상태에 대해 상세히 작성해주세요.",
-                q8: "8. 참여자 라인업", q8_copy: "8. 참여자 라인업", q8_ph: "보컬, 일러스트레이터 등 참여자 라인업을 작성해주세요.",
-                q9: "9. 마감일", q9_desc: "기본적으로 작업 시작 후 14일(Live2D 추가시 21일)입니다. 빠른 마감의 경우 날짜를 적어주시면 일정을 고려하여 가격을 책정해드립니다.", q9_ph: "예: 2026년 06월 30일 (협의 가능)",
-                q10: "10. 기타 신청 내용을 작성해주세요.", q10_copy: "10. 추가 요청", q10_ph: "추가 문의사항이나 전달하고 싶으신 메시지가 있다면 작성해주세요.",
-                resTitle: "예상 견적서", resEmpty: "항목을 선택하면 내역이 표시됩니다.", resTotal: "총 예상 견적", copyBtn: "복사하기", emailBtn: "견적서 바로 전송", resNotice: "※ 해당 금액은 예상 견적이며 실제 확정 견적과 다를 수 있습니다. 빠른 마감은 미포함된 가격입니다.",
-                alert1: "1. 사용 용도를 선택해주세요.", alert5: "5. 업로드 채널을 입력해주세요.", alert6: "6. 신청곡 링크를 입력해주세요.", alert7: "7. 자료를 입력해주세요.", alert8: "8. 참여자 라인업을 입력해주세요.", alert9: "9. 마감일을 입력해주세요.",
-                alertSuccess: "복사가 완료되었습니다. 문의 시 붙여넣기로 사용해주세요.", alertFail: "복사에 실패했습니다. 수동으로 복사해주세요.",
-                c_use: "사용 용도", c_live: "Live 2D", c_vidEx: "영상 길이 초과", c_ppl: "추가 인원", c_fast: "빠른 마감", c_nego: "협의 후 결정", c_none: "없음",
-                title: "WAVIT - 견적 계산기",
-                contactPlaceholder: "회신받을 연락처 (이메일 / 디스코드)",
-                alertContact: "연락처를 입력해주세요.",
-                confirmSend: "입력하신 내용이 모두 정확한가요?\n확인을 누르시면 견적서가 전송됩니다.",
-                sending: "전송 중...",
-                sendSuccess: "이메일로 견적서가 전송되었습니다.\n확인 후 회신드리겠습니다.",
-                sendFailPrefix: "전송에 실패했습니다:\n",
-                systemError: "시스템 오류가 발생했습니다.\n잠시 후 다시 시도해주세요.",
-                modalCancel: "취소",
-                modalConfirm: "확인",
-                emailSubject: "[WAVIT 견적서] 새로운 견적 문의가 도착했습니다.",
-                emailSenderName: "WAVIT 견적 계산기",
-                mailHeader: "[WAVIT 온라인 견적 문의]",
-                contactLabel: "연락처:",
-                logNotice: "※ 서비스 품질 및 문의 확인을 위한 최소한의 로그가 기록될 수 있습니다."
-            },
-            en: {
-                curr: " KRW",
-                headerDesc: "Select details below to instantly view your estimated quote.",
-                q1: "1. Usage", q1_1: "Streaming", q1_2: "Commercial",
-                q2: "2. Add Live 2D", q2_desc: "Adding Live 2D extends the base 14-day period by 7 days (total 21 days). ※ Prices are for reference only and subject to change.", q2_1: "Basic Parts", q2_2: "Detailed Parts", q2_3: "Detailed Parts + 2.5D",
-                q3: "3. Video Length", q3_desc: "Exceeding the base 4 mins incurs a fee of 5,000 KRW per 30 secs. (e.g., 4:01 applies the fee).", q3_min: "Min", q3_sec: "Sec",
-                q4: "4. Extra Fees (Multiple)", q4_copy: "4. Extra Fees", q4_1: "Extra Person", q4_1_sub: "+10,000 KRW / Person", q4_1_desc: "Base is 2 people. Extra fee from 3rd person.", q4_1_qty: "Quantity", q4_2: "Fast Deadline", q4_2_sub: "Negotiable", q4_3: "Simple Thumbnail", q4_3_sub: "+5,000 KRW", c_thumb: "Simple Thumbnail",
-                q5: "5. Upload Channel", q5_ph: "e.g., YouTube Channel Name or URL",
-                q6: "6. Song Link", q6_ph: "Enter the song link.",
-                q7: "7. Materials (Illustrations, Audio, etc.)", q7_copy: "7. Attached Materials", q7_desc: "Specify when missing materials will be provided. Work starts only after all materials are received.", q7_ph: "Describe material links and status in detail.",
-                q8: "8. Participant Lineup", q8_copy: "8. Lineup", q8_ph: "Please enter the participating vocalists and artists.",
-                q9: "9. Deadline", q9_desc: "Base is 14 days (21 for Live 2D). For faster deadlines, specify the date; price depends on schedule and difficulty.", q9_ph: "e.g., June 30, 2026 (Negotiable)",
-                q10: "10. Any other requests?", q10_copy: "10. Additional Requests", q10_ph: "Add any extra inquiries or messages here.",
-                resTitle: "ESTIMATE", resEmpty: "Select items to see the breakdown.", resTotal: "Total Estimate", copyBtn: "COPY", emailBtn: "Send Estimate Now", resNotice: "※ This is an estimated quote and may differ from the final price. Fast deadline fees are not included.",
-                alert1: "Please select 1. Usage.", alert5: "Please enter 5. Upload Channel.", alert6: "Please enter 6. Song Link.", alert7: "Please enter 7. Materials.", alert8: "Please enter 8. Participant Lineup.", alert9: "Please enter 9. Deadline.",
-                alertSuccess: "Copied successfully. Please paste it when inquiring.", alertFail: "Copy failed. Please copy manually.",
-                c_use: "Usage", c_live: "Live 2D", c_vidEx: "Video Time Extra", c_ppl: "Extra Person", c_fast: "Fast Deadline", c_nego: "Negotiable", c_none: "None",
-                title: "WAVIT - Estimate Calculator",
-                contactPlaceholder: "Contact info for reply (Email / Discord)",
-                alertContact: "Please enter your contact information.",
-                confirmSend: "Is all the information correct?\nClick Confirm to send the estimate.",
-                sending: "Sending...",
-                sendSuccess: "The estimate has been sent via email.\nWe will reply after reviewing.",
-                sendFailPrefix: "Failed to send:\n",
-                systemError: "A system error occurred.\nPlease try again later.",
-                modalCancel: "Cancel",
-                modalConfirm: "Confirm",
-                emailSubject: "[WAVIT Estimate] A new quote inquiry has arrived.",
-                emailSenderName: "WAVIT Estimate Calculator",
-                mailHeader: "[WAVIT Online Quote Inquiry]",
-                contactLabel: "Contact:",
-                logNotice: "※ Minimal logs may be recorded for service quality and inquiry verification."
-            },
-            ja: {
-                curr: " ウォン",
-                headerDesc: "詳細を選択・入力すると、すぐに見積もりを確認できます。",
-                q1: "1. 使用用途", q1_1: "配信用", q1_2: "商用",
-                q2: "2. Live 2D 追加", q2_desc: "Live 2Dを追加する場合、基本作業期間(14日)に7日が追加され、納期は21日となります。 ※ 参考価格であり、変動する場合があります。", q2_1: "基本パーツ分け", q2_2: "詳細パーツ分け", q2_3: "詳細パーツ分け + 2.5D",
-                q3: "3. 動画の長さ", q3_desc: "基本の4分を超える場合、30秒ごとに5,000ウォンの追加料金が発生します（例：4分01秒から適用）。", q3_min: "分", q3_sec: "秒",
-                q4: "4. 追加料金 (複数選択可)", q4_copy: "4. 追加料金", q4_1: "追加人数", q4_1_sub: "+10,000ウォン / 人", q4_1_desc: "基本2人。3人目から追加料金発生", q4_1_qty: "人数", q4_2: "お急ぎ納品", q4_2_sub: "要相談", q4_3: "簡単サムネイル", q4_3_sub: "+5,000ウォン", c_thumb: "簡単サムネイル",
-                q5: "5. アップロード先", q5_ph: "例：YouTubeチャンネル名またはURL",
-                q6: "6. 楽曲リンク", q6_ph: "楽曲リンクを入力してください。",
-                q7: "7. イラスト、音源などの資料", q7_copy: "7. 資料添付", q7_desc: "未準備の資料がある場合は提出予定日をご記入ください。全資料が揃うまで作業は開始しません。", q7_ph: "資料のリンクや準備状況を詳細にご記入ください。",
-                q8: "8. 参加者ラインナップ", q8_copy: "8. 参加者ラインナップ", q8_ph: "参加したボーカル、イラストレーター等のラインナップをご記入ください。",
-                q9: "9. 希望納期", q9_desc: "基本は14日（Live 2D追加時は21日）。お急ぎの場合は日付をご記入いただければスケジュールを考慮し価格を決定します。", q9_ph: "例：2026年06月 30日（相談可）",
-                q10: "10. その他", q10_copy: "10. その他", q10_ph: "追加の質問やメッセージがあればご記入ください。",
-                resTitle: "見積書", resEmpty: "項目を選択すると内訳が表示されます。", resTotal: "合計見積額", copyBtn: "コピーする", emailBtn: "見積書を即時送信", resNotice: "※ この金額は見積もりであり、実際の確定金額とは異なる場合があります。お急ぎ納品料金は含まれていません。",
-                alert1: "1. 使用用途を選択してください。", alert5: "5. アップロード先を入力してください。", alert6: "6. 楽曲リンクを入力してください。", alert7: "7. 資料を入力してください。", alert8: "8. 参加者ラインナップを入力してください。", alert9: "9. 希望納期を入力してください。",
-                alertSuccess: "コピーが完了しました。お問い合わせの際に貼り付けてご使用ください。", alertFail: "コピーに失敗しました。手動でコピーしてください。",
-                c_use: "使用用途", c_live: "Live 2D", c_vidEx: "動画の長さ超過", c_ppl: "追加人数", c_fast: "お急ぎ納品", c_nego: "要相談", c_none: "なし",
-                title: "WAVIT - 見積もり計算ツール",
-                contactPlaceholder: "返信用連絡先（メール / Discord）",
-                alertContact: "連絡先を入力してください。",
-                confirmSend: "入力内容に間違いはありませんか？\n「確認」を押すと見積もりが送信されます。",
-                sending: "送信中...",
-                sendSuccess: "見積もりをメールで送信しました。\n確認後、折り返しご連絡いたします。",
-                sendFailPrefix: "送信に失敗しました：\n",
-                systemError: "システムエラーが発生しました。\nしばらくしてからもう一度お試しください。",
-                modalCancel: "キャンセル",
-                modalConfirm: "確認",
-                emailSubject: "[WAVIT 見積もり] 新しいお見積もりのご依頼が届きました。",
-                emailSenderName: "WAVIT 見積もり計算ツール",
-                mailHeader: "[WAVIT オンラインお見積もり依頼]",
-                contactLabel: "連絡先："
-            }
-        };
-
-        function changeLanguage(lang) {
-            currentLang = lang;
-            const t = i18n[lang];
-
-            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-            const activeLangBtn = document.getElementById('lang-' + lang);
-            if (activeLangBtn) activeLangBtn.classList.add('active');
-
-            // Data-driven i18n update
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if (t[key] !== undefined) {
-                    el.textContent = t[key];
-                }
-            });
-
-            document.querySelectorAll('[data-i18n-ph]').forEach(el => {
-                const key = el.getAttribute('data-i18n-ph');
-                if (t[key] !== undefined) {
-                    el.placeholder = t[key];
-                }
-            });
-
-            const prices = document.querySelectorAll('.option-price');
-            if (prices.length >= 5) {
-                prices[0].textContent = "100,000" + t.curr;
-                prices[1].textContent = "300,000" + t.curr;
-                prices[2].textContent = "+20,000" + t.curr;
-                prices[3].textContent = "+50,000" + t.curr;
-                prices[4].textContent = "+80,000" + t.curr;
-            }
-
-            document.title = t.title;
-            const contactInfoInput = document.getElementById('contactInfo');
-            if (contactInfoInput) contactInfoInput.placeholder = t.contactPlaceholder;
-            
-            const modalCancelBtn = document.getElementById('customModalCancel');
-            if (modalCancelBtn) modalCancelBtn.textContent = t.modalCancel;
-            
-            const modalConfirmBtn = document.getElementById('customModalConfirm');
-            if (modalConfirmBtn) modalConfirmBtn.textContent = t.modalConfirm;
-            
-            const logNoticeEl = document.getElementById('logNoticeText');
-            if (logNoticeEl && t.logNotice) logNoticeEl.textContent = t.logNotice;
-
-            if (typeof gtag === 'function') {
-                gtag('event', 'select_content', {
-                    content_type: 'language_button',
-                    item_id: lang
-                });
-            }
-
-            calculateTotal();
-        }
-
-        function selectRadioCard(groupName, inputEl) {
-            // 1. Toggle selection logic based on previous state
-            if (inputEl.dataset.wasChecked === "true") {
-                inputEl.checked = false;
-                inputEl.dataset.wasChecked = "false";
-            } else {
-                // Reset all radios in the same group
-                document.getElementsByName(groupName).forEach(el => {
-                    el.dataset.wasChecked = "false";
-                });
-                inputEl.dataset.wasChecked = "true";
-            }
-
-            // 2. Update UI classes for all cards in the group
-            document.getElementsByName(groupName).forEach(el => {
-                const card = el.closest('.option-card');
-                if (card) {
-                    if (el.checked) {
-                        card.classList.add('selected');
-
-                        if (typeof gtag === 'function') {
-                            gtag('event', 'select_item', {
-                                item_list_name: groupName,
-                                item_name: el.value
-                            });
-                        }
-                    } else {
-                        card.classList.remove('selected');
-                    }
-                }
-            });
-
-            // 3. Recalculate price
-            calculateTotal();
-        }
-
-        function toggleCheckboxCard(type) {
-            const checkbox = document.getElementById(type + 'Check');
-            const container = document.getElementById(type + 'Container');
-            const qtyInput = document.getElementById(type + 'Qty');
-            if (qtyInput) {
-                if (checkbox.checked) {
-                    container.classList.add('checked');
-                    if (parseInt(qtyInput.value) === 0) qtyInput.value = 1;
-                } else {
-                    container.classList.remove('checked');
-                    qtyInput.value = 0;
-                }
-            } else {
-                if (checkbox.checked) container.classList.add('checked');
-                else container.classList.remove('checked');
-            }
-            calculateTotal();
-        }
-
-        document.querySelectorAll('.option-card input:checked').forEach(input => {
-            const card = input.closest('.option-card');
-            if (card) card.classList.add('selected');
-            input.dataset.wasChecked = "true";
-        });
-
-        function calculateTotal() {
-            const t = i18n[currentLang];
-            const useTypeActive = document.querySelector('input[name="useType"]:checked');
-            const useTypeValue = useTypeActive ? parseInt(useTypeActive.value) : 0;
-            const live2dActive = document.querySelector('input[name="live2D"]:checked');
-            const live2dValue = live2dActive ? parseInt(live2dActive.value) : 0;
-
-            const extraPeopleCheck = document.getElementById('extraPeopleCheck').checked;
-            const extraPeopleQty = parseInt(document.getElementById('extraPeopleQty').value) || 0;
-            const extraPeopleCost = extraPeopleCheck && extraPeopleQty > 0 ? extraPeopleQty * 10000 : 0;
-
-            const videoMin = parseInt(document.getElementById('videoMin').value) || 0;
-            const videoSec = parseInt(document.getElementById('videoSec').value) || 0;
-            const totalSeconds = (videoMin * 60) + videoSec;
-            let extraTimeCost = 0;
-            if (totalSeconds > 240) {
-                const extraUnits = Math.ceil((totalSeconds - 240) / 30);
-                extraTimeCost = extraUnits * 5000;
-            }
-
-            const thumbCheck = document.getElementById('simpleThumbnailCheck').checked;
-            const thumbCost = thumbCheck ? 5000 : 0;
-
-            const total = useTypeValue + live2dValue + extraPeopleCost + extraTimeCost + thumbCost;
-            const formattedTotal = total.toLocaleString();
-
-            let breakdownHTML = '';
-            if (useTypeValue > 0) {
-                const useTypeName = useTypeActive.closest('.option-card').querySelector('.option-label').textContent;
-                breakdownHTML += `<div class="breakdown-item"><span>${t.c_use} (${useTypeName})</span><span class="item-price">${useTypeValue.toLocaleString()}${t.curr}</span></div>`;
-            }
-            if (live2dValue > 0) {
-                const live2dName = live2dActive.closest('.option-card').querySelector('.option-label').textContent;
-                breakdownHTML += `<div class="breakdown-item"><span>${t.c_live} (${live2dName})</span><span class="item-price">+${live2dValue.toLocaleString()}${t.curr}</span></div>`;
-            }
-            if (extraTimeCost > 0) {
-                breakdownHTML += `<div class="breakdown-item"><span>${t.c_vidEx}</span><span class="item-price">+${extraTimeCost.toLocaleString()}${t.curr}</span></div>`;
-            }
-            if (extraPeopleCost > 0) {
-                breakdownHTML += `<div class="breakdown-item"><span>${t.c_ppl} (${extraPeopleQty})</span><span class="item-price">+${extraPeopleCost.toLocaleString()}${t.curr}</span></div>`;
-            }
-            if (thumbCost > 0) {
-                breakdownHTML += `<div class="breakdown-item"><span>${t.c_thumb}</span><span class="item-price">+5,000${t.curr}</span></div>`;
-            }
-            if (document.getElementById('fastDeadlineCheck').checked) {
-                breakdownHTML += `<div class="breakdown-item"><span>${t.c_fast}</span><span class="item-price">${t.c_nego}</span></div>`;
-            }
-            if (breakdownHTML === '') {
-                breakdownHTML = `<div class="breakdown-item" style="color: var(--text-muted); font-size: 13px;">${t.resEmpty}</div>`;
-            }
-
-            document.getElementById('priceBreakdown').innerHTML = breakdownHTML;
-            document.getElementById('totalEstimateText').innerText = `${t.resTotal}: ${formattedTotal}${t.curr}`;
-            const convertedEl = document.getElementById('convertedPriceText');
-            if (currentLang === 'en' && exchangeRates.USD) {
-                convertedEl.innerText = `≈ $${(total * exchangeRates.USD).toFixed(2)} USD`;
-            } else if (currentLang === 'ja' && exchangeRates.JPY) {
-                convertedEl.innerText = `≈ ¥${Math.floor(total * exchangeRates.JPY).toLocaleString()} JPY`;
-            } else {
-                convertedEl.innerText = '';
-            }
-        }
-
-        document.getElementById('copyBtn').addEventListener('click', function () {
-            const t = i18n[currentLang];
-            const v = getFormValues();
-            const validation = validateFormInputs(v, t);
-            if (!validation.valid) { showAlert(validation.message, validation.focusId); return; }
-
-            const useTypeText = v.useTypeActive.closest('.option-card').querySelector('.option-label').textContent;
-            const useTypeValue = v.useTypeValue;
-
-            const live2DText = v.live2DActive ? v.live2DActive.closest('.option-card').querySelector('.option-label').textContent : t.c_none;
-            const live2dValue = v.live2dValue;
-
-            const videoMin = v.videoMin;
-            const videoSec = v.videoSec;
-            const totalSeconds = (videoMin * 60) + videoSec;
-            let extraTimeCost = 0;
-            if (totalSeconds > 240) {
-                const extraUnits = Math.ceil((totalSeconds - 240) / 30);
-                extraTimeCost = extraUnits * 5000;
-            }
-
-            const extraPeopleCheck = v.extraPeopleCheck;
-            const extraPeopleQty = v.extraPeopleQty;
-            const extraPeopleCost = extraPeopleCheck && extraPeopleQty > 0 ? extraPeopleQty * 10000 : 0;
-
-            const thumbCheck = v.thumbCheck;
-            const thumbCost = thumbCheck ? 5000 : 0;
-
-            const total = useTypeValue + live2dValue + extraPeopleCost + extraTimeCost + thumbCost;
-
-            if (typeof gtag === 'function') {
-                gtag('event', 'generate_lead', {
-                    currency: 'KRW',
-                    value: total,
-                    selected_usage: useTypeText,
-                    selected_live2d: live2DText,
-                    has_extra_people: extraPeopleCheck,
-                    fast_deadline: v.fastDeadlineCheck
-                });
-            }
-
-            const formattedTotal = total.toLocaleString();
-            let convertedStr = "";
-            if (currentLang === 'en' && exchangeRates.USD) {
-                convertedStr = ` (≈ $${(total * exchangeRates.USD).toFixed(2)} USD)`;
-            } else if (currentLang === 'ja' && exchangeRates.JPY) {
-                convertedStr = ` (≈ ¥${Math.floor(total * exchangeRates.JPY).toLocaleString()} JPY)`;
-            }
-
-            const useTypePriceText = `${useTypeValue.toLocaleString()}${t.curr}`;
-            const live2DPriceText = `+${live2dValue.toLocaleString()}${t.curr}`;
-            const videoPriceText = extraTimeCost > 0 ? `+${extraTimeCost.toLocaleString()}${t.curr}` : `0${t.curr}`;
-
-            let plainExtraDetails = "";
-            let htmlExtraDetails = "";
-
-            if (extraPeopleCheck && extraPeopleQty > 0) {
-                plainExtraDetails += `\n   - ${t.c_ppl}: ${extraPeopleQty} (+${extraPeopleCost.toLocaleString()}${t.curr})`;
-                htmlExtraDetails += `<div>- ${t.c_ppl}: ${extraPeopleQty} <span style="font-size: 12px;">(+${extraPeopleCost.toLocaleString()}${t.curr})</span></div>`;
-            }
-            if (thumbCheck) {
-                plainExtraDetails += `\n   - ${t.c_thumb} (+5,000${t.curr})`;
-                htmlExtraDetails += `<div>- ${t.c_thumb} <span style="font-size: 12px;">(+5,000${t.curr})</span></div>`;
-            }
-            if (v.fastDeadlineCheck) {
-                plainExtraDetails += `\n   - ${t.c_fast}: ${t.c_nego}`;
-                htmlExtraDetails += `<div>- ${t.c_fast}: ${t.c_nego}</div>`;
-            }
-
-            if (plainExtraDetails === "") {
-                plainExtraDetails = " " + t.c_none;
-                htmlExtraDetails = t.c_none;
-            }
-
-            // Sanitize user inputs to prevent DOM XSS
-            const safeUploadChannel = escapeHTML(v.uploadChannel);
-            const safeMusicInfo = escapeHTML(v.musicInfo);
-            const safeMaterialsInfo = escapeHTML(v.materialsInfo);
-            const safeLineupInfo = escapeHTML(v.lineupInfo);
-            const safeDeadlineInfo = escapeHTML(v.deadlineInfo);
-            const safeOtherText = escapeHTML(v.otherDetails || t.c_none);
-
-            const plainText = `[WAVIT]
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-${t.q1}: ${useTypeText} (${useTypePriceText})
-${t.q2}: ${live2DText} (${live2DPriceText})
-${t.q3}: ${videoMin}${t.q3_min} ${videoSec}${t.q3_sec} (${videoPriceText})
-${t.q4_copy}:${plainExtraDetails.replace(/\n/g, '\n  ')}
-${t.q5}: ${safeUploadChannel}
-${t.q6}: ${safeMusicInfo}
-${t.q7_copy}: ${safeMaterialsInfo}
-${t.q8_copy}: ${safeLineupInfo}
-${t.q9}: ${safeDeadlineInfo}
-${t.q10_copy}: ${safeOtherText}
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-${t.resTotal}: ${formattedTotal}${t.curr}${typeof convertedStr !== 'undefined' ? convertedStr : ''}
-${t.resNotice}`;
-
-            // 운영자용 비동기 이메일 로그 전송
-            sendCopyLogToAdmin(plainText);
-
-            const htmlText = `
-    <table width="100%" style="max-width: 540px; border-collapse: collapse; font-family: 'Inter', -apple-system, sans-serif; color: #000000; line-height: 1.8; background-color: #ffffff; border: 1px solid #d4d4d8; border-top: 2px solid #000000;">
-        <tr>
-            <td style="padding: 32px;">
-                <h2 style="margin: 0 0 8px 0; color: #000000; font-size: 20px; font-weight: 600; text-transform: uppercase; letter-spacing: -0.015em;">WAVIT - ${t.resTitle}</h2>
-                <p style="margin: 0 0 24px 0; color: #71717a; font-size: 13px;">${t.headerDesc}</p>
-                
-                <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
-                    <tr style="border-bottom: 1px solid #d4d4d8;"><td style="padding: 12px 0; width: 120px; color: #71717a; font-weight: 600;">${t.q1}</td><td style="padding: 12px 0; font-weight: 700; color: #000000;">${useTypeText} <span style="color: #000000; font-size: 12px; font-weight: 600;">(${useTypePriceText})</span></td></tr>
-                    <tr style="border-bottom: 1px solid #d4d4d8;"><td style="padding: 12px 0; color: #71717a; font-weight: 600;">${t.q2}</td><td style="padding: 12px 0; font-weight: 700; color: #000000;">${live2DText} <span style="color: #000000; font-size: 12px; font-weight: 600;">(${live2DPriceText})</span></td></tr>
-                    <tr style="border-bottom: 1px solid #d4d4d8;"><td style="padding: 12px 0; color: #71717a; font-weight: 600;">${t.q3}</td><td style="padding: 12px 0; font-weight: 700; color: #000000;">${videoMin}${t.q3_min} ${videoSec}${t.q3_sec} <span style="color: #000000; font-size: 12px; font-weight: 600;">(${videoPriceText})</span></td></tr>
-                    <tr style="border-bottom: 1px solid #d4d4d8;"><td style="padding: 12px 0; color: #71717a; font-weight: 600; vertical-align: top;">${t.q4_copy}</td><td style="padding: 12px 0; font-weight: 600; color: #000000; margin: 0;">${htmlExtraDetails}</td></tr>
-                    <tr style="border-bottom: 1px solid #d4d4d8;"><td style="padding: 12px 0; color: #71717a; font-weight: 600;">${t.q5}</td><td style="padding: 12px 0; color: #000000;">${safeUploadChannel}</td></tr>
-                    <tr style="border-bottom: 1px solid #d4d4d8;"><td style="padding: 12px 0; color: #71717a; font-weight: 600;">${t.q6}</td><td style="padding: 12px 0; color: #000000;">${safeMusicInfo}</td></tr>
-                    <tr style="border-bottom: 1px solid #d4d4d8;"><td style="padding: 12px 0; color: #71717a; font-weight: 600; vertical-align: top;">${t.q7_copy}</td><td style="padding: 12px 0; color: #000000; white-space: pre-wrap;">${safeMaterialsInfo}</td></tr>
-                    <tr style="border-bottom: 1px solid #d4d4d8;"><td style="padding: 12px 0; color: #71717a; font-weight: 600;">${t.q8_copy}</td><td style="padding: 12px 0; color: #000000;">${safeLineupInfo}</td></tr>
-                    <tr style="border-bottom: 1px solid #d4d4d8;"><td style="padding: 12px 0; color: #71717a; font-weight: 600;">${t.q9}</td><td style="padding: 12px 0; color: #000000;">${safeDeadlineInfo}</td></tr>
-                    <tr style="border-bottom: 1px solid #000000;"><td style="padding: 12px 0; color: #71717a; font-weight: 600; vertical-align: top;">${t.q10_copy}</td><td style="padding: 12px 0; color: #000000; white-space: pre-wrap;">${safeOtherText}</td></tr>
-                </table>
-                
-                <div style="margin-top: 24px; padding: 20px; background-color: #fafafa; text-align: center; border: 1px solid #000000;">
-                    <span style="font-size: 18px; font-weight: 700; color: #000000;">${t.resTotal}: ${formattedTotal}${t.curr}</span>
-                    <div style="font-size: 13px; color: #71717a; font-weight: 600; margin-top: 4px;">${typeof convertedStr !== 'undefined' ? convertedStr : ''}</div>
-                </div>
-                <p style="font-size: 11px; color: #71717a; text-align: center; margin: 12px 0 0 0; font-weight: 500;">${t.resNotice}</p>
-            </td>
-        </tr>
-    </table>
-    `;
-
-            const blobHTML = new Blob([htmlText], { type: 'text/html' });
-            const blobText = new Blob([plainText], { type: 'text/plain' });
-
-            if (typeof ClipboardItem !== "undefined" && navigator.clipboard && navigator.clipboard.write) {
-                navigator.clipboard.write([new ClipboardItem({ 'text/html': blobHTML, 'text/plain': blobText })])
-                    .then(() => showAlert(t.alertSuccess))
-                    .catch(() => fallbackRichTextCopy(htmlText, plainText, t));
-            } else {
-                fallbackRichTextCopy(htmlText, plainText, t);
-            }
-
-            function fallbackRichTextCopy(html, plain, t) {
-                const tempDiv = document.createElement("div");
-                tempDiv.innerHTML = html;
-
-                // CRITICAL: Keep the element inside the viewport so the browser fully computes its layout and styles for the clipboard.
-                tempDiv.style.position = "fixed";
-                tempDiv.style.top = "50%";
-                tempDiv.style.left = "50%";
-                tempDiv.style.transform = "translate(-50%, -50%)";
-                tempDiv.style.width = "100%";
-                tempDiv.style.opacity = "0"; // Make it invisible
-                tempDiv.style.pointerEvents = "none";
-                tempDiv.style.zIndex = "-1000";
-
-                document.body.appendChild(tempDiv);
-
-                const range = document.createRange();
-                range.selectNodeContents(tempDiv);
-                const selection = window.getSelection();
-                selection.removeAllRanges();
-                selection.addRange(range);
-
-                try {
-                    // Rely on the browser's native copy engine to properly serialize the DOM into Rich Text
-                    const successful = document.execCommand('copy');
-                    if (successful) {
-                        showAlert(t.alertSuccess);
-                    } else {
-                        fallbackPlainTextOnly(plain, t);
-                    }
-                } catch (err) {
-                    fallbackPlainTextOnly(plain, t);
-                } finally {
-                    selection.removeAllRanges();
-                    document.body.removeChild(tempDiv);
-                }
-            }
-
-            function fallbackPlainTextOnly(plain, t) {
-                const textArea = document.createElement("textarea");
-                textArea.value = plain;
-                textArea.style.position = "fixed";
-                textArea.style.top = "0";
-                textArea.style.left = "0";
-                textArea.style.opacity = "0";
-                document.body.appendChild(textArea);
-                textArea.select();
-                try {
-                    document.execCommand('copy');
-                    showAlert(t.alertSuccess);
-                } catch (e) {
-                    showAlert(t.alertFail);
-                }
-                document.body.removeChild(textArea);
-            }
-        });
-
-        // --- Centralized Form Data Extractor & Validation ---
-        function getFormValues() {
-            const useTypeActive = document.querySelector('input[name="useType"]:checked');
-            const live2DActive = document.querySelector('input[name="live2D"]:checked');
-            const videoMin = Math.max(0, parseInt(document.getElementById('videoMin').value) || 0);
-            const videoSec = Math.min(59, Math.max(0, parseInt(document.getElementById('videoSec').value) || 0));
-            const extraPeopleCheck = document.getElementById('extraPeopleCheck').checked;
-            const extraPeopleQty = extraPeopleCheck ? Math.max(0, parseInt(document.getElementById('extraPeopleQty').value) || 0) : 0;
-            const fastDeadlineCheck = document.getElementById('fastDeadlineCheck').checked;
-            const thumbCheck = document.getElementById('simpleThumbnailCheck').checked;
-
-            return {
-                useTypeActive,
-                useTypeValue: useTypeActive ? parseInt(useTypeActive.value) : 0,
-                live2DActive,
-                live2dValue: live2DActive ? parseInt(live2DActive.value) : 0,
-                videoMin,
-                videoSec,
-                extraPeopleCheck,
-                extraPeopleQty,
-                fastDeadlineCheck,
-                thumbCheck,
-                uploadChannel: document.getElementById('uploadChannel').value.trim(),
-                musicInfo: document.getElementById('musicInfo').value.trim(),
-                materialsInfo: document.getElementById('materialsInfo').value.trim(),
-                lineupInfo: document.getElementById('lineupInfo').value.trim(),
-                deadlineInfo: document.getElementById('deadlineInfo').value.trim(),
-                otherDetails: document.getElementById('otherDetails').value.trim()
-            };
-        }
-
-        function validateFormInputs(v, t) {
-            if (!v.useTypeActive) return { valid: false, message: t.alert1 };
-            if (!v.uploadChannel) return { valid: false, message: t.alert5, focusId: 'uploadChannel' };
-            if (!v.musicInfo) return { valid: false, message: t.alert6, focusId: 'musicInfo' };
-            if (!v.materialsInfo) return { valid: false, message: t.alert7, focusId: 'materialsInfo' };
-            if (!v.lineupInfo) return { valid: false, message: t.alert8, focusId: 'lineupInfo' };
-            if (!v.deadlineInfo) return { valid: false, message: t.alert9, focusId: 'deadlineInfo' };
-            return { valid: true };
-        }
-
-        // 1.5 운영자용 비동기 이메일 로그 전송 함수 (5초 디바운싱 Throttling 적용)
-        let lastLogTime = 0;
-        function sendCopyLogToAdmin(plainText) {
-            try {
-                const now = Date.now();
-                if (now - lastLogTime < 5000) return; // Throttle: Maximum 1 log per 5 seconds
-                lastLogTime = now;
-
-                const accessTime = new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' });
-                const userAgent = navigator.userAgent || 'Unknown';
-                const screenSize = `${window.screen.width || 0}x${window.screen.height || 0}`;
-                const lang = typeof currentLang !== 'undefined' ? currentLang : 'ko';
-                const pageUrl = window.location.href;
-
-                const messageBody = `[WAVIT 복사하기 이벤트 로그]
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-■ 접속 일시: ${accessTime}
-■ 언어 설정: ${lang}
-■ 화면 해상도: ${screenSize}
-■ 페이지 URL: ${pageUrl}
-■ 브라우저 (User-Agent):
-${userAgent}
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-■ 복사된 견적 내역:
-${plainText}`;
-
-                fetch('https://api.staticforms.xyz/submit', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        accessKey: "sf_767a29f020dab85042ce629f",
-                        subject: "[WAVIT 견적서 Log] 복사하기 클릭 로그",
-                        name: "WAVIT Copy Logger",
-                        email: "no-reply@wavit.com",
-                        message: messageBody
-                    })
-                }).catch(err => console.error('[CopyLog Error]', err));
-            } catch (e) {
-                console.error('[CopyLog Exception]', e);
-            }
-        }
-
-        // 2. showAlert, showConfirm, showPrompt 함수 정의
-        function showAlert(message, focusElementId = null) {
-            const overlay = document.getElementById('customModalOverlay');
-            const msgEl = document.getElementById('customModalMessage');
-            const cancelBtn = document.getElementById('customModalCancel');
-            const confirmBtn = document.getElementById('customModalConfirm');
-            const inputEl = document.getElementById('modalContactInput');
-
-            msgEl.textContent = message;
-            cancelBtn.style.display = 'none';
-            inputEl.style.display = 'none';
-            overlay.classList.add('active');
-
-            confirmBtn.onclick = function () {
-                overlay.classList.remove('active');
-                if (focusElementId) document.getElementById(focusElementId).focus();
-            };
-        }
-
-        function showPrompt(message, onConfirm) {
-            const overlay = document.getElementById('customModalOverlay');
-            const msgEl = document.getElementById('customModalMessage');
-            const cancelBtn = document.getElementById('customModalCancel');
-            const confirmBtn = document.getElementById('customModalConfirm');
-            const inputEl = document.getElementById('modalContactInput');
-            const t = i18n[currentLang];
-
-            msgEl.textContent = message;
-            inputEl.style.display = 'block';
-            inputEl.value = '';
-            inputEl.placeholder = t.contactPlaceholder;
-            inputEl.style.borderColor = 'var(--nordic-border)'; // reset border color on show
-            cancelBtn.style.display = 'block';
-            
-            overlay.classList.add('active');
-            inputEl.focus();
-
-            cancelBtn.onclick = () => overlay.classList.remove('active');
-            
-            confirmBtn.onclick = function() {
-                const val = inputEl.value.trim();
-                if (!val) {
-                    inputEl.style.borderColor = 'red';
-                    return;
-                }
-                overlay.classList.remove('active');
-                onConfirm(val);
-            };
-        }
-
-        document.getElementById('emailBtn').addEventListener('click', function () {
-            const t = i18n[currentLang];
-            
-            // 1. 유효성 검사 (기존 연락처 검사 부분 삭제)
-            const v = getFormValues();
-            const validation = validateFormInputs(v, t);
-            if (!validation.valid) { showAlert(validation.message, validation.focusId); return; }
-
-            // 2. prompt 모달 띄우기
-            showPrompt(t.confirmSend, (contactInfo) => {
-                // 입력된 contactInfo로 전송 진행
-                const btn = document.getElementById('emailBtn');
-                const originalText = btn.textContent;
-                btn.textContent = t.sending;
-                btn.disabled = true;
-
-                // 비용 계산 및 텍스트 구성 로직
-                const useTypeText = v.useTypeActive ? v.useTypeActive.closest('.option-card').querySelector('.option-label').textContent : t.c_none;
-                const useTypeValue = v.useTypeValue;
-                const live2DText = v.live2DActive ? v.live2DActive.closest('.option-card').querySelector('.option-label').textContent : t.c_none;
-                const live2dValue = v.live2dValue;
-                const uploadChannel = v.uploadChannel;
-                const musicInfo = v.musicInfo;
-                const materialsInfo = v.materialsInfo;
-                const lineupInfo = v.lineupInfo;
-                const deadlineInfo = v.deadlineInfo;
-
-                const videoMin = parseInt(document.getElementById('videoMin').value) || 0;
-                const videoSec = parseInt(document.getElementById('videoSec').value) || 0;
-                const totalSeconds = (videoMin * 60) + videoSec;
-                let extraTimeCost = 0;
-                if (totalSeconds > 240) {
-                    const extraUnits = Math.ceil((totalSeconds - 240) / 30);
-                    extraTimeCost = extraUnits * 5000;
-                }
-
-                const extraPeopleCheck = document.getElementById('extraPeopleCheck').checked;
-                const extraPeopleQty = parseInt(document.getElementById('extraPeopleQty').value) || 0;
-                const extraPeopleCost = extraPeopleCheck && extraPeopleQty > 0 ? extraPeopleQty * 10000 : 0;
-
-                const thumbCheck = document.getElementById('simpleThumbnailCheck').checked;
-                const thumbCost = thumbCheck ? 5000 : 0;
-
-                const total = useTypeValue + live2dValue + extraPeopleCost + extraTimeCost + thumbCost;
-                const formattedTotal = total.toLocaleString();
-
-                let plainExtraDetails = "";
-                if (extraPeopleCheck && extraPeopleQty > 0) plainExtraDetails += `
-   - ${t.c_ppl}: ${extraPeopleQty} (+${extraPeopleCost.toLocaleString()}${t.curr})`;
-                if (thumbCheck) plainExtraDetails += `
-   - ${t.c_thumb} (+5,000${t.curr})`;
-                if (document.getElementById('fastDeadlineCheck').checked) plainExtraDetails += `
-   - ${t.c_fast}: ${t.c_nego}`;
-                if (plainExtraDetails === "") plainExtraDetails = " " + t.c_none;
-
-                const otherText = document.getElementById('otherDetails').value.trim() || t.c_none;
-
-                // 4. 전송할 텍스트 본문 구성
-                const messageBody = `${t.mailHeader}
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-${t.contactLabel} ${contactInfo}
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-${t.q1}: ${useTypeText} (${useTypeValue.toLocaleString()}${t.curr})
-${t.q2}: ${live2DText} (+${live2dValue.toLocaleString()}${t.curr})
-${t.q3}: ${videoMin}${t.q3_min} ${videoSec}${t.q3_sec} (+${extraTimeCost.toLocaleString()}${t.curr})
-${t.q4_copy}:${plainExtraDetails.replace(/\n/g, '\n  ')}
-${t.q5}: ${uploadChannel}
-${t.q6}: ${musicInfo}
-${t.q7_copy}: ${materialsInfo}
-${t.q8_copy}: ${lineupInfo}
-${t.q9}: ${deadlineInfo}
-${t.q10_copy}: ${otherText}
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-${t.resTotal}: ${formattedTotal}${t.curr}`;
-
-                // 5. Static Forms 데이터 전송 (Fetch API)
-                fetch('https://api.staticforms.xyz/submit', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        accessKey: "sf_767a29f020dab85042ce629f",
-                        subject: t.emailSubject,
-                        name: t.emailSenderName,
-                        email: "no-reply@wavit.com", // Static Forms 필수 입력 항목 (임의 주소)
-                        message: messageBody
-                    })
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            showAlert(t.sendSuccess);
-                        } else {
-                            showAlert(t.sendFailPrefix + data.message);
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        showAlert(t.systemError);
-                    })
-                    .finally(() => {
-                        // 성공/실패 여부와 관계없이 버튼 상태 원래대로 복구
-                        btn.textContent = originalText;
-                        btn.disabled = false;
-                    });
-            });
-        });
-    </script>
-
-<div class="custom-modal-overlay" id="customModalOverlay">
+    <!-- Custom Modal Overlay -->
+    <div class="custom-modal-overlay" id="customModalOverlay">
         <div class="custom-modal">
             <div class="custom-modal-message" id="customModalMessage"></div>
             <input type="text" id="modalContactInput" style="display:none; width: 100%; margin-bottom: 20px;" />
@@ -1764,21 +359,6 @@ ${t.resTotal}: ${formattedTotal}${t.curr}`;
             </div>
         </div>
     </div>
-
-    <script>
-        window.addEventListener('DOMContentLoaded', function () {
-            const queryString = window.location.search;
-            if (queryString) {
-                const urlParams = new URLSearchParams(queryString);
-                if (urlParams.get('embedded') === 'true') {
-                    const emailBtn = document.getElementById('emailBtn');
-                    if (emailBtn) {
-                        emailBtn.style.display = 'none';
-                    }
-                }
-            }
-        });
-    </script>
 
 </body>
 
