@@ -268,6 +268,15 @@ textarea {
     min-height: 100px;
 }
 
+.option-card.disabled {
+    opacity: 0.35;
+    pointer-events: none;
+    cursor: not-allowed;
+    filter: grayscale(1);
+    background: var(--nordic-surface-subtle);
+    border-color: var(--nordic-border);
+}
+
 .checkbox-container {
     background: var(--nordic-surface);
     border: 1px solid var(--nordic-border);
@@ -372,9 +381,8 @@ textarea {
     display: flex;
     align-items: center;
     gap: 8px;
-    opacity: 0.5;
-    pointer-events: none;
-    transition: var(--transition);
+    opacity: 1;
+    pointer-events: auto;
     padding-right: 16px;
 }
 
@@ -389,88 +397,74 @@ textarea {
     font-weight: 600;
 }
 
-.qty-stepper {
-    display: flex;
-    align-items: center;
-    gap: 4px;
+.checkbox-container.checked .quantity-control span {
+    color: var(--accent-text) !important;
 }
 
-.qty-btn {
-    width: 36px;
+.extra-people-stepper-wrapper {
+    background: #ffffff !important;
+    border: 1px solid var(--nordic-border) !important;
+    padding: 4px 10px;
     height: 36px;
-    min-width: 36px;
-    min-height: 36px;
-    background: var(--nordic-surface);
-    border: 1px solid var(--nordic-border);
-    border-radius: var(--cell-radius);
-    color: var(--text-primary);
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
     display: flex;
     align-items: center;
-    justify-content: center;
-    transition: var(--transition);
-    user-select: none;
-    /* 모바일 터치 영역 확보 */
-    touch-action: manipulation;
-    -webkit-tap-highlight-color: transparent;
 }
 
-.qty-btn:hover {
-    background: var(--nordic-surface-subtle);
-    border-color: var(--nordic-border-strong);
+.extra-people-stepper-wrapper .time-input {
+    width: 36px;
+    color: #111827 !important;
 }
 
-.checkbox-container.checked .qty-btn {
-    background: var(--accent-surface);
-    color: var(--accent-text);
-    border-color: var(--accent-text);
+.qty-unit,
+.quantity-control .qty-unit,
+.checkbox-container.checked .quantity-control .qty-unit,
+.extra-people-stepper-wrapper .qty-unit {
+    color: #111827 !important;
+    font-size: 13.5px;
+    font-weight: 600;
+    margin-left: 6px;
 }
 
 .checkbox-container.checked .qty-btn:hover {
-    opacity: 0.85;
+    background: #000000;
+    color: #ffffff;
+}
+
+.qty-stepper input[type=number] {
+    width: 36px;
+    height: 34px;
+    border: none;
+    border-left: 1px solid var(--nordic-border);
+    border-right: 1px solid var(--nordic-border);
+    background: transparent;
+    text-align: center;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-primary);
+    outline: none;
+    padding: 0;
+    -moz-appearance: textfield;
+}
+
+.checkbox-container.checked .qty-stepper input[type=number] {
+    border-color: var(--nordic-border);
+    color: #000000;
+}
+
+.qty-stepper input[type=number]::-webkit-outer-spin-button,
+.qty-stepper input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 .qty-unit {
     font-size: 13px;
     font-weight: 600;
     color: var(--text-primary);
-    margin-left: 2px;
+    margin-left: 6px;
 }
 
-.quantity-control input[type="number"] {
-    width: 44px;
-    padding: 5px 0;
-    border: 1px solid var(--nordic-border);
-    border-radius: var(--cell-radius);
-    text-align: center;
-    font-family: inherit;
-    font-size: 14px;
-    font-weight: 600;
-    outline: none;
-    background: var(--nordic-surface);
-    color: var(--text-primary);
-    -webkit-appearance: none;
-    -moz-appearance: textfield;
-}
-
-.quantity-control input[type="number"]::-webkit-outer-spin-button,
-.quantity-control input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
-.checkbox-container.checked .quantity-control input[type="number"] {
-    background: var(--accent-surface);
-    color: var(--accent-text);
-    border-color: var(--accent-text);
-}
-
-.quantity-control input[type="number"]:focus {
-    border-color: var(--nordic-border-strong);
-    box-shadow: 0 0 0 1px var(--nordic-border-strong);
-}
 
 .time-input-group {
     display: flex;
@@ -514,6 +508,59 @@ textarea {
     padding: 0;
     /* iOS auto-zoom 방지 */
     -webkit-text-size-adjust: 100%;
+}
+
+.stepper-input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.stepper-input-container .time-input {
+    width: 56px;
+    padding-right: 18px;
+    text-align: center;
+}
+
+.stepper-btn-group {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    width: 16px;
+    height: 28px;
+    border-left: 1px solid var(--nordic-border);
+}
+
+.stepper-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 8px;
+    line-height: 1;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+    user-select: none;
+    padding: 0;
+}
+
+.stepper-btn:hover {
+    background: var(--nordic-surface-subtle);
+    color: var(--text-primary);
+}
+
+.stepper-btn:active {
+    background: var(--nordic-border);
+}
+
+.stepper-btn.stepper-up {
+    border-bottom: 1px solid var(--nordic-border);
 }
 
 .time-input::-webkit-outer-spin-button,
@@ -681,11 +728,19 @@ textarea {
 .breakdown-item {
     display: flex;
     justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
     font-size: 13.5px;
     color: var(--text-muted);
     border-bottom: 1px solid var(--nordic-border);
     padding-bottom: 6px;
     letter-spacing: -0.015em;
+}
+
+.breakdown-item > span:first-child {
+    flex: 1;
+    min-width: 0;
+    word-break: break-word;
 }
 
 .breakdown-item:last-child {
@@ -695,11 +750,14 @@ textarea {
 .breakdown-item .item-price {
     font-weight: 600;
     color: var(--text-primary);
+    white-space: nowrap;
+    flex-shrink: 0;
+    text-align: right;
 }
 
 .total-price-display {
-    font-size: 20px;
-    font-weight: 600;
+    font-size: 18px;
+    font-weight: 700;
     color: var(--text-primary);
     font-family: var(--font-sans);
     text-align: right;
@@ -707,6 +765,8 @@ textarea {
     padding-top: 16px;
     border-top: 1px solid var(--nordic-border-strong);
     letter-spacing: -0.015em;
+    white-space: nowrap;
+    word-break: keep-all;
 }
 
 #convertedPriceText {
@@ -833,15 +893,28 @@ textarea {
     }
 
     .options-grid {
-        grid-template-columns: 1fr;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        width: 100%;
+        box-sizing: border-box;
+        gap: 10px;
+    }
+
+    .option-card {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 16px 14px;
     }
 
     .form-main-wrapper {
+        width: 100%;
         flex-direction: column;
         gap: 0;
     }
 
     .form-left-side {
+        width: 100%;
+        box-sizing: border-box;
         border-right: none;
         padding-right: 0;
         border-bottom: 1px solid var(--nordic-border);
@@ -853,6 +926,7 @@ textarea {
         position: static;
         width: 100%;
         margin-top: 0;
+        box-sizing: border-box;
     }
 
     /* 툴팁: 모바일에서 화면 너비에 맞게 조정 */
@@ -869,13 +943,14 @@ textarea {
    ========================================== */
 @media (max-width: 480px) {
     body {
-        padding: 16px 0 0 0;
+        padding: 0 0 80px 0;
     }
 
     .container {
         border-left: none;
         border-right: none;
         border-radius: 0;
+        border-top: none;
     }
 
     .header {
@@ -888,6 +963,18 @@ textarea {
 
     .form-body {
         padding: 0 16px 24px 16px;
+    }
+
+    .options-grid {
+        grid-template-columns: 1fr !important;
+        width: 100% !important;
+        gap: 10px;
+    }
+
+    .option-card {
+        width: 100% !important;
+        box-sizing: border-box;
+        padding: 16px 16px !important;
     }
 
     /* 체크박스 컨테이너: 수량 조절기가 좁은 화면에서 아래로 내려가도록 */
@@ -925,16 +1012,23 @@ textarea {
         min-width: 100px;
     }
 
-    /* 영어 긴 텍스트 넘침 방지 */
-    .btn-step {
-        font-size: 12px;
-        padding: 11px 14px;
-        word-break: break-word;
+    /* 스텝 네비게이션 바: 엄지손가락으로 누르기 쉬운 풀위치 버튼 */
+    .step-nav-bar {
+        flex-direction: column-reverse;
+        gap: 10px;
+        width: 100%;
     }
 
-    /* 스텝 네비게이션 바 */
-    .step-nav-bar {
-        flex-wrap: wrap;
+    .btn-step {
+        width: 100% !important;
+        min-height: 48px !important;
+        font-size: 15px !important;
+        justify-content: center !important;
+        box-sizing: border-box;
+    }
+
+    .btn-step-next {
+        margin-left: 0 !important;
     }
 
     /* 온보딩 플로우 폰트 크기 조정 */
@@ -983,13 +1077,22 @@ textarea {
 .onboarding-flow {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     margin-top: 20px;
-    padding: 12px 16px;
+    padding: 12px 20px;
+    width: 100%;
+    box-sizing: border-box;
     background: var(--nordic-surface-subtle);
     border: 1px solid var(--nordic-border);
     border-radius: var(--card-radius);
-    flex-wrap: wrap;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+}
+
+.onboarding-flow::-webkit-scrollbar {
+    display: none;
 }
 
 .flow-step {
@@ -998,6 +1101,7 @@ textarea {
     gap: 8px;
     opacity: 0.55;
     transition: var(--transition);
+    flex-shrink: 0;
 }
 
 .flow-step.active {
@@ -1025,6 +1129,7 @@ textarea {
     color: var(--text-muted);
     font-size: 12px;
     font-weight: 700;
+    flex-shrink: 0;
 }
 
 /* 2. Form Section Blocks & Headers */
@@ -1217,39 +1322,51 @@ textarea {
     transition: width 0.25s ease;
 }
 
-/* 6. Step Wizard Visibility & Smooth Height Transition */
+/* 6. Step Wizard Visibility & Direction-Aware Slide Animations */
 .form-left-side {
     transition: height 0.32s cubic-bezier(0.4, 0, 0.2, 1);
     will-change: height;
 }
 
 .form-section-block {
-    transition: opacity 0.22s cubic-bezier(0.4, 0, 0.2, 1), transform 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: opacity 0.24s cubic-bezier(0.4, 0, 0.2, 1), transform 0.24s cubic-bezier(0.4, 0, 0.2, 1);
     will-change: opacity, transform;
 }
 
 .form-section-block.step-hidden {
     display: none !important;
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateX(0);
 }
 
-.form-section-block.step-leaving {
+.form-section-block.step-leaving-left {
     display: block !important;
     opacity: 0;
-    transform: translateY(-6px);
+    transform: translateX(-16px);
 }
 
-.form-section-block.step-entering {
+.form-section-block.step-leaving-right {
     display: block !important;
     opacity: 0;
-    transform: translateY(6px);
+    transform: translateX(16px);
+}
+
+.form-section-block.step-entering-left {
+    display: block !important;
+    opacity: 0;
+    transform: translateX(-16px);
+}
+
+.form-section-block.step-entering-right {
+    display: block !important;
+    opacity: 0;
+    transform: translateX(16px);
 }
 
 .form-section-block.step-active {
     display: block !important;
     opacity: 1;
-    transform: translateY(0);
+    transform: translateX(0);
 }
 
 .onboarding-flow .flow-step {
@@ -1308,19 +1425,25 @@ textarea {
     border-color: var(--nordic-border-strong);
 }
 
-/* 7. Collapsible Live 2D Sub-Options Container (Option A) */
+/* 7. Collapsible Live 2D Sub-Options Container (Smooth CSS Grid Transition) */
 .live2d-suboptions-container {
-    max-height: 0;
-    overflow: hidden;
+    display: grid;
+    grid-template-rows: 0fr;
     opacity: 0;
-    transition: max-height 0.3s cubic-bezier(0, 1, 0, 1), opacity 0.25s ease, margin-top 0.25s ease;
+    margin-top: 0;
+    transition: grid-template-rows 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+                margin-top 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.live2d-suboptions-container > .live2d-suboptions-inner {
+    overflow: hidden;
 }
 
 .live2d-suboptions-container.expanded {
-    max-height: 500px;
+    grid-template-rows: 1fr;
     opacity: 1;
     margin-top: 14px;
-    transition: max-height 0.35s cubic-bezier(1, 0, 1, 0), opacity 0.25s ease, margin-top 0.25s ease;
 }
 
 /* --------------------------------------------------------------------------
@@ -1371,6 +1494,238 @@ span.lang-fading-in:not(.section-tag):not(.lang-btn):not(.btn-step) {
 .section-tag.lang-fading-in {
   display: inline-flex !important;
 }
+
+/* Toast Notification Component */
+.toast-notification {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%) translateY(16px);
+  background: rgba(17, 24, 39, 0.94);
+  backdrop-filter: blur(12px);
+  color: #ffffff;
+  padding: 12px 22px;
+  border-radius: 9999px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.25), 0 8px 10px -6px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  z-index: 10000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 90vw;
+  text-align: center;
+}
+
+.toast-notification.active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Mobile Floating Sticky Quote Summary Bar (< 768px) */
+.mobile-sticky-bar {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(17, 24, 39, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: #ffffff;
+    padding: 12px 20px;
+    z-index: 999;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.2);
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+@media (max-width: 768px) {
+    .mobile-sticky-bar {
+        display: flex;
+    }
+
+    .toast-notification {
+        bottom: 76px;
+    }
+}
+
+.mobile-sticky-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.mobile-sticky-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: #94a3b8;
+    letter-spacing: -0.01em;
+}
+
+.mobile-sticky-val {
+    font-size: 17px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: -0.02em;
+}
+
+.mobile-sticky-btn {
+    background: #ffffff;
+    color: #111827;
+    border: none;
+    border-radius: 9999px;
+    padding: 9px 18px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+    flex-shrink: 0;
+}
+
+.mobile-sticky-btn:active {
+    transform: scale(0.96);
+    opacity: 0.9;
+}
+
+/* --------------------------------------------------------------------------
+   Narrow Mobile Responsive Enhancements (< 640px)
+   -------------------------------------------------------------------------- */
+@media (max-width: 640px) {
+    /* Enable horizontal scroll on step indicator bar without overflowing */
+    .onboarding-flow {
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 6px;
+        scrollbar-width: none;
+    }
+    .onboarding-flow::-webkit-scrollbar {
+        display: none;
+    }
+    .flow-step {
+        flex-shrink: 0;
+    }
+
+    /* Thumb-friendly 48px high action navigation buttons */
+    .step-nav-bar {
+        flex-direction: column-reverse;
+        gap: 10px;
+    }
+
+    .btn-step {
+        width: 100%;
+        min-height: 48px;
+        font-size: 15px;
+        justify-content: center;
+    }
+
+    .btn-step-next {
+        margin-left: 0;
+    }
+
+    /* Prevent iOS Safari auto-zoom on input focus */
+    input[type="text"],
+    input[type="number"],
+    select,
+    textarea {
+        font-size: 16px !important;
+    }
+
+    /* Card active tactile touch state */
+    .option-card:active,
+    .use-type-card:active {
+        transform: scale(0.98);
+    }
+}
+
+/* ==========================================================================
+   Nordic Glass-Cut Micro UI/UX Enhancements (Strictly Preserving Original Design)
+   ========================================================================== */
+
+/* 1. Price Display Tabular Nums & Pulse Effect */
+.total-price-display {
+    font-variant-numeric: tabular-nums;
+    transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.total-price-display.price-updated {
+    transform: scale(1.03);
+}
+
+/* 2. Option Cards Tactile Micro Hover & Click Snap */
+.option-card {
+    transition: transform 0.12s ease, border-color 0.12s ease, background-color 0.12s ease, box-shadow 0.12s ease;
+}
+
+@media (hover: hover) {
+    .option-card:hover {
+        transform: translateY(-1px);
+    }
+}
+
+/* 3. Active Step Pulsing Dot Indicator */
+.flow-step.active .step-num {
+    position: relative;
+}
+
+.flow-step.active .step-num::after {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    background-color: var(--accent-surface);
+    border-radius: 50%;
+    margin-left: 4px;
+    vertical-align: middle;
+    animation: nordic-step-pulse 1.8s infinite ease-in-out;
+}
+
+@keyframes nordic-step-pulse {
+    0%, 100% { transform: scale(0.8); opacity: 0.5; }
+    50% { transform: scale(1.5); opacity: 1; }
+}
+
+/* 4. Dark Mode Top Rim Light (Glass-Cut Precision Edge) */
+@media (prefers-color-scheme: dark) {
+    .container, .option-card, .form-section-block {
+        border-top-color: rgba(255, 255, 255, 0.14) !important;
+    }
+}
+
+/* 5. Mobile Glassmorphic Floating Summary Drawer Bar */
+@media (max-width: 767px) {
+    .mobile-estimate-bar {
+        background: rgba(250, 250, 250, 0.92) !important;
+        backdrop-filter: blur(16px) saturate(180%);
+        -webkit-backdrop-filter: blur(16px) saturate(180%);
+        border-top: 1px solid var(--nordic-border-strong);
+        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    @media (prefers-color-scheme: dark) {
+        .mobile-estimate-bar {
+            background: rgba(18, 18, 21, 0.92) !important;
+            border-top-color: rgba(255, 255, 255, 0.15);
+        }
+    }
+}
+
+/* 6. Ultrawide QHD/4K (>= 1440px) Fluid Width Optimization */
+@media (min-width: 1440px) {
+    .container {
+        max-width: 1140px;
+    }
+}
+
 
 
 

@@ -1,0 +1,4 @@
+node_modules/
+screenshots/
+qa_test_report.json
+qa_test_suite.js

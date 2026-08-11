@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WAVIT - 견적서 복사 텍스트 양식 미리보기</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background-color: var(--nordic-bg, #f8fafc);
+            color: #1e293b;
+            font-family: 'Inter', -apple-system, sans-serif;
+            padding: 40px 20px;
+            margin: 0;
+        }
+
+        .preview-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .preview-header {
+            text-align: center;
+            margin-bottom: 36px;
+        }
+
+        .preview-badge {
+            display: inline-block;
+            background: #111827;
+            color: #ffffff;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 5px 14px;
+            border-radius: 9999px;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .preview-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #0f172a;
+            margin: 0 0 10px 0;
+            letter-spacing: -0.02em;
+        }
+
+        .preview-subtitle {
+            font-size: 14px;
+            color: #64748b;
+            margin: 0;
+        }
+
+        /* Preset Switcher Buttons */
+        .preset-bar {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 32px;
+        }
+
+        .preset-btn {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            padding: 10px 18px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #334155;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        .preset-btn:hover {
+            border-color: #0f172a;
+            color: #0f172a;
+            transform: translateY(-1px);
+        }
+
+        .preset-btn.active {
+            background: #0f172a;
+            color: #ffffff;
+            border-color: #0f172a;
+            box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+        }
+
+        /* Grid Layout */
+        .preview-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 28px;
+        }
+
+        @media (max-width: 900px) {
+            .preview-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .preview-card {
+            background: #ffffff;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+            padding: 24px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .card-title-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: #f1f5f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #0f172a;
+            margin: 0;
+        }
+
+        .btn-copy-preview {
+            background: #0f172a;
+            color: #ffffff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-copy-preview:hover {
+            background: #1e293b;
+            transform: translateY(-1px);
+        }
+
+        /* Plain Text Box */
+        .plain-text-box {
+            background: #0f172a;
+            color: #f8fafc;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            line-height: 1.65;
+            padding: 20px;
+            border-radius: 12px;
+            white-space: pre-wrap;
+            word-break: break-all;
+            overflow-x: auto;
+            flex: 1;
+            margin: 0;
+            border: 1px solid #1e293b;
+        }
+
+        /* HTML Rich Render Frame */
+        .html-render-wrapper {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            flex: 1;
+        }
+
+        .back-link-bar {
+            text-align: center;
+            margin-top: 36px;
+        }
+
+        .back-link {
+            color: #0f172a;
+            font-weight: 600;
+            font-size: 14px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+        }
+
+        .back-link:hover {
+            background: #f1f5f9;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="preview-container">
+        <div class="preview-header">
+            <span class="preview-badge">WAVIT Quote Copy Preview</span>
+            <h1 class="preview-title">견적서 복사 텍스트 양식 미리보기</h1>
+            <p class="preview-subtitle">견적서 복사하기 버튼을 눌렀을 때 생성되는 일반 텍스트 및 이메일 HTML 테이블 양식을 실시간으로 확인하세요.</p>
+        </div>
+
+        <!-- Sample Presets -->
+        <div class="preset-bar">
+            <button class="preset-btn active" onclick="loadPreset('cover_broadcast')">🎵 커버곡 (방송용 1.0배)</button>
+            <button class="preset-btn" onclick="loadPreset('cover_commercial')">💼 커버곡 (상업용 1.5배)</button>
+            <button class="preset-btn" onclick="loadPreset('original_commercial')">✨ 오리지널 곡 (상업용 1.5배)</button>
+            <button class="preset-btn" onclick="loadPreset('full_options')">🚀 풀 옵션 (Live2D + 인원추가 + 썸네일)</button>
+        </div>
+
+        <!-- Dual Column Preview Grid -->
+        <div class="preview-grid">
+            <!-- Left: Plain Text Preview -->
+            <div class="preview-card">
+                <div class="card-header-row">
+                    <div class="card-title-group">
+                        <div class="card-icon">📝</div>
+                        <h2 class="card-title">일반 텍스트 복사 양식 (Plain Text)</h2>
+                    </div>
+                    <button class="btn-copy-preview" onclick="copyPlainText()">
+                        <span>📋</span> <span>텍스트 복사</span>
+                    </button>
+                </div>
+                <pre class="plain-text-box" id="plainTextOutput"></pre>
+            </div>
+
+            <!-- Right: Rich Text Email Table Preview -->
+            <div class="preview-card">
+                <div class="card-header-row">
+                    <div class="card-title-group">
+                        <div class="card-icon">📧</div>
+                        <h2 class="card-title">리치 텍스트 테이블 양식 (HTML Table)</h2>
+                    </div>
+                    <button class="btn-copy-preview" onclick="copyHtmlRichText()">
+                        <span>📋</span> <span>리치 텍스트 복사</span>
+                    </button>
+                </div>
+                <div class="html-render-wrapper" id="htmlRenderOutput"></div>
+            </div>
+        </div>
+
+        <div class="back-link-bar">
+            <a href="index.html" class="back-link">← 견적 계산기 메인 페이지로 돌아가기</a>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toastNotification" class="toast-notification" role="status" aria-live="polite"></div>
+
+    <script>
+        const presets = {
+            cover_broadcast: {
+                songType: '커버곡',
+                songTypePrice: 140000,
+                useType: '방송용',
+                multiplier: 1.0,
+                live2D: '선택하지 않음',
+                live2DPrice: 0,
+                videoMin: 3, videoSec: 30, videoPrice: 0,
+                extraPeopleQty: 0, extraPeoplePrice: 0,
+                thumbCheck: false,
+                fastDeadline: false,
+                deadline: '2026년 06월 30일',
+                music: '커버 신청곡 제목 - Artist Name',
+                channel: 'https://youtube.com/@wavit_official',
+                materials: '구글 드라이브 링크 (일러스트 PSD, 음원 WAV)',
+                lineup: '보컬: WAVIT / 일러스트: Designer A / 믹싱: Mixer B',
+                other: '영상 분위기: 화려하고 감성적인 애니메이션 연출 희망합니다.'
+            },
+            cover_commercial: {
+                songType: '커버곡',
+                songTypePrice: 140000,
+                useType: '상업용',
+                multiplier: 1.5,
+                live2D: '선택하지 않음',
+                live2DPrice: 0,
+                videoMin: 4, videoSec: 0, videoPrice: 0,
+                extraPeopleQty: 0, extraPeoplePrice: 0,
+                thumbCheck: false,
+                fastDeadline: false,
+                deadline: '2026년 07월 15일',
+                music: '상업 커버 곡명',
+                channel: 'https://youtube.com/@commercial_channel',
+                materials: '구글 드라이브 자료 첨부',
+                lineup: '보컬 1명',
+                other: '상업용 앨범 아트 연출 포함'
+            },
+            original_commercial: {
+                songType: '오리지널 곡',
+                songTypePrice: 140000,
+                useType: '상업용',
+                multiplier: 1.5,
+                live2D: '선택하지 않음',
+                live2DPrice: 0,
+                videoMin: 3, videoSec: 45, videoPrice: 0,
+                extraPeopleQty: 0, extraPeoplePrice: 0,
+                thumbCheck: true,
+                fastDeadline: false,
+                deadline: '2026년 08월 01일',
+                music: '자작 오리지널 곡명 (Original Track)',
+                channel: 'https://chzzk.naver.com/wavit_stream',
+                materials: '오리지널 일러스트 Layer PSD 및 마스터링 음원',
+                lineup: '작곡: Composer X / 보컬: Vocal Y',
+                other: '오리지널 신곡 음원 발매 기념 MV 제작'
+            },
+            full_options: {
+                songType: '오리지널 곡',
+                songTypePrice: 140000,
+                useType: '상업용',
+                multiplier: 1.5,
+                live2D: '상세 파츠 + 2.5D',
+                live2DPrice: 20000,
+                videoMin: 5, videoSec: 0, videoPrice: 20000,
+                extraPeopleQty: 2, extraPeoplePrice: 20000,
+                thumbCheck: true,
+                fastDeadline: true,
+                deadline: '2026년 05월 20일 (빠른 마감 요청)',
+                music: 'FULL OPTION ORIGINAL SONG',
+                channel: 'https://youtube.com/@full_option_vtuber',
+                materials: 'Google Drive Full Package (Live2D Model + PSD + WAV)',
+                lineup: 'VTuber A & B / Live2D Rigger C / Illustrator D',
+                other: 'Live2D 화려한 2.5D 모션 연출 및 썸네일 함께 제작'
+            }
+        };
+
+        let currentPreset = presets.cover_broadcast;
+
+        function loadPreset(key) {
+            document.querySelectorAll('.preset-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            currentPreset = presets[key];
+            renderPreview();
+        }
+
+        function renderPreview() {
+            const data = currentPreset;
+            const subtotal = data.songTypePrice + data.live2DPrice + data.videoPrice + data.extraPeoplePrice + (data.thumbCheck ? 8000 : 0);
+            const total = Math.round(subtotal * data.multiplier);
+            const formattedTotal = total.toLocaleString();
+
+            const songTypePriceText = `${data.songTypePrice.toLocaleString()}원`;
+            const useTypeMultiplierText = data.multiplier === 1.5 ? '1.5배 적용' : '1.0배';
+            const live2DPriceText = data.live2DPrice > 0 ? `+${data.live2DPrice.toLocaleString()}원` : `0원`;
+            const videoPriceText = data.videoPrice > 0 ? `+${data.videoPrice.toLocaleString()}원` : `0원`;
+
+            let plainExtraDetails = "";
+            let htmlExtraDetails = "";
+
+            if (data.extraPeopleQty > 0) {
+                plainExtraDetails += `\n   - 추가 인원: ${data.extraPeopleQty}명 추가 (+${data.extraPeoplePrice.toLocaleString()}원)`;
+                htmlExtraDetails += `<div>- 추가 인원: ${data.extraPeopleQty}명 추가 <span style="font-size: 12px;">(+${data.extraPeoplePrice.toLocaleString()}원)</span></div>`;
+            }
+            if (data.thumbCheck) {
+                plainExtraDetails += `\n   - 간단 썸네일 (+8,000원)`;
+                htmlExtraDetails += `<div>- 간단 썸네일 <span style="font-size: 12px;">(+8,000원)</span></div>`;
+            }
+            if (data.fastDeadline) {
+                plainExtraDetails += `\n   - 빠른 마감: 협의 후 결정`;
+                htmlExtraDetails += `<div>- 빠른 마감: 협의 후 결정</div>`;
+            }
+
+            if (plainExtraDetails === "") {
+                plainExtraDetails = " 없음";
+                htmlExtraDetails = "없음";
+            }
+
+            // 1. Plain Text Output Format
+            const plainText = `[WAVIT_studio]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. 신청곡: ${data.music}
+2. 마감일: ${data.deadline}
+3. 추가 요청: ${data.other}
+4. 업로드 채널: ${data.channel}
+5. 라인업: ${data.lineup}
+6. 곡 유형: ${data.songType} (${songTypePriceText})
+7. Live 2D 추가: ${data.live2D} (${live2DPriceText})
+8. 영상 길이: ${data.videoMin}분 ${data.videoSec}초 (${videoPriceText})
+9. 추가금:${plainExtraDetails.replace(/\n/g, '\n  ')}
+10. 자료 첨부: ${data.materials}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+사용 용도: ${data.useType} (${useTypeMultiplierText})
+총 예상 견적: ${formattedTotal}원
+※ 해당 금액은 예상 견적이며 실제 확정 견적과 다를 수 있습니다. 빠른 마감은 미포함된 가격입니다.`;
+
+            function formatLinkHTML(str) {
+                if (!str) return '';
+                const urlRegex = /(https?:\/\/[^\s<]+)/g;
+                return str.replace(urlRegex, function(url) {
+                    return `<a href="${url}" target="_blank" rel="noopener noreferrer" style="color: #2563eb; text-decoration: underline;">${url}</a>`;
+                });
+            }
+
+            // 2. HTML Table Output Format
+            const htmlText = `
+<table width="100%" style="max-width: 540px; border-collapse: collapse; font-family: 'Inter', -apple-system, sans-serif; color: #000000; line-height: 1.8; background-color: #ffffff; border: 1px solid #d4d4d8; border-top: 2px solid #000000;">
+    <tr>
+        <td style="padding: 32px;">
+            <h2 style="margin: 0 0 16px 0; color: #000000; font-size: 20px; font-weight: 700; letter-spacing: -0.015em;">WAVIT_studio</h2>
+            
+            <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+                <tr style="border-bottom: 1px solid #d4d4d8;"><td style="padding: 12px 0; width: 120px; color: #71717a; font-weight: 600;">1. 신청곡</td><td style="padding: 12px 0; color: #000000;">${formatLinkHTML(data.music)}</td></tr>
+                <tr style="border-bottom: 1px solid #d4d4d8;"><td style="padding: 12px 0; color: #71717a; font-weight: 600;">2. 마감일</td><td style="padding: 12px 0; color: #000000;">${data.deadline}</td></tr>
+                <tr style="border-bottom: 1px solid #d4d4d8;"><td style="padding: 12px 0; color: #71717a; font-weight: 600; vertical-align: top;">3. 추가 요청</td><td style="padding: 12px 0; color: #000000; white-space: pre-wrap;">${formatLinkHTML(data.other)}</td></tr>
+                <tr style="border-bottom: 1px solid #d4d4d8;"><td style="padding: 12px 0; color: #71717a; font-weight: 600;">4. 업로드 채널</td><td style="padding: 12px 0; color: #000000;">${formatLinkHTML(data.channel)}</td></tr>
+                <tr style="border-bottom: 1px solid #d4d4d8;"><td style="padding: 12px 0; color: #71717a; font-weight: 600;">5. 라인업</td><td style="padding: 12px 0; color: #000000;">${data.lineup}</td></tr>
+                <tr style="border-bottom: 1px solid #d4d4d8;"><td style="padding: 12px 0; color: #71717a; font-weight: 600;">6. 곡 유형</td><td style="padding: 12px 0; font-weight: 700; color: #000000;">${data.songType} <span style="color: #000000; font-size: 12px; font-weight: 600;">(${songTypePriceText})</span></td></tr>
+                <tr style="border-bottom: 1px solid #d4d4d8;"><td style="padding: 12px 0; color: #71717a; font-weight: 600;">7. Live 2D 추가</td><td style="padding: 12px 0; font-weight: 700; color: #000000;">${data.live2D} <span style="color: #000000; font-size: 12px; font-weight: 600;">(${live2DPriceText})</span></td></tr>
+                <tr style="border-bottom: 1px solid #d4d4d8;"><td style="padding: 12px 0; color: #71717a; font-weight: 600;">8. 영상 길이</td><td style="padding: 12px 0; font-weight: 700; color: #000000;">${data.videoMin}분 ${data.videoSec}초 <span style="color: #000000; font-size: 12px; font-weight: 600;">(${videoPriceText})</span></td></tr>
+                <tr style="border-bottom: 1px solid #d4d4d8;"><td style="padding: 12px 0; color: #71717a; font-weight: 600; vertical-align: top;">9. 추가금</td><td style="padding: 12px 0; font-weight: 600; color: #000000; margin: 0;">${htmlExtraDetails}</td></tr>
+                <tr style="border-bottom: 1px solid #000000;"><td style="padding: 12px 0; color: #71717a; font-weight: 600; vertical-align: top;">10. 자료 첨부</td><td style="padding: 12px 0; color: #000000; white-space: pre-wrap;">${formatLinkHTML(data.materials)}</td></tr>
+            </table>
+            
+            <div style="margin-top: 24px; padding: 20px; background-color: #fafafa; text-align: center; border: 1px solid #000000;">
+                <div style="font-size: 13px; color: #71717a; font-weight: 600; margin-bottom: 4px;">사용 용도: ${data.useType} (${useTypeMultiplierText})</div>
+                <span style="font-size: 18px; font-weight: 700; color: #000000;">총 예상 견적: ${formattedTotal}원</span>
+            </div>
+            <p style="font-size: 11px; color: #71717a; text-align: left; margin: 16px 0 0 0; font-weight: 500;">※ 해당 금액은 예상 견적이며 실제 확정 견적과 다를 수 있습니다. 빠른 마감은 미포함된 가격입니다.</p>
+        </td>
+    </tr>
+</table>
+`;
+
+            document.getElementById('plainTextOutput').textContent = plainText;
+            document.getElementById('htmlRenderOutput').innerHTML = htmlText;
+        }
+
+        let toastTimer = null;
+        function showToast(msg) {
+            const toast = document.getElementById('toastNotification');
+            toast.textContent = msg;
+            toast.classList.add('active');
+            if (toastTimer) clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => toast.classList.remove('active'), 2500);
+        }
+
+        function copyPlainText() {
+            const text = document.getElementById('plainTextOutput').textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('📋 일반 텍스트 양식이 클립보드에 복사되었습니다!');
+            }).catch(() => {
+                showToast('❌ 복사에 실패했습니다.');
+            });
+        }
+
+        function copyHtmlRichText() {
+            const html = document.getElementById('htmlRenderOutput').innerHTML;
+            const plain = document.getElementById('plainTextOutput').textContent;
+            const blobHTML = new Blob([html], { type: 'text/html' });
+            const blobText = new Blob([plain], { type: 'text/plain' });
+
+            if (typeof ClipboardItem !== "undefined" && navigator.clipboard && navigator.clipboard.write) {
+                navigator.clipboard.write([new ClipboardItem({ 'text/html': blobHTML, 'text/plain': blobText })])
+                    .then(() => showToast('✨ 리치 텍스트 테이블이 클립보드에 복사되었습니다! (이메일/메신저에 붙여넣기 가능)'))
+                    .catch(() => copyPlainText());
+            } else {
+                copyPlainText();
+            }
+        }
+
+        // Initialize on load
+        renderPreview();
+    </script>
+</body>
+
+</html>

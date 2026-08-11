@@ -12,7 +12,7 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WAVIT_studio - Custom Order</title>
+    <title>WAVIT - 견적 계산기</title>
     <meta name="description" content="WAVIT studio - 영상 제작 및 Live2D 견적을 즉시 계산하고 확인하실 수 있는 온라인 견적 계산기입니다.">
     <meta property="og:title" content="WAVIT_studio - Custom Order">
     <meta property="og:description" content="상세 내역을 선택하고 입력하시면 예상 견적을 즉시 확인할 수 있습니다.">
@@ -43,16 +43,31 @@
             </div>
             <p id="header-desc" data-i18n="headerDesc">상세 내역을 선택하고 입력하시면 예상 견적을 즉시 확인할 수 있습니다.</p>
 
-            <!-- 1. Onboarding Step Bar -->
+            <!-- 1. Onboarding Step Bar (5-Step Wizard Flow) -->
             <div class="onboarding-flow">
                 <div class="flow-step active" id="step-flow-1" onclick="goToStep(1)" style="cursor: pointer;">
                     <span class="step-num">01</span>
-                    <span class="step-text" data-i18n="step1">견적 산출 & 마감일</span>
+                    <span class="step-text" data-i18n="step1">사용 용도</span>
                 </div>
                 <div class="flow-arrow">→</div>
                 <div class="flow-step" id="step-flow-2" onclick="goToStep(2)" style="cursor: pointer;">
                     <span class="step-num">02</span>
-                    <span class="step-text" data-i18n="step2">프로젝트 상세 작성</span>
+                    <span class="step-text" data-i18n="step2">Live 2D 추가</span>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step" id="step-flow-3" onclick="goToStep(3)" style="cursor: pointer;">
+                    <span class="step-num">03</span>
+                    <span class="step-text" data-i18n="step3">영상 길이 & 추가금</span>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step" id="step-flow-4" onclick="goToStep(4)" style="cursor: pointer;">
+                    <span class="step-num">04</span>
+                    <span class="step-text" data-i18n="step4">신청곡 & 마감일</span>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step" id="step-flow-5" onclick="goToStep(5)" style="cursor: pointer;">
+                    <span class="step-num">05</span>
+                    <span class="step-text" data-i18n="step5">자료 및 기타</span>
                 </div>
             </div>
         </div>
@@ -60,35 +75,75 @@
         <form class="form-body" id="calculatorForm" onsubmit="return false;">
             <div class="form-main-wrapper">
                 <div class="form-left-side">
-                    <!-- SECTION 01: 견적 산출 & 마감일 -->
+                    <!-- SECTION 01: 곡 유형 및 사용 용도 -->
                     <div class="form-section-block step-active" id="step-card-1">
                         <div class="section-header">
                             <span class="section-tag" data-i18n="sec1Tag">SECTION 01</span>
-                            <h2 class="section-title" data-i18n="sec1Title">견적 산출 & 마감일</h2>
+                            <h2 class="section-title" data-i18n="sec1Title">곡 유형 & 사용 용도</h2>
                         </div>
 
-                        <!-- 1. 사용 용도 -->
+                        <!-- 1. 곡 유형 -->
                         <div class="form-group">
                             <div class="field-header">
                                 <div class="field-title-group">
-                                    <label class="field-title required" data-i18n="q1">1. 사용 용도</label>
+                                    <label class="field-title required" data-i18n="q1_song">1. 곡 유형</label>
                                 </div>
                                 <span class="field-status" id="status-q1" data-i18n="statusUnselected">미선택</span>
                             </div>
                             <div class="options-grid">
-                                <label class="option-card" id="useTypeRadioCard1" role="radio" aria-checked="false">
-                                    <input type="radio" name="useType" value="140000"
-                                        onclick="selectRadioCard('useType', this)">
-                                    <span class="option-label" data-i18n="q1_1">방송용</span>
+                                <label class="option-card" id="songTypeCoverCard" role="radio" aria-checked="false">
+                                    <input type="radio" name="songType" value="cover" onclick="selectSongType('cover')">
+                                    <span class="option-label" data-i18n="q1_song_cover">커버곡</span>
                                     <span class="option-price" data-base-price="140000">140,000원</span>
                                 </label>
-                                <label class="option-card" id="useTypeRadioCard2" role="radio" aria-checked="false">
-                                    <input type="radio" name="useType" value="300000"
-                                        onclick="selectRadioCard('useType', this)">
-                                    <span class="option-label" data-i18n="q1_2">상업용</span>
-                                    <span class="option-price" data-base-price="300000">300,000원</span>
+                                <label class="option-card" id="songTypeOriginalCard" role="radio" aria-checked="false">
+                                    <input type="radio" name="songType" value="original" onclick="selectSongType('original')">
+                                    <span class="option-label" data-i18n="q1_song_original">오리지널 곡</span>
+                                    <span class="option-price" data-base-price="140000">140,000원</span>
                                 </label>
                             </div>
+                        </div>
+
+                        <!-- Suboptions: 사용 용도 -->
+                        <div class="live2d-suboptions-container" id="useTypeSubContainer">
+                            <div class="live2d-suboptions-inner">
+                                <div class="form-group" style="margin-top: 16px;">
+                                    <div class="field-header">
+                                        <div class="field-title-group">
+                                            <label class="field-title required" data-i18n="q1_use">사용 용도</label>
+                                        </div>
+                                    </div>
+                                    <div class="options-grid">
+                                        <label class="option-card" id="useTypeRadioCard1" role="radio" aria-checked="false">
+                                            <input type="radio" name="useType" value="broadcast" onclick="selectUseType('broadcast')">
+                                            <span class="option-label" data-i18n="q1_1">방송용</span>
+                                            <span class="option-price" data-i18n="q1_1_sub">1.0배</span>
+                                        </label>
+                                        <label class="option-card" id="useTypeRadioCard2" role="radio" aria-checked="false">
+                                            <input type="radio" name="useType" value="commercial" onclick="selectUseType('commercial')">
+                                            <span class="option-label" data-i18n="q1_2">상업용</span>
+                                            <span class="option-price" data-i18n="q1_2_sub">1.5배</span>
+                                        </label>
+                                    </div>
+                                    <div class="description" id="useTypeNotice" style="margin-top: 8px; font-size: 12px; color: var(--text-muted); display: none;" data-i18n="q1_notice">
+                                        ※ 오리지널 곡은 상업용(1.5배)만 선택 가능합니다.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 1 Navigation Bar -->
+                        <div class="step-nav-bar">
+                            <button type="button" class="btn-step btn-step-next" onclick="nextStep()"
+                                data-i18n="btnNext">다음 단계 →</button>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 02: Live 2D 추가 -->
+                    <div class="form-section-block step-hidden" id="step-card-2">
+                        <div class="section-header">
+                            <span class="section-tag" data-i18n="sec2Tag">SECTION 02</span>
+                            <h2 class="section-title" data-i18n="sec2Title">Live 2D 추가</h2>
                         </div>
 
                         <!-- 2. Live 2D 추가 -->
@@ -96,52 +151,68 @@
                             <div class="field-header">
                                 <div class="field-title-group">
                                     <label class="field-title" data-i18n="q2">2. Live 2D 추가</label>
-                                    <button type="button" class="tooltip-trigger"
-                                        onclick="toggleTooltip('tt-live2d', event)" aria-label="도움말">?</button>
-                                </div>
-                                <div class="tooltip-box" id="tt-live2d" data-i18n="tt_live2d">
-                                    Live2D 리깅 파츠 분리 정도를 의미합니다. 상세 파츠 + 2.5D는 더 높은 입체감과 자연스러운 움직임을 구현합니다.
                                 </div>
                             </div>
 
-                            <div class="checkbox-container" id="live2dContainer" role="checkbox" aria-checked="false">
-                                <label class="checkbox-info">
-                                    <input type="checkbox" id="live2dCheck" onchange="toggleLive2DCard()">
-                                    <div class="checkbox-text-group">
-                                        <span class="checkbox-title" data-i18n="q2_card_title">Live 2D 리깅 옵션 추가</span>
-                                        <span class="checkbox-subtext" data-i18n="q2_card_sub">+20,000원부터~ / 작업기간
-                                            +5일</span>
-                                    </div>
+                            <!-- Top Radio Cards: 선택하지 않음 / Live 2D 추가 -->
+                            <div class="options-grid" style="grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); margin-bottom: 16px;">
+                                <label class="option-card selected" id="live2dTopNoneCard" role="radio" aria-checked="true">
+                                    <input type="radio" name="live2dMode" value="none" checked onclick="selectLive2DMode('none')">
+                                    <span class="option-label" data-i18n="q2_none">선택하지 않음</span>
+                                    <span class="option-price" data-i18n="q2_none_sub">추가금 없음</span>
+                                </label>
+                                <label class="option-card" id="live2dTopAddCard" role="radio" aria-checked="false">
+                                    <input type="radio" name="live2dMode" value="add" onclick="selectLive2DMode('add')">
+                                    <span class="option-label" data-i18n="q2_add">Live 2D 추가</span>
+                                    <span class="option-price" data-i18n="q2_add_sub">+20,000원부터~</span>
                                 </label>
                             </div>
 
                             <div class="live2d-suboptions-container" id="live2dSubContainer">
-                                <div class="description" data-i18n="q2_desc">Live 2D 추가시 기본 작업기간(10일)에 5일 추가되어 마감 기간이 작업
-                                    시작일로부터 15일이 됩니다. ※ 참고 가격이며 변동될 수 있습니다.</div>
-                                <div class="options-grid">
-                                    <label class="option-card" id="live2dRadioCard1" role="radio" aria-checked="false">
-                                        <input type="radio" name="live2D" value="20000"
-                                            onclick="selectRadioCard('live2D', this)">
-                                        <span class="option-label" data-i18n="q2_1">기본 파츠</span>
-                                        <span class="option-price" data-base-price="20000"
-                                            data-price-prefix="+">+20,000원</span>
-                                    </label>
-                                    <label class="option-card" id="live2dRadioCard2" role="radio" aria-checked="false">
-                                        <input type="radio" name="live2D" value="50000"
-                                            onclick="selectRadioCard('live2D', this)">
-                                        <span class="option-label" data-i18n="q2_2">상세 파츠</span>
-                                        <span class="option-price" data-base-price="50000"
-                                            data-price-prefix="+">+50,000원</span>
-                                    </label>
-                                    <label class="option-card" id="live2dRadioCard3" role="radio" aria-checked="false">
-                                        <input type="radio" name="live2D" value="80000"
-                                            onclick="selectRadioCard('live2D', this)">
-                                        <span class="option-label" data-i18n="q2_3">상세 파츠 + 2.5D</span>
-                                        <span class="option-price" data-base-price="80000"
-                                            data-price-prefix="+">+80,000원</span>
-                                    </label>
+                                <div class="live2d-suboptions-inner">
+                                    <div class="description" data-i18n="q2_desc">Live 2D 추가시 기본 작업기간(10일)에 5일 추가되어 마감 기간이 작업 시작일로부터 15일이 됩니다.</div>
+                                    <div class="options-grid">
+                                        <label class="option-card" id="live2dRadioCard1" role="radio" aria-checked="false">
+                                            <input type="radio" name="live2D" value="20000"
+                                                onclick="selectRadioCard('live2D', this)">
+                                            <span class="option-label" data-i18n="q2_1">기본 파츠</span>
+                                            <span class="option-price" data-base-price="20000"
+                                                data-price-prefix="+">+20,000원</span>
+                                        </label>
+                                        <label class="option-card" id="live2dRadioCard2" role="radio" aria-checked="false">
+                                            <input type="radio" name="live2D" value="50000"
+                                                onclick="selectRadioCard('live2D', this)">
+                                            <span class="option-label" data-i18n="q2_2">상세 파츠</span>
+                                            <span class="option-price" data-base-price="50000"
+                                                data-price-prefix="+">+50,000원</span>
+                                        </label>
+                                        <label class="option-card" id="live2dRadioCard3" role="radio" aria-checked="false">
+                                            <input type="radio" name="live2D" value="80000"
+                                                onclick="selectRadioCard('live2D', this)">
+                                            <span class="option-label" data-i18n="q2_3">상세 파츠 + 2.5D</span>
+                                            <span class="option-price" data-base-price="80000"
+                                                data-price-prefix="+">+80,000원</span>
+                                        </label>
+                                    </div>
+                                    <div class="description" style="margin-top: 10px;" data-i18n="q2_note">위 가격은 이해를 돕기 위하여 제공되었으며 실제 가격은 Live2D 구동 범위 및 밀도 등 상담을 통해 변경됩니다</div>
                                 </div>
                             </div>
+                        </div>
+
+                        <!-- Step 2 Navigation Bar -->
+                        <div class="step-nav-bar">
+                            <button type="button" class="btn-step btn-step-prev" onclick="prevStep()"
+                                data-i18n="btnPrev">← 이전 단계</button>
+                            <button type="button" class="btn-step btn-step-next" onclick="nextStep()"
+                                data-i18n="btnNext">다음 단계 →</button>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 03: 영상 길이와 추가금 -->
+                    <div class="form-section-block step-hidden" id="step-card-3">
+                        <div class="section-header">
+                            <span class="section-tag" data-i18n="sec3Tag">SECTION 03</span>
+                            <h2 class="section-title" data-i18n="sec3Title">영상 길이와 추가금</h2>
                         </div>
 
                         <!-- 3. 영상 길이 -->
@@ -149,27 +220,34 @@
                             <div class="field-header">
                                 <div class="field-title-group">
                                     <label class="field-title required" data-i18n="q3">3. 영상 길이</label>
-                                    <button type="button" class="tooltip-trigger"
-                                        onclick="toggleTooltip('tt-video', event)" aria-label="도움말">?</button>
-                                </div>
-                                <div class="tooltip-box" id="tt-video" data-i18n="tt_video">
-                                    기본 4:00까지 초과금이 없으며, 4:01부터는 30초 단위로 10,000원이 자동 합산됩니다.
                                 </div>
                             </div>
                             <div class="description" data-i18n="q3_desc">기본 4분을 초과할 경우 30초당 10,000원의 추가금이 있습니다. 4:01의 경우
                                 추가금이 발생합니다.</div>
                             <div class="time-input-group">
                                 <div class="time-input-wrapper">
-                                    <input type="number" id="videoMin" class="time-input" value="0" min="0"
-                                        inputmode="numeric" onchange="this.value=Math.max(0, parseInt(this.value)||0)"
-                                        oninput="calculateTotal()">
+                                    <div class="stepper-input-container">
+                                        <input type="number" id="videoMin" class="time-input" value="0" min="0"
+                                            inputmode="numeric" onchange="this.value=Math.max(0, parseInt(this.value)||0); calculateTotal();"
+                                            oninput="calculateTotal()">
+                                        <div class="stepper-btn-group">
+                                            <button type="button" class="stepper-btn stepper-up" onclick="changeTimeValue('min', 1)" aria-label="분 증가">▲</button>
+                                            <button type="button" class="stepper-btn stepper-down" onclick="changeTimeValue('min', -1)" aria-label="분 감소">▼</button>
+                                        </div>
+                                    </div>
                                     <span class="time-label" data-i18n="q3_min">분</span>
                                 </div>
                                 <div class="time-input-wrapper">
-                                    <input type="number" id="videoSec" class="time-input" value="0" min="0" max="59"
-                                        inputmode="numeric"
-                                        onchange="this.value=Math.min(59, Math.max(0, parseInt(this.value)||0))"
-                                        oninput="calculateTotal()">
+                                    <div class="stepper-input-container">
+                                        <input type="number" id="videoSec" class="time-input" value="0" min="0" max="59"
+                                            inputmode="numeric"
+                                            onchange="this.value=Math.min(59, Math.max(0, parseInt(this.value)||0)); calculateTotal();"
+                                            oninput="calculateTotal()">
+                                        <div class="stepper-btn-group">
+                                            <button type="button" class="stepper-btn stepper-up" onclick="changeTimeValue('sec', 30)" aria-label="초 증가">▲</button>
+                                            <button type="button" class="stepper-btn stepper-down" onclick="changeTimeValue('sec', -30)" aria-label="초 감소">▼</button>
+                                        </div>
+                                    </div>
                                     <span class="time-label" data-i18n="q3_sec">초</span>
                                 </div>
                             </div>
@@ -195,13 +273,17 @@
                                 </label>
                                 <div class="quantity-control">
                                     <span data-i18n="q4_1_qty">추가 인원수</span>
-                                    <div class="qty-stepper">
-                                        <button type="button" class="qty-btn"
-                                            onclick="changeQuantity('extraPeople', -1)" aria-label="수량 감소">-</button>
-                                        <input type="number" id="extraPeopleQty" value="0" min="0" readonly
-                                            oninput="calculateTotal()">
-                                        <button type="button" class="qty-btn" onclick="changeQuantity('extraPeople', 1)"
-                                            aria-label="수량 증가">+</button>
+                                    <div class="time-input-wrapper extra-people-stepper-wrapper">
+                                        <div class="stepper-input-container">
+                                            <input type="number" id="extraPeopleQty" class="time-input" value="0" min="0"
+                                                inputmode="numeric"
+                                                onchange="changeQuantityFromInput('extraPeople', this.value)"
+                                                oninput="changeQuantityFromInput('extraPeople', this.value)">
+                                            <div class="stepper-btn-group">
+                                                <button type="button" class="stepper-btn stepper-up" onclick="changeQuantity('extraPeople', 1)" aria-label="수량 증가">▲</button>
+                                                <button type="button" class="stepper-btn stepper-down" onclick="changeQuantity('extraPeople', -1)" aria-label="수량 감소">▼</button>
+                                            </div>
+                                        </div>
                                         <span class="qty-unit" data-i18n="unit_person">명</span>
                                     </div>
                                 </div>
@@ -235,18 +317,29 @@
                             </div>
                         </div>
 
+                        <!-- Step 3 Navigation Bar -->
+                        <div class="step-nav-bar">
+                            <button type="button" class="btn-step btn-step-prev" onclick="prevStep()"
+                                data-i18n="btnPrev">← 이전 단계</button>
+                            <button type="button" class="btn-step btn-step-next" onclick="nextStep()"
+                                data-i18n="btnNext">다음 단계 →</button>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 04: 신청곡 링크, 업로드 채널 & 마감일 -->
+                    <div class="form-section-block step-hidden" id="step-card-4">
+                        <div class="section-header">
+                            <span class="section-tag" data-i18n="sec4Tag">SECTION 04</span>
+                            <h2 class="section-title" data-i18n="sec4Title">신청곡, 업로드 채널 & 마감일</h2>
+                        </div>
+
                         <!-- 5. 마감일 -->
                         <div class="form-group">
                             <div class="field-header">
                                 <div class="field-title-group">
                                     <label class="field-title required" for="deadlineInfo" data-i18n="q5">5. 마감일</label>
-                                    <button type="button" class="tooltip-trigger"
-                                        onclick="toggleTooltip('tt-deadline', event)" aria-label="도움말">?</button>
                                 </div>
                                 <span class="field-status" id="status-q5" data-i18n="statusUnwritten">미작성</span>
-                                <div class="tooltip-box" id="tt-deadline" data-i18n="tt_deadline">
-                                    지정 마감일이 필요하신 경우 날짜를 작성해 주시면 일정 가능 여부 및 빠른 마감 비용 산출이 진행됩니다.
-                                </div>
                             </div>
                             <div class="description" data-i18n="q5_desc">기본적으로 작업 시작 후 10일(Live2D 추가시 15일)입니다. 이보다 빠른
                                 마감의 경우 날짜를 적어주시면 작업 난이도와 일정을 고려하여 가격을 책정해드립니다.</div>
@@ -254,29 +347,15 @@
                                 placeholder="예: 2026년 06월 30일 (협의 가능)" autocomplete="off" oninput="calculateTotal()">
                         </div>
 
-                        <!-- Step 1 Navigation Bar -->
-                        <div class="step-nav-bar">
-                            <button type="button" class="btn-step btn-step-next" onclick="nextStep()"
-                                data-i18n="btnNext1">다음 단계 (02. 상세 자료 작성) →</button>
-                        </div>
-                    </div>
-
-                    <!-- SECTION 02: 프로젝트 상세 자료 -->
-                    <div class="form-section-block step-hidden" id="step-card-2">
-                        <div class="section-header">
-                            <span class="section-tag" data-i18n="sec2Tag">SECTION 02</span>
-                            <h2 class="section-title" data-i18n="sec2Title">프로젝트 상세 자료</h2>
-                        </div>
-
-                        <!-- 6. 신청곡 링크 -->
+                        <!-- 6. 신청곡 -->
                         <div class="form-group">
                             <div class="field-header">
                                 <div class="field-title-group">
-                                    <label class="field-title required" for="musicInfo" data-i18n="q6">6. 신청곡 링크</label>
+                                    <label class="field-title required" for="musicInfo" data-i18n="q6">6. 신청곡</label>
                                 </div>
                                 <span class="field-status" id="status-q6" data-i18n="statusUnwritten">미작성</span>
                             </div>
-                            <input type="text" id="musicInfo" data-i18n-ph="q6_ph" placeholder="신청곡 링크를 입력해주세요."
+                            <input type="text" id="musicInfo" data-i18n-ph="q6_ph" placeholder="제목 또는 링크를 입력"
                                 inputmode="url" autocomplete="off" oninput="calculateTotal()">
                         </div>
 
@@ -289,28 +368,38 @@
                                 </div>
                                 <span class="field-status" id="status-q7" data-i18n="statusUnwritten">미작성</span>
                             </div>
-                            <input type="text" id="uploadChannel" data-i18n-ph="q7_ph" placeholder="예: 유튜브 채널명 또는 URL"
+                            <input type="text" id="uploadChannel" data-i18n-ph="q7_ph" placeholder="채널 링크"
                                 inputmode="url" autocomplete="off" oninput="calculateTotal()">
                         </div>
 
-                        <!-- 8. 일러스트 음원 등의 자료 -->
+                        <!-- Step 4 Navigation Bar -->
+                        <div class="step-nav-bar">
+                            <button type="button" class="btn-step btn-step-prev" onclick="prevStep()"
+                                data-i18n="btnPrev">← 이전 단계</button>
+                            <button type="button" class="btn-step btn-step-next" onclick="nextStep()"
+                                data-i18n="btnNext">다음 단계 →</button>
+                        </div>
+                    </div>
+
+                    <!-- SECTION 05: 자료 및 기타 -->
+                    <div class="form-section-block step-hidden" id="step-card-5">
+                        <div class="section-header">
+                            <span class="section-tag" data-i18n="sec5Tag">SECTION 05</span>
+                            <h2 class="section-title" data-i18n="sec5Title">자료 및 기타</h2>
+                        </div>
+
+                        <!-- 8. 일러스트 및 음원 등의 자료 첨부 -->
                         <div class="form-group">
                             <div class="field-header">
                                 <div class="field-title-group">
-                                    <label class="field-title required" for="materialsInfo" data-i18n="q8">8. 일러스트 음원 등의
-                                        자료</label>
-                                    <button type="button" class="tooltip-trigger"
-                                        onclick="toggleTooltip('tt-materials', event)" aria-label="도움말">?</button>
+                                    <label class="field-title required" for="materialsInfo" data-i18n="q8">8. 일러스트 및 음원 등의 자료 첨부</label>
                                 </div>
                                 <span class="field-status" id="status-q8" data-i18n="statusUnwritten">미작성</span>
-                                <div class="tooltip-box" id="tt-materials" data-i18n="tt_materials">
-                                    모든 자료(일러스트, 음원 등)가 최종 수령된 날짜부터 작업 카운트다운(10일/15일)이 시작됩니다.
-                                </div>
                             </div>
                             <div class="description" data-i18n="q8_desc">준비되지 않은 자료가 있다면 언제 전달 가능한지 적어주시길 바랍니다. 기본적으로 모든
                                 자료를 전달받기 전에는 작업을 시작하지 않습니다.</div>
                             <textarea id="materialsInfo" data-i18n-ph="q8_ph"
-                                placeholder="자료 링크 및 준비 상태에 대해 상세히 작성해주세요." oninput="calculateTotal()"></textarea>
+                                placeholder="구글 드라이브 등 편한 방법으로 첨부해주세요." oninput="calculateTotal()"></textarea>
                         </div>
 
                         <!-- 9. 참여자 라인업 -->
@@ -334,7 +423,7 @@
                                 placeholder="추가 문의사항이나 전달하고 싶으신 메시지가 있다면 작성해주세요."></textarea>
                         </div>
 
-                        <!-- Step 2 Navigation Bar -->
+                        <!-- Step 5 Navigation Bar -->
                         <div class="step-nav-bar">
                             <button type="button" class="btn-step btn-step-prev" onclick="prevStep()"
                                 data-i18n="btnPrev">← 이전 단계</button>
@@ -395,7 +484,19 @@
                 <button class="custom-modal-btn" id="customModalConfirm">확인</button>
             </div>
         </div>
+    <!-- Mobile Sticky Floating Summary Bar (Appears on Mobile Screen < 768px) -->
+    <div id="mobileStickyBar" class="mobile-sticky-bar">
+        <div class="mobile-sticky-info">
+            <span class="mobile-sticky-label" data-i18n="resTotalLabel">총 예상 견적</span>
+            <span class="mobile-sticky-val" id="mobileStickyTotal">0원</span>
+        </div>
+        <button type="button" class="mobile-sticky-btn" onclick="scrollToEstimateSidebar()">
+            <span data-i18n="mobileStickyAction">견적 확인</span>
+        </button>
     </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toastNotification" class="toast-notification" role="status" aria-live="polite"></div>
 
 </body>
 
