@@ -46,24 +46,24 @@ const i18n = {
         sec4Tag: "SECTION 04", sec4Title: "신청곡, 업로드 채널 & 마감일",
         sec5Tag: "SECTION 05", sec5Title: "자료 및 기타",
         statusUnselected: "미선택", statusUnwritten: "미작성", statusCompleted: "✓ 완료",
-        tt_live2d: "Live2D 리깅 파츠 분리 정도를 의미합니다. 상세 파츠 + 2.5D는 더 높은 입체감과 자연스러운 움직임을 구현합니다.",
+        tt_live2d: "Live2D 리깅 옵션입니다. 상세 구동 범위 및 밀도는 상담을 통해 결정됩니다.",
         tt_video: "기본 4:00까지 초과금이 없으며, 4:01부터는 30초 단위로 10,000원이 자동 합산됩니다.",
         tt_materials: "모든 자료(일러스트, 음원 등)가 최종 수령된 날짜부터 작업 카운트다운(10일/15일)이 시작됩니다.",
         tt_deadline: "지정 마감일이 필요하신 경우 날짜를 작성해 주시면 일정 가능 여부 및 빠른 마감 비용 산출이 진행됩니다.",
         progressTitle: "필수 항목 작성",
         q1_song: "1. 곡 유형", q1_song_copy: "1. 곡 유형", q1_song_cover: "커버곡", q1_song_original: "오리지널 곡",
         q1_use: "사용 용도", q1_use_copy: "사용 용도", q1_1: "방송용", q1_1_sub: "1.0배", q1_2: "상업용", q1_2_sub: "1.5배", q1_2_apply: "상업용 (1.5배 적용)", q1_notice: "※ 오리지널 곡은 상업용(1.5배)만 선택 가능합니다.", toastOriginalNotice: "오리지널 곡 선택 시 상업용(1.5배)이 자동 적용됩니다.",
-        q2: "2. Live 2D 추가", q2_desc: "Live 2D 추가시 기본 작업기간(10일)에 5일 추가되어 마감 기간이 작업 시작일로부터 15일이 됩니다.", q2_note: "위 가격은 이해를 돕기 위하여 제공되었으며 실제 가격은 Live2D 구동 범위 및 밀도 등 상담을 통해 변경됩니다", q2_none: "선택하지 않음", q2_none_sub: "추가금 없음", q2_add: "Live 2D 추가", q2_add_sub: "+20,000원부터~", q2_1: "기본 파츠", q2_2: "상세 파츠", q2_3: "상세 파츠 + 2.5D",
+        q2: "2. Live 2D 추가", q2_desc: "Live 2D 추가 시 기본 작업기간(10일)에 5일 추가되어 마감 기간이 작업 시작일로부터 15일이 됩니다.", q2_note: "※ 실제 가격은 Live2D 구동 범위 및 밀도 등 상담을 통해 30,000원~100,000원 범위에서 책정됩니다. (최소 기본금 +30,000원 적용)", q2_none: "선택하지 않음", q2_none_sub: "추가금 없음", q2_add: "Live 2D 추가", q2_add_sub: "+30,000원 ~ 100,000원",
         live2dExpandText: "Live 2D 리깅 옵션 추가하기", live2dCollapseText: "Live 2D 리깅 옵션 닫기",
         q3: "3. 영상 길이", q3_desc: "기본 4분을 초과할 경우 30초당 10,000원의 추가금이 있습니다. 4:01의 경우 추가금이 발생합니다.", q3_min: "분", q3_sec: "초",
-        q4: "4. 추가금 (다중선택)", q4_copy: "4. 추가금", q4_1: "추가 인원", q4_1_sub: "+10,000원 / 명", q4_1_desc: "기본 2인 포함. 3인째부터 인당 +10,000원", q4_1_qty: "추가 인원수", unit_person: "명", q4_2: "빠른 마감", q4_2_sub: "협의 후 결정", q4_3: "간단 썸네일", q4_3_sub: "+8,000원", c_thumb: "간단 썸네일",
+        q4: "4. 추가금 (다중선택)", q4_copy: "4. 추가금", q4_1: "추가 인원", q4_1_sub: "+20,000원 / 명", q4_1_desc: "기본 2인 포함. 3인째부터 인당 +20,000원", q4_1_qty: "추가 인원수", unit_person: "명", q4_2: "빠른 마감", q4_2_sub: "협의 후 결정", q4_3: "간단 썸네일", q4_3_sub: "+15,000원", c_thumb: "간단 썸네일",
         q5: "5. 마감일", q5_copy: "5. 마감일", q5_desc: "기본적으로 작업 시작 후 10일(Live2D 추가시 15일)입니다. 빠른 마감의 경우 날짜를 적어주시면 일정을 고려하여 가격을 책정해드립니다.", q5_ph: "예: 2026년 06월 30일 (협의 가능)",
         q6: "6. 신청곡", q6_copy: "6. 신청곡", q6_ph: "제목 또는 링크를 입력",
         q7: "7. 업로드 채널", q7_copy: "7. 업로드 채널", q7_ph: "채널 링크",
         q8: "8. 일러스트 및 음원 등의 자료 첨부", q8_copy: "8. 자료 첨부", q8_desc: "준비되지 않은 자료가 있다면 언제 전달 가능한지 적어주시길 바랍니다. 기본적으로 모든 자료를 전달받기 전에는 작업을 시작하지 않습니다.", q8_ph: "구글 드라이브 등 편한 방법으로 첨부해주세요.",
         q9: "9. 참여자 라인업", q9_copy: "9. 참여자 라인업", q9_ph: "보컬, 일러스트레이터 등 참여자 라인업을 작성해주세요.",
         q10: "10. 기타 신청 내용을 작성해주세요.", q10_copy: "10. 추가 요청", q10_ph: "추가 문의사항이나 전달하고 싶으신 메시지가 있다면 작성해주세요.",
-        resTitle: "예상 견적서", resEmpty: "항목을 선택하면 내역이 표시됩니다.", resTotal: "총 예상 견적", copyBtn: "복사하기", emailBtn: "견적서 바로 전송", resNotice: "※ 해당 금액은 예상 견적이며 실제 확정 견적과 다를 수 있습니다. 빠른 마감은 미포함된 가격입니다.",
+        resTitle: "예상 견적서", resEmpty: "항목을 선택하면 내역이 표시됩니다.", resTotal: "총 예상 견적", resTotalLabel: "총 예상 견적", copyBtn: "복사하기", emailBtn: "견적서 바로 전송", resNotice: "※ 해당 금액은 예상 견적이며 실제 확정 견적과 다를 수 있습니다. 빠른 마감은 미포함된 가격입니다.",
         alert1: "1. 곡 유형과 사용 용도를 선택해주세요.", alert1_song: "1. 곡 유형을 선택해주세요.", alert1_use: "사용 용도를 선택해주세요.", alert5: "5. 마감일을 입력해주세요.", alert6: "6. 신청곡을 입력해주세요.", alert7: "7. 업로드 채널을 입력해주세요.", alert8: "8. 자료를 입력해주세요.", alert9: "9. 참여자 라인업을 입력해주세요.",
         alertSuccess: "복사가 완료되었습니다. 문의 시 붙여넣기로 사용해주세요.", alertFail: "복사에 실패했습니다. 수동으로 복사해주세요.",
         c_song: "곡 유형", c_use: "사용 용도", c_live: "Live 2D", c_vidEx: "영상 길이 초과", c_ppl: "추가 인원", c_fast: "빠른 마감", c_nego: "협의 후 결정", c_none: "없음",
@@ -84,7 +84,7 @@ const i18n = {
         logNotice: "※ 서비스 품질 및 문의 확인을 위한 최소한의 로그가 기록될 수 있습니다.",
         unit_extra: "추가",
         q2_card_title: "Live 2D 리깅 옵션 추가",
-        q2_card_sub: "+20,000원부터~ / 작업기간 +5일"
+        q2_card_sub: "+30,000원 ~ 100,000원 / 작업기간 +5일"
     },
     en: {
         curr: " KRW",
@@ -97,24 +97,24 @@ const i18n = {
         sec4Tag: "SECTION 04", sec4Title: "Song, Channel & Deadline",
         sec5Tag: "SECTION 05", sec5Title: "Materials & Others",
         statusUnselected: "Unselected", statusUnwritten: "Empty", statusCompleted: "✓ Done",
-        tt_live2d: "Specifies the Live2D part separation level. Detailed Parts + 2.5D offers enhanced depth and smoother movement.",
+        tt_live2d: "Specifies the Live2D option. Detailed scope and density are determined via consultation.",
         tt_video: "Base 4:00 has no extra fee. From 4:01 onward, 10,000 KRW per 30s is added.",
         tt_materials: "Work countdown (10 or 15 days) starts on the day all materials are received.",
         tt_deadline: "Specify a deadline if required; schedule availability and rush fee will be evaluated.",
         progressTitle: "Required Fields",
         q1_song: "1. Song Type", q1_song_copy: "1. Song Type", q1_song_cover: "Cover Song", q1_song_original: "Original Song",
         q1_use: "Usage Purpose", q1_use_copy: "Usage Purpose", q1_1: "Broadcast", q1_1_sub: "1.0x", q1_2: "Commercial", q1_2_sub: "1.5x", q1_2_apply: "Commercial (1.5x Applied)", q1_notice: "※ Original Songs are only available for Commercial use (1.5x).", toastOriginalNotice: "Commercial (1.5x) is automatically applied for Original Songs.",
-        q2: "2. Add Live 2D", q2_desc: "Adding Live 2D extends the base 10-day period by 5 days (total 15 days).", q2_note: "The prices above are provided for reference; actual prices may change based on consultation regarding Live2D range and density.", q2_none: "Don't Add", q2_none_sub: "No extra fee", q2_add: "Add Live 2D", q2_add_sub: "+20,000 KRW~", q2_1: "Basic Parts", q2_2: "Detailed Parts", q2_3: "Detailed Parts + 2.5D",
+        q2: "2. Add Live 2D", q2_desc: "Adding Live 2D extends the base 10-day period by 5 days (total 15 days).", q2_note: "※ Actual prices range from 30,000 to 100,000 KRW based on consultation regarding Live2D range and density. (+30,000 KRW base applied)", q2_none: "Don't Add", q2_none_sub: "No extra fee", q2_add: "Add Live 2D", q2_add_sub: "+30,000 ~ 100,000 KRW",
         live2dExpandText: "Add Live 2D Rigging Option", live2dCollapseText: "Close Live 2D Rigging Option",
         q3: "3. Video Length", q3_desc: "Exceeding the base 4 mins incurs a fee of 10,000 KRW per 30 secs. (e.g., 4:01 applies the fee).", q3_min: "Min", q3_sec: "Sec",
-        q4: "4. Extra Fees (Multiple)", q4_copy: "4. Extra Fees", q4_1: "Extra Person", q4_1_sub: "+10,000 KRW / Person", q4_1_desc: "Base 2 included. +10,000 KRW / person from 3rd", q4_1_qty: "Extra People", unit_person: "", q4_2: "Fast Deadline", q4_2_sub: "Negotiable", q4_3: "Simple Thumbnail", q4_3_sub: "+8,000 KRW", c_thumb: "Simple Thumbnail",
+        q4: "4. Extra Fees (Multiple)", q4_copy: "4. Extra Fees", q4_1: "Extra Person", q4_1_sub: "+20,000 KRW / Person", q4_1_desc: "Base 2 included. +20,000 KRW / person from 3rd", q4_1_qty: "Extra People", unit_person: "", q4_2: "Fast Deadline", q4_2_sub: "Negotiable", q4_3: "Simple Thumbnail", q4_3_sub: "+15,000 KRW", c_thumb: "Simple Thumbnail",
         q5: "5. Deadline", q5_copy: "5. Deadline", q5_desc: "Base is 10 days (15 for Live 2D). For faster deadlines, specify the date.", q5_ph: "e.g., June 30, 2026",
         q6: "6. Song", q6_copy: "6. Song", q6_ph: "Enter song title or link",
         q7: "7. Upload Channel", q7_copy: "7. Upload Channel", q7_ph: "Channel Link",
         q8: "8. Attach Materials (Illustrations, Audio, etc.)", q8_copy: "8. Attached Materials", q8_desc: "Specify when missing materials will be provided. Work starts only after all materials are received.", q8_ph: "Please attach via Google Drive or any preferred method.",
         q9: "9. Participant Lineup", q9_copy: "9. Lineup", q9_ph: "Please enter the participating vocalists and artists.",
         q10: "10. Any other requests?", q10_copy: "10. Additional Requests", q10_ph: "Add any extra inquiries or messages here.",
-        resTitle: "ESTIMATE", resEmpty: "Select items to see the breakdown.", resTotal: "Total Estimate", copyBtn: "COPY", emailBtn: "Send Estimate Now", resNotice: "※ This is an estimated quote and may differ from the final price. Fast deadline fees are not included.",
+        resTitle: "ESTIMATE", resEmpty: "Select items to see the breakdown.", resTotal: "Total Estimate", resTotalLabel: "Total Estimate", copyBtn: "COPY", emailBtn: "Send Estimate Now", resNotice: "※ This is an estimated quote and may differ from the final price. Fast deadline fees are not included.",
         c_song: "Song Type", c_use: "Usage", c_live: "Live 2D", c_vidEx: "Video Time Extra", c_ppl: "Extra Person", c_fast: "Fast Deadline", c_nego: "Negotiable", c_none: "None",
         alert1: "Please select song type and usage purpose.", alert1_song: "Please select a song type.", alert1_use: "Please select usage purpose.",
         title: "WAVIT_studio - Custom Order",
@@ -134,7 +134,7 @@ const i18n = {
         logNotice: "※ Minimal logs may be recorded for service quality and inquiry verification.",
         unit_extra: "added",
         q2_card_title: "Add Live 2D Rigging Option",
-        q2_card_sub: "+20,000 KRW~ / +5 days"
+        q2_card_sub: "+30,000 ~ 100,000 KRW / +5 days"
     },
     ja: {
         curr: " ウォン",
@@ -147,19 +147,28 @@ const i18n = {
         sec4Tag: "SECTION 04", sec4Title: "楽曲・アップロード先 & 希望納期",
         sec5Tag: "SECTION 05", sec5Title: "その他すべてのご質問",
         statusUnselected: "未選択", statusUnwritten: "未入力", statusCompleted: "✓ 完了",
-        tt_live2d: "Live2Dのパーツ分けレベル를指します。詳細パーツ + 2.5Dはより立体感と自然な動きを実現します。",
+        tt_live2d: "Live2Dオプションです。詳細な可動範囲や密度はご相談の上決定されます。",
         tt_video: "基本4分まで追加料金なし。4分01秒以降は30秒ごとに10,000ウォンが加算されます。",
         tt_materials: "全資料（イラスト・音源等）が揃った日から作業カウント（10日/15日）が開始します。",
         tt_deadline: "希望納期がある場合はご記入ください。スケジュール確認および特急料金の算出を行います。",
         progressTitle: "必須項目の入力",
         q1_song: "1. 楽曲タイプ", q1_song_copy: "1. 楽曲タイプ", q1_song_cover: "カバー曲", q1_song_original: "オリジナル曲",
         q1_use: "使用用途", q1_use_copy: "使用用途", q1_1: "配信・放送用", q1_1_sub: "1.0倍", q1_2: "商用", q1_2_sub: "1.5倍", q1_2_apply: "商用 (1.5倍適用)", q1_notice: "※ オリジナル曲は商用(1.5倍)のみ選択可能です。", toastOriginalNotice: "オリジナル曲選択時、商用(1.5倍)が自動適用されます。",
-        q2: "2. Live 2D 追加", q2_desc: "Live 2Dを追加する場合、基本作業期間(10日)に5日が追加され、納期は15日となります。", q2_note: "上記の価格は参考用であり、実際の価格はLive2Dの可動範囲や密度などのご相談により変更される場合があります。", q2_1: "基本パーツ分け", q2_2: "詳細パーツ分け", q2_3: "詳細パーツ分け + 2.5D",
-        q2_card_title: "Live 2D リギングオプションを追加", q2_card_sub: "+20,000ウォンから〜 / 作業期間 +5日",
+        q2: "2. Live 2D 追加", q2_desc: "Live 2Dを追加する場合、基本作業期間(10日)に5日が追加され、納期は15日となります。", q2_note: "※ 実際の価格はLive2Dの可動範囲や密度などのご相談により30,000〜100,000ウォンの範囲で決定されます。（最低基本料金+30,000ウォン適用）", q2_none: "選択しない", q2_none_sub: "追加料金なし", q2_add: "Live 2D 追加", q2_add_sub: "+30,000ウォン 〜 100,000ウォン",
+        q2_card_title: "Live 2D リギングオプションを追加", q2_card_sub: "+30,000ウォンから〜 / 作業期間 +5日",
         live2dExpandText: "Live 2D リギングオプションを追加する", live2dCollapseText: "Live 2D リギングオプションを閉じる",
         q3: "3. 動画の長さ", q3_desc: "基本の4分を超える場合、30秒ごとに10,000ウォンの追加料金が発生します（例：4分01秒から適用）。", q3_min: "分", q3_sec: "秒",
-        q4: "4. 追加料金 (複数選択可)", q4_copy: "4. 追加料金", q4_1: "追加人数", q4_1_sub: "+10,000ウォン / 人", q4_1_desc: "基本2人含む。3人目から1人につき+10,000ウォン", q4_1_qty: "追加人数", unit_person: "人", q4_2: "お急ぎ納品", q4_2_sub: "要相談", q4_3: "簡単サムネイル", q4_3_sub: "+8,000ウォン", c_thumb: "簡単サムネイル",
-        q5: "5. 希望納期", q5_copy: "5. 希望納期", q5_desc: "基本は10日（Live 2D追加時は15日）。お急ぎの場合は日付をご記入いただければスケジュールを考慮し価格を決定します。", q5_ph: "例：2026年06月30日（相談可）",
+        q4: "4. 追加料金 (複数選択可)", q4_copy: "4. 追加料金", q4_1: "追加人数", q4_1_sub: "+20,000ウォン / 人", q4_1_desc: "基本2人含む。3人目から1人につき+20,000ウォン", q4_1_qty: "追加人数", unit_person: "人", q4_2: "お急ぎ納品", q4_2_sub: "要相談", q4_3: "簡単サムネイル", q4_3_sub: "+15,000ウォン", c_thumb: "簡単サムネイル",
+        tt_deadline: "希望納期がある場合はご記入ください。スケジュール確認および特急料金の算出を行います。",
+        progressTitle: "必須項目の入力",
+        q1_song: "1. 楽曲タイプ", q1_song_copy: "1. 楽曲タイプ", q1_song_cover: "カバー曲", q1_song_original: "オリジナル曲",
+        q1_use: "使用用途", q1_use_copy: "使用用途", q1_1: "配信・放送用", q1_1_sub: "1.0倍", q1_2: "商用", q1_2_sub: "1.5倍", q1_2_apply: "商用 (1.5倍適用)", q1_notice: "※ オリジナル曲は商用(1.5倍)のみ選択可能です。", toastOriginalNotice: "オリジナル曲選択時、商用(1.5倍)が自動適用されます。",
+        q2: "2. Live 2D 追加", q2_desc: "Live 2Dを追加する場合、基本作業期間(10日)に5日が追加され、納期は15日となります。", q2_note: "※ 実際の価格はLive2Dの可動範囲や密度などのご相談により30,000〜100,000ウォンの範囲で決定されます。（最低基本料金+30,000ウォン適用）", q2_none: "選択しない", q2_none_sub: "追加料金なし", q2_add: "Live 2D 追加", q2_add_sub: "+30,000ウォン 〜 100,000ウォン",
+        q2_card_title: "Live 2D リギングオプションを追加", q2_card_sub: "+30,000ウォンから〜 / 作業期間 +5日",
+        live2dExpandText: "Live 2D リギングオプションを追加する", live2dCollapseText: "Live 2D リギングオプションを閉じる",
+        q3: "3. 動画の長さ", q3_desc: "基本の4分を超える場合、30秒ごとに10,000ウォンの追加料金が発生します（例：4分01秒から適用）。", q3_min: "分", q3_sec: "秒",
+        q4: "4. 追加料金 (複数選択可)", q4_copy: "4. 追加料金", q4_1: "追加人数", q4_1_sub: "+20,000ウォン / 人", q4_1_desc: "基本2人含む。3人目から1人につき+20,000ウォン", q4_1_qty: "追加人数", unit_person: "人", q4_2: "お急ぎ納品", q4_2_sub: "要相談", q4_3: "簡単サムネイル", q4_3_sub: "+15,000ウォン", c_thumb: "簡単サムネイル",
+        q5: "5. 希望納期", q5_copy: "5. 希望納期", q5_desc: "基本は10日（Live 2D追加時は15日）。お急ぎの場合は日付をご記入いただければスケジュールを考慮し価格を決定します。", q5_ph: "例：2026年06월 30일（相談可）",
         q6: "6. 楽曲", q6_copy: "6. 楽曲", q6_ph: "タイトルまたはリンクを入力",
         q7: "7. アップロード先", q7_copy: "7. アップロード先", q7_ph: "チャンネルリンク",
         q8: "8. イラスト・音源などの資料添付", q8_copy: "8. 資料添付", q8_desc: "未準備の資料がある場合は提出予定日をご記入ください。全資料が揃うまで作業は開始しません。", q8_ph: "Googleドライブなど、使いやすい方法で添付してください。",
@@ -184,7 +193,7 @@ const i18n = {
         mailHeader: "[WAVIT オンラインお見積もり依頼]",
         contactLabel: "連絡先：",
         logNotice: "※ サービス品質およびお問い合わせ確認のため、最小限のログが記録される場合があります。",
-        unit_extra: "追加"
+        unit_extra: "추가"
     }
 };
 
@@ -417,7 +426,6 @@ function selectUseType(type) {
 function selectLive2DMode(mode) {
     const noneCard = document.getElementById('live2dTopNoneCard');
     const addCard = document.getElementById('live2dTopAddCard');
-    const subContainer = document.getElementById('live2dSubContainer');
 
     if (mode === 'none') {
         if (noneCard) {
@@ -432,19 +440,6 @@ function selectLive2DMode(mode) {
             const input = addCard.querySelector('input');
             if (input) input.checked = false;
         }
-        if (subContainer) {
-            subContainer.classList.remove('expanded');
-        }
-
-        document.getElementsByName('live2D').forEach(el => {
-            el.checked = false;
-            el.dataset.wasChecked = 'false';
-            const card = el.closest('.option-card');
-            if (card) {
-                card.classList.remove('selected');
-                card.setAttribute('aria-checked', 'false');
-            }
-        });
     } else {
         if (addCard) {
             addCard.classList.add('selected');
@@ -457,23 +452,6 @@ function selectLive2DMode(mode) {
             noneCard.setAttribute('aria-checked', 'false');
             const input = noneCard.querySelector('input');
             if (input) input.checked = false;
-        }
-        if (subContainer) {
-            subContainer.classList.add('expanded');
-        }
-
-        const checkedSub = document.querySelector('input[name="live2D"]:checked');
-        if (!checkedSub) {
-            const firstSubInput = document.querySelector('#live2dRadioCard1 input');
-            if (firstSubInput) {
-                firstSubInput.checked = true;
-                firstSubInput.dataset.wasChecked = 'true';
-                const card = firstSubInput.closest('.option-card');
-                if (card) {
-                    card.classList.add('selected');
-                    card.setAttribute('aria-checked', 'true');
-                }
-            }
         }
     }
 
@@ -808,7 +786,7 @@ function getEstimateDetails() {
     const t = i18n[currentLang];
     
     const songTypeActive = document.querySelector('input[name="songType"]:checked');
-    const songTypeValue = songTypeActive ? 140000 : 0;
+    const songTypeValue = songTypeActive ? 210000 : 0;
     const songTypeName = songTypeActive ? (songTypeActive.value === 'cover' ? t.q1_song_cover : t.q1_song_original) : t.c_none;
 
     const useTypeActive = document.querySelector('input[name="useType"]:checked');
@@ -817,13 +795,14 @@ function getEstimateDetails() {
 
     const live2dModeActive = document.querySelector('input[name="live2dMode"]:checked');
     const isLive2DAdded = live2dModeActive && live2dModeActive.value === 'add';
-    const live2DActive = isLive2DAdded ? document.querySelector('input[name="live2D"]:checked') : null;
-    const live2dValue = live2DActive ? parseInt(live2DActive.value) : 0;
-    const live2DText = live2DActive ? live2DActive.closest('.option-card').querySelector('.option-label').textContent : (t.q2_none || t.c_none);
+    const live2dMinCost = isLive2DAdded ? 30000 : 0;
+    const live2dMaxCost = isLive2DAdded ? 100000 : 0;
+    const live2dValue = live2dMinCost;
+    const live2DText = isLive2DAdded ? t.q2_add : (t.q2_none || t.c_none);
 
     const extraPeopleCheck = document.getElementById('extraPeopleCheck').checked;
     const extraPeopleQty = extraPeopleCheck ? Math.max(0, parseInt(document.getElementById('extraPeopleQty').value) || 0) : 0;
-    const extraPeopleCost = extraPeopleCheck && extraPeopleQty > 0 ? extraPeopleQty * 10000 : 0;
+    const extraPeopleCost = extraPeopleCheck && extraPeopleQty > 0 ? extraPeopleQty * 20000 : 0;
 
     const videoMin = Math.max(0, parseInt(document.getElementById('videoMin').value) || 0);
     const videoSec = Math.min(59, Math.max(0, parseInt(document.getElementById('videoSec').value) || 0));
@@ -835,19 +814,32 @@ function getEstimateDetails() {
     }
 
     const thumbCheck = document.getElementById('simpleThumbnailCheck').checked;
-    const thumbCost = thumbCheck ? 8000 : 0;
+    const thumbCost = thumbCheck ? 15000 : 0;
 
     const fastDeadlineCheck = document.getElementById('fastDeadlineCheck').checked;
 
-    const subtotal = songTypeValue + live2dValue + extraPeopleCost + extraTimeCost + thumbCost;
-    const total = Math.round(subtotal * multiplier);
-    const formattedTotal = total.toLocaleString();
+    const baseOtherSubtotal = songTypeValue + extraPeopleCost + extraTimeCost + thumbCost;
+    const subtotalMin = baseOtherSubtotal + live2dMinCost;
+    const subtotalMax = baseOtherSubtotal + live2dMaxCost;
+
+    const totalMin = Math.round(subtotalMin * multiplier);
+    const totalMax = Math.round(subtotalMax * multiplier);
+    const isRange = isLive2DAdded && (totalMin !== totalMax);
+
+    const total = totalMin; // Numeric baseline
+    const formattedTotal = isRange
+        ? `${totalMin.toLocaleString()} ~ ${totalMax.toLocaleString()}`
+        : totalMin.toLocaleString();
 
     let convertedStr = "";
     if (currentLang === 'en' && exchangeRates.USD) {
-        convertedStr = ` (≈ $${(total * exchangeRates.USD).toFixed(2)} USD)`;
+        convertedStr = isRange
+            ? ` (≈ $${(totalMin * exchangeRates.USD).toFixed(2)} ~ $${(totalMax * exchangeRates.USD).toFixed(2)} USD)`
+            : ` (≈ $${(totalMin * exchangeRates.USD).toFixed(2)} USD)`;
     } else if (currentLang === 'ja' && exchangeRates.JPY) {
-        convertedStr = ` (≈ ¥${Math.floor(total * exchangeRates.JPY).toLocaleString()} JPY)`;
+        convertedStr = isRange
+            ? ` (≈ ¥${Math.floor(totalMin * exchangeRates.JPY).toLocaleString()} ~ ¥${Math.floor(totalMax * exchangeRates.JPY).toLocaleString()} JPY)`
+            : ` (≈ ¥${Math.floor(totalMin * exchangeRates.JPY).toLocaleString()} JPY)`;
     }
 
     const uploadChannel = document.getElementById('uploadChannel').value.trim();
@@ -861,12 +853,13 @@ function getEstimateDetails() {
         t,
         songTypeActive, songTypeName, songTypeValue,
         useTypeActive, useTypeName, multiplier,
-        live2DActive, live2DText, live2dValue,
+        isLive2DAdded, live2DText, live2dValue, live2dMinCost, live2dMaxCost, isRange,
         videoMin, videoSec, totalSeconds, extraTimeCost,
         extraPeopleCheck, extraPeopleQty, extraPeopleCost,
         thumbCheck, thumbCost,
         fastDeadlineCheck,
-        subtotal, total, formattedTotal, convertedStr,
+        subtotalMin, subtotalMax, subtotal: subtotalMin,
+        totalMin, totalMax, total, formattedTotal, convertedStr,
         uploadChannel, musicInfo, materialsInfo, lineupInfo, deadlineInfo, otherDetails,
         safeUploadChannel: escapeHTML(uploadChannel),
         safeMusicInfo: escapeHTML(musicInfo),
@@ -901,45 +894,6 @@ document.addEventListener('click', function(e) {
     }
 });
 
-function toggleLive2DCard() {
-    const checkbox = document.getElementById('live2dCheck');
-    const container = document.getElementById('live2dContainer');
-    const subContainer = document.getElementById('live2dSubContainer');
-
-    if (!checkbox || !container || !subContainer) return;
-
-    if (checkbox.checked) {
-        container.classList.add('checked');
-        container.setAttribute('aria-checked', 'true');
-        subContainer.classList.add('expanded');
-
-        const checkedRadio = document.querySelector('input[name="live2D"]:checked');
-        if (!checkedRadio) {
-            const defaultRadio = document.querySelector('input[name="live2D"][value="20000"]');
-            if (defaultRadio) {
-                defaultRadio.checked = true;
-                selectRadioCard('live2D', defaultRadio);
-            }
-        }
-    } else {
-        container.classList.remove('checked');
-        container.setAttribute('aria-checked', 'false');
-        subContainer.classList.remove('expanded');
-
-        document.getElementsByName('live2D').forEach(el => {
-            el.checked = false;
-            el.dataset.wasChecked = 'false';
-            const card = el.closest('.option-card');
-            if (card) {
-                card.classList.remove('selected');
-                card.setAttribute('aria-checked', 'false');
-            }
-        });
-    }
-
-    calculateTotal();
-}
-
 function calculateTotal() {
     const est = getEstimateDetails();
     const t = est.t;
@@ -948,8 +902,8 @@ function calculateTotal() {
     if (est.songTypeActive) {
         breakdownHTML += `<div class="breakdown-item"><span>${t.c_song || '곡 유형'} (${est.songTypeName})</span><span class="item-price">${est.songTypeValue.toLocaleString()}${t.curr}</span></div>`;
     }
-    if (est.live2dValue > 0) {
-        breakdownHTML += `<div class="breakdown-item"><span>${t.c_live} (${est.live2DText})</span><span class="item-price">+${est.live2dValue.toLocaleString()}${t.curr}</span></div>`;
+    if (est.isLive2DAdded) {
+        breakdownHTML += `<div class="breakdown-item"><span>${t.c_live}</span><span class="item-price">+30,000 ~ 100,000${t.curr}</span></div>`;
     }
     if (est.extraTimeCost > 0) {
         breakdownHTML += `<div class="breakdown-item"><span>${t.c_vidEx}</span><span class="item-price">+${est.extraTimeCost.toLocaleString()}${t.curr}</span></div>`;
@@ -958,7 +912,7 @@ function calculateTotal() {
         breakdownHTML += `<div class="breakdown-item"><span>${t.c_ppl} (${est.extraPeopleQty}${t.unit_person || ''} ${t.unit_extra || '추가'})</span><span class="item-price">+${est.extraPeopleCost.toLocaleString()}${t.curr}</span></div>`;
     }
     if (est.thumbCost > 0) {
-        breakdownHTML += `<div class="breakdown-item"><span>${t.c_thumb}</span><span class="item-price">+8,000${t.curr}</span></div>`;
+        breakdownHTML += `<div class="breakdown-item"><span>${t.c_thumb}</span><span class="item-price">+15,000${t.curr}</span></div>`;
     }
     if (est.fastDeadlineCheck) {
         breakdownHTML += `<div class="breakdown-item"><span>${t.c_fast}</span><span class="item-price">${t.c_nego}</span></div>`;
@@ -973,21 +927,30 @@ function calculateTotal() {
     }
 
     document.getElementById('priceBreakdown').innerHTML = breakdownHTML;
+    
+    const labelEl = document.getElementById('totalEstimateLabel');
+    if (labelEl) {
+        labelEl.innerText = t.resTotalLabel || t.resTotal || '총 예상 견적';
+    }
+
     const totalEl = document.getElementById('totalEstimateText');
+    const wrapperEl = document.getElementById('totalEstimateWrapper');
     if (totalEl) {
-        totalEl.innerText = `${t.resTotal}: ${est.formattedTotal}${t.curr}`;
-        totalEl.classList.remove('price-updated');
-        void totalEl.offsetWidth;
-        totalEl.classList.add('price-updated');
-        setTimeout(() => totalEl.classList.remove('price-updated'), 160);
+        totalEl.innerText = `${est.formattedTotal}${t.curr}`;
+        if (wrapperEl) {
+            wrapperEl.classList.remove('price-updated');
+            void wrapperEl.offsetWidth;
+            wrapperEl.classList.add('price-updated');
+            setTimeout(() => wrapperEl.classList.remove('price-updated'), 160);
+        }
+    }
+    const mobileStickyEl = document.getElementById('mobileStickyTotal');
+    if (mobileStickyEl) {
+        mobileStickyEl.innerText = `${est.formattedTotal}${t.curr}`;
     }
     const convertedEl = document.getElementById('convertedPriceText');
-    if (currentLang === 'en' && exchangeRates.USD) {
-        convertedEl.innerText = `≈ $${(est.total * exchangeRates.USD).toFixed(2)} USD`;
-    } else if (currentLang === 'ja' && exchangeRates.JPY) {
-        convertedEl.innerText = `≈ ¥${Math.floor(est.total * exchangeRates.JPY).toLocaleString()} JPY`;
-    } else {
-        convertedEl.innerText = '';
+    if (convertedEl) {
+        convertedEl.innerText = est.convertedStr ? est.convertedStr.trim() : '';
     }
 
     updateFormProgress(est);
@@ -1153,7 +1116,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const songTypePriceText = `${est.songTypeValue.toLocaleString()}${t.curr}`;
             const useTypeMultiplierText = est.multiplier === 1.5 ? '1.5배 적용' : '1.0배';
-            const live2DPriceText = `+${est.live2dValue.toLocaleString()}${t.curr}`;
+            const live2DPriceText = est.isLive2DAdded ? `+30,000 ~ 100,000${t.curr}` : `0${t.curr}`;
             const videoPriceText = est.extraTimeCost > 0 ? `+${est.extraTimeCost.toLocaleString()}${t.curr}` : `0${t.curr}`;
 
             let plainExtraDetails = "";
@@ -1164,8 +1127,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 htmlExtraDetails += `<div>- ${t.c_ppl}: ${est.extraPeopleQty}${t.unit_person || ''} ${t.unit_extra || '추가'} <span style="font-size: 12px;">(+${est.extraPeopleCost.toLocaleString()}${t.curr})</span></div>`;
             }
             if (est.thumbCheck) {
-                plainExtraDetails += `\n   - ${t.c_thumb} (+8,000${t.curr})`;
-                htmlExtraDetails += `<div>- ${t.c_thumb} <span style="font-size: 12px;">(+8,000${t.curr})</span></div>`;
+                plainExtraDetails += `\n   - ${t.c_thumb} (+15,000${t.curr})`;
+                htmlExtraDetails += `<div>- ${t.c_thumb} <span style="font-size: 12px;">(+15,000${t.curr})</span></div>`;
             }
             if (est.fastDeadlineCheck) {
                 plainExtraDetails += `\n   - ${t.c_fast}: ${t.c_nego}`;
@@ -1321,58 +1284,75 @@ ${t.resNotice}`;
                 btn.textContent = t.sending;
                 btn.disabled = true;
 
-                let plainExtraDetails = "";
-                if (est.extraPeopleCheck && est.extraPeopleQty > 0) {
-                    plainExtraDetails += `\n   - ${t.c_ppl}: ${est.extraPeopleQty}${t.unit_person || ''} ${t.unit_extra || '추가'} (+${est.extraPeopleCost.toLocaleString()}${t.curr})`;
-                }
-                if (est.thumbCheck) plainExtraDetails += `\n   - ${t.c_thumb} (+8,000${t.curr})`;
-                if (est.fastDeadlineCheck) plainExtraDetails += `\n   - ${t.c_fast}: ${t.c_nego}`;
-                if (plainExtraDetails === "") plainExtraDetails = " " + t.c_none;
+                try {
+                    const songTypePriceText = `${est.songTypeValue.toLocaleString()}${t.curr}`;
+                    const useTypeMultiplierText = est.multiplier === 1.5 ? '1.5배 적용' : '1.0배';
+                    const live2DPriceText = est.isLive2DAdded ? `+30,000 ~ 100,000${t.curr}` : `0${t.curr}`;
+                    const videoPriceText = est.extraTimeCost > 0 ? `+${est.extraTimeCost.toLocaleString()}${t.curr}` : `0${t.curr}`;
 
-                const messageBody = `${t.mailHeader}
+                    let plainExtraDetails = "";
+                    if (est.extraPeopleCheck && est.extraPeopleQty > 0) {
+                        plainExtraDetails += `\n   - ${t.c_ppl}: ${est.extraPeopleQty}${t.unit_person || ''} ${t.unit_extra || '추가'} (+${est.extraPeopleCost.toLocaleString()}${t.curr})`;
+                    }
+                    if (est.thumbCheck) plainExtraDetails += `\n   - ${t.c_thumb} (+15,000${t.curr})`;
+                    if (est.fastDeadlineCheck) plainExtraDetails += `\n   - ${t.c_fast}: ${t.c_nego}`;
+                    if (plainExtraDetails === "") plainExtraDetails = " " + t.c_none;
+
+                    const messageBody = `${t.mailHeader}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ${t.contactLabel} ${contactInfo}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-${t.q1}: ${est.useTypeName} (${est.useTypeValue.toLocaleString()}${t.curr})
-${t.q2}: ${est.live2DText} (+${est.live2dValue.toLocaleString()}${t.curr})
-${t.q3}: ${est.videoMin}${t.q3_min} ${est.videoSec}${t.q3_sec} (+${est.extraTimeCost.toLocaleString()}${t.curr})
-${t.q4_copy}:${plainExtraDetails.replace(/\n/g, '\n  ')}
-${t.q5_copy}: ${est.deadlineInfo}
-${t.q6_copy}: ${est.musicInfo}
-${t.q7_copy}: ${est.uploadChannel}
-${t.q8_copy}: ${est.materialsInfo}
-${t.q9_copy}: ${est.lineupInfo}
-${t.q10_copy}: ${est.otherDetails || t.c_none}
+1. 신청곡: ${est.musicInfo}
+2. 마감일: ${est.deadlineInfo}
+3. 추가 요청: ${est.otherDetails || t.c_none}
+4. 업로드 채널: ${est.uploadChannel}
+5. 라인업: ${est.lineupInfo}
+6. 곡 유형: ${est.songTypeName} (${songTypePriceText})
+7. Live 2D 추가: ${est.live2DText} (${live2DPriceText})
+8. 영상 길이: ${est.videoMin}${t.q3_min} ${est.videoSec}${t.q3_sec} (${videoPriceText})
+9. 추가금:${plainExtraDetails.replace(/\n/g, '\n  ')}
+10. 자료 첨부: ${est.materialsInfo}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-${t.resTotal}: ${est.formattedTotal}${t.curr}`;
+사용 용도: ${est.useTypeName} (${useTypeMultiplierText})
+${t.resTotal}: ${est.formattedTotal}${t.curr}${est.convertedStr}`;
 
-                fetch('https://api.staticforms.xyz/submit', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        accessKey: "sf_767a29f020dab85042ce629f",
-                        subject: t.emailSubject,
-                        name: t.emailSenderName,
-                        email: "no-reply@wavit.com",
-                        message: messageBody
+                    // Check if contactInfo is an email address format
+                    const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contactInfo.trim());
+                    const replyEmail = isEmail ? contactInfo.trim() : "no-reply@wavit.com";
+
+                    fetch('https://api.staticforms.xyz/submit', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            accessKey: "sf_767a29f020dab85042ce629f",
+                            subject: t.emailSubject,
+                            name: t.emailSenderName,
+                            email: replyEmail,
+                            message: messageBody
+                        })
                     })
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            showAlert(t.sendSuccess);
-                        } else {
-                            showAlert(t.sendFailPrefix + data.message);
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        showAlert(t.systemError);
-                    })
-                    .finally(() => {
-                        btn.textContent = originalText;
-                        btn.disabled = false;
-                    });
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                showAlert(t.sendSuccess);
+                            } else {
+                                showAlert(t.sendFailPrefix + (data.message || 'Error'));
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Email send error:', error);
+                            showAlert(t.systemError);
+                        })
+                        .finally(() => {
+                            btn.textContent = originalText;
+                            btn.disabled = false;
+                        });
+                } catch (err) {
+                    console.error('Email prep error:', err);
+                    showAlert(t.systemError);
+                    btn.textContent = originalText;
+                    btn.disabled = false;
+                }
             });
         });
     }

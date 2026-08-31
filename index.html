@@ -94,12 +94,12 @@
                                 <label class="option-card" id="songTypeCoverCard" role="radio" aria-checked="false">
                                     <input type="radio" name="songType" value="cover" onclick="selectSongType('cover')">
                                     <span class="option-label" data-i18n="q1_song_cover">커버곡</span>
-                                    <span class="option-price" data-base-price="140000">140,000원</span>
+                                    <span class="option-price" data-base-price="210000">210,000원</span>
                                 </label>
                                 <label class="option-card" id="songTypeOriginalCard" role="radio" aria-checked="false">
                                     <input type="radio" name="songType" value="original" onclick="selectSongType('original')">
                                     <span class="option-label" data-i18n="q1_song_original">오리지널 곡</span>
-                                    <span class="option-price" data-base-price="140000">140,000원</span>
+                                    <span class="option-price" data-base-price="210000">210,000원</span>
                                 </label>
                             </div>
                         </div>
@@ -164,39 +164,12 @@
                                 <label class="option-card" id="live2dTopAddCard" role="radio" aria-checked="false">
                                     <input type="radio" name="live2dMode" value="add" onclick="selectLive2DMode('add')">
                                     <span class="option-label" data-i18n="q2_add">Live 2D 추가</span>
-                                    <span class="option-price" data-i18n="q2_add_sub">+20,000원부터~</span>
+                                    <span class="option-price" data-i18n="q2_add_sub">+30,000원 ~ 100,000원</span>
                                 </label>
                             </div>
 
-                            <div class="live2d-suboptions-container" id="live2dSubContainer">
-                                <div class="live2d-suboptions-inner">
-                                    <div class="description" data-i18n="q2_desc">Live 2D 추가시 기본 작업기간(10일)에 5일 추가되어 마감 기간이 작업 시작일로부터 15일이 됩니다.</div>
-                                    <div class="options-grid">
-                                        <label class="option-card" id="live2dRadioCard1" role="radio" aria-checked="false">
-                                            <input type="radio" name="live2D" value="20000"
-                                                onclick="selectRadioCard('live2D', this)">
-                                            <span class="option-label" data-i18n="q2_1">기본 파츠</span>
-                                            <span class="option-price" data-base-price="20000"
-                                                data-price-prefix="+">+20,000원</span>
-                                        </label>
-                                        <label class="option-card" id="live2dRadioCard2" role="radio" aria-checked="false">
-                                            <input type="radio" name="live2D" value="50000"
-                                                onclick="selectRadioCard('live2D', this)">
-                                            <span class="option-label" data-i18n="q2_2">상세 파츠</span>
-                                            <span class="option-price" data-base-price="50000"
-                                                data-price-prefix="+">+50,000원</span>
-                                        </label>
-                                        <label class="option-card" id="live2dRadioCard3" role="radio" aria-checked="false">
-                                            <input type="radio" name="live2D" value="80000"
-                                                onclick="selectRadioCard('live2D', this)">
-                                            <span class="option-label" data-i18n="q2_3">상세 파츠 + 2.5D</span>
-                                            <span class="option-price" data-base-price="80000"
-                                                data-price-prefix="+">+80,000원</span>
-                                        </label>
-                                    </div>
-                                    <div class="description" style="margin-top: 10px;" data-i18n="q2_note">위 가격은 이해를 돕기 위하여 제공되었으며 실제 가격은 Live2D 구동 범위 및 밀도 등 상담을 통해 변경됩니다</div>
-                                </div>
-                            </div>
+                            <div class="description" style="margin-top: 12px; line-height: 1.6;" data-i18n="q2_desc">Live 2D 추가 시 기본 작업기간(10일)에 5일 추가되어 마감 기간이 작업 시작일로부터 15일이 됩니다.</div>
+                            <div class="description" style="margin-top: 6px; font-size: 12px; color: var(--text-muted);" data-i18n="q2_note">※ 실제 가격은 Live2D 구동 범위 및 밀도 등 상담을 통해 30,000원~100,000원 범위에서 책정됩니다. (최소 기본금 +30,000원 적용)</div>
                         </div>
 
                         <!-- Step 2 Navigation Bar -->
@@ -265,10 +238,10 @@
                                         onchange="toggleCheckboxCard('extraPeople')">
                                     <div class="checkbox-text-group">
                                         <span class="checkbox-title" data-i18n="q4_1">추가 인원</span>
-                                        <span class="checkbox-subtext" data-i18n="q4_1_sub">+10,000원 / 명</span>
+                                        <span class="checkbox-subtext" data-i18n="q4_1_sub">+20,000원 / 명</span>
                                         <span
                                             style="font-size: 11px; color: var(--text-muted); margin-top: 4px; font-weight: 400;"
-                                            data-i18n="q4_1_desc">기본 2인 포함. 3인째부터 인당 +10,000원</span>
+                                            data-i18n="q4_1_desc">기본 2인 포함. 3인째부터 인당 +20,000원</span>
                                     </div>
                                 </label>
                                 <div class="quantity-control">
@@ -311,7 +284,7 @@
                                     <div class="checkbox-text-group">
                                         <span class="checkbox-title" id="title-thumb" data-i18n="q4_3">간단 썸네일</span>
                                         <span class="checkbox-subtext" id="sub-thumb"
-                                            data-i18n="q4_3_sub">+8,000원</span>
+                                            data-i18n="q4_3_sub">+15,000원</span>
                                     </div>
                                 </label>
                             </div>
@@ -450,12 +423,11 @@
                         <div class="breakdown-item" style="color: var(--text-muted); font-size: 13px;">항목을 선택하면 내역이
                             표시됩니다.</div>
                     </div>
-                    <div class="total-price-display" id="totalEstimateText">
-                        총 예상 견적: 0원
+                    <div class="total-price-display" id="totalEstimateWrapper">
+                        <span class="total-price-label" id="totalEstimateLabel" data-i18n="resTotalLabel">총 예상 견적</span>
+                        <span class="total-price-value" id="totalEstimateText">0원</span>
                     </div>
-                    <div id="convertedPriceText"
-                        style="font-size: 13px; color: var(--text-muted); text-align: right; margin-top: -12px; margin-bottom: 16px; font-weight: 600;">
-                    </div>
+                    <div id="convertedPriceText" class="converted-price-text"></div>
                     <button class="btn-custom btn-copy" id="copyBtn" data-i18n="copyBtn">복사하기</button>
                     <button class="btn-custom btn-email" id="emailBtn" data-i18n="emailBtn">견적서 바로 전송</button>
 

@@ -598,11 +598,11 @@ textarea {
     background: var(--nordic-surface);
     border: 1px solid var(--nordic-border);
     border-radius: var(--card-radius);
-    padding: 24px;
+    padding: 24px 20px;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04);
     position: sticky;
     top: 40px;
-    width: 300px;
+    width: 320px;
     flex-shrink: 0;
 }
 
@@ -756,22 +756,42 @@ textarea {
 }
 
 .total-price-display {
-    font-size: 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+    margin-bottom: 6px;
+    padding-top: 16px;
+    border-top: 1px solid var(--nordic-border-strong);
+    text-align: right;
+}
+
+.total-price-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: -0.015em;
+}
+
+.total-price-value {
+    font-size: 20px;
     font-weight: 700;
     color: var(--text-primary);
     font-family: var(--font-sans);
-    text-align: right;
-    margin-bottom: 20px;
-    padding-top: 16px;
-    border-top: 1px solid var(--nordic-border-strong);
-    letter-spacing: -0.015em;
-    white-space: nowrap;
+    letter-spacing: -0.02em;
     word-break: keep-all;
+    line-height: 1.25;
 }
 
+.converted-price-text,
 #convertedPriceText {
     font-family: var(--font-sans);
+    font-size: 12.5px;
     color: var(--text-muted);
+    text-align: right;
+    margin-bottom: 16px;
+    font-weight: 500;
+    min-height: 16px;
 }
 
 /* Custom Modal Styles */
